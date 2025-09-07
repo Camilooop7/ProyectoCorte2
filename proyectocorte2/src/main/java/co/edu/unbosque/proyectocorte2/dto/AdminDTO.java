@@ -19,13 +19,13 @@ public class AdminDTO extends Persona{
 		this.cargo = cargo;
 	}
 
-	public AdminDTO(String nombre, int edad, String correo, String contrasena, String rol, String cargo) {
-		super(nombre, edad, correo, contrasena, rol);
+	public AdminDTO(String nombre, int documento, String correo, String contrasena, String rol, String cargo) {
+		super(nombre, documento, correo, contrasena, rol);
 		this.cargo = cargo;
 	}
 
-	public AdminDTO(String nombre, int edad, String correo, String contrasena, String rol) {
-		super(nombre, edad, correo, contrasena, rol);
+	public AdminDTO(String nombre, int documento, String correo, String contrasena, String rol) {
+		super(nombre, documento, correo, contrasena, rol);
 		// TODO Auto-generated constructor stub
 	}
 

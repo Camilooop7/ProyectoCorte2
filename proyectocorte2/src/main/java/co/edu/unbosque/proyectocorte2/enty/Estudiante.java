@@ -25,15 +25,15 @@ public class Estudiante extends Persona{
 		this.semestre = semestre;
 	}
 
-	public Estudiante(String nombre, int edad, String correo, String contrasena, String rol, String carrera,
+	public Estudiante(String nombre, int documento, String correo, String contrasena, String rol, String carrera,
 			int semestre) {
-		super(nombre, edad, correo, contrasena, rol);
+		super(nombre, documento, correo, contrasena, rol);
 		this.carrera = carrera;
 		this.semestre = semestre;
 	}
 
-	public Estudiante(String nombre, int edad, String correo, String contrasena, String rol) {
-		super(nombre, edad, correo, contrasena, rol);
+	public Estudiante(String nombre, int documento, String correo, String contrasena, String rol) {
+		super(nombre, documento, correo, contrasena, rol);
 		// TODO Auto-generated constructor stub
 	}
 

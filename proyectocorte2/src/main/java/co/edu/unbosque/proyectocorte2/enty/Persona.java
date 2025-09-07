@@ -15,7 +15,7 @@ public abstract class Persona {
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 	@Column(unique = true, name = "nombre")
 	private String nombre;
-	private int edad;
+	private int documento;
 	@Column(unique = true, name = "correo")
 	private String correo;
 	private String contrasena;
@@ -25,10 +25,10 @@ public abstract class Persona {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Persona(String nombre, int edad, String correo, String contrasena, String rol) {
+	public Persona(String nombre, int documento, String correo, String contrasena, String rol) {
 		super();
 		this.nombre = nombre;
-		this.edad = edad;
+		this.documento = documento;
 		this.correo = correo;
 		this.contrasena = contrasena;
 		this.rol = rol;
@@ -50,12 +50,12 @@ public abstract class Persona {
 		this.nombre = nombre;
 	}
 
-	public int getEdad() {
-		return edad;
+	public int getDocumento() {
+		return documento;
 	}
 
-	public void setEdad(int edad) {
-		this.edad = edad;
+	public void setDocumento(int documento) {
+		this.documento = documento;
 	}
 
 	public String getCorreo() {
@@ -84,13 +84,13 @@ public abstract class Persona {
 
 	@Override
 	public String toString() {
-		return "Persona [id=" + id + ", nombre=" + nombre + ", edad=" + edad + ", correo=" + correo + ", contrasena="
+		return "Persona [id=" + id + ", nombre=" + nombre + ", edad=" + documento + ", correo=" + correo + ", contrasena="
 				+ contrasena + ", rol=" + rol + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(contrasena, correo, edad, id, nombre, rol);
+		return Objects.hash(contrasena, correo, documento, id, nombre, rol);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public abstract class Persona {
 			return false;
 		Persona other = (Persona) obj;
 		return Objects.equals(contrasena, other.contrasena) && Objects.equals(correo, other.correo)
-				&& edad == other.edad && Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre)
+				&& documento == other.documento && Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre)
 				&& Objects.equals(rol, other.rol);
 	}
 

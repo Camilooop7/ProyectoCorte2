@@ -1,4 +1,4 @@
-package co.edu.unbosque.miprimerspring.exception;
+package co.edu.unbosque.proyectocorte2.exception;
 
 import java.util.InputMismatchException;
 

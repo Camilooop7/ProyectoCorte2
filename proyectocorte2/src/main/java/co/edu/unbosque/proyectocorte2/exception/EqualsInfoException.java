@@ -1,4 +1,4 @@
-package co.edu.unbosque.miprimerspring.exception;
+package co.edu.unbosque.proyectocorte2.exception;
 
 /**
  * Clase la cual es publica para ser llamada dentro de otras clases la cual es

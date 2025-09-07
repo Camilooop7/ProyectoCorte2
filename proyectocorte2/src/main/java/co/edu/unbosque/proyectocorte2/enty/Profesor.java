@@ -23,13 +23,13 @@ public class Profesor extends Persona {
 		this.departamento = departamento;
 	}
 
-	public Profesor(String nombre, int edad, String correo, String contrasena, String rol, String departamento) {
-		super(nombre, edad, correo, contrasena, rol);
+	public Profesor(String nombre, int documento, String correo, String contrasena, String rol, String departamento) {
+		super(nombre, documento, correo, contrasena, rol);
 		this.departamento = departamento;
 	}
 
-	public Profesor(String nombre, int edad, String correo, String contrasena, String rol) {
-		super(nombre, edad, correo, contrasena, rol);
+	public Profesor(String nombre, int documento, String correo, String contrasena, String rol) {
+		super(nombre, documento, correo, contrasena, rol);
 		// TODO Auto-generated constructor stub
 	}
 

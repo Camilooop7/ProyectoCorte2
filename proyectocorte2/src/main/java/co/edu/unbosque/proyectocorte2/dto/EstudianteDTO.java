@@ -3,11 +3,7 @@ package co.edu.unbosque.proyectocorte2.dto;
 import java.util.Objects;
 
 import co.edu.unbosque.proyectocorte2.enty.Persona;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
 
 
 public class EstudianteDTO extends Persona{
@@ -25,15 +21,15 @@ public class EstudianteDTO extends Persona{
 		this.semestre = semestre;
 	}
 
-	public EstudianteDTO(String nombre, int edad, String correo, String contrasena, String rol, String carrera,
+	public EstudianteDTO(String nombre, int documento, String correo, String contrasena, String rol, String carrera,
 			int semestre) {
-		super(nombre, edad, correo, contrasena, rol);
+		super(nombre, documento, correo, contrasena, rol);
 		this.carrera = carrera;
 		this.semestre = semestre;
 	}
 
-	public EstudianteDTO(String nombre, int edad, String correo, String contrasena, String rol) {
-		super(nombre, edad, correo, contrasena, rol);
+	public EstudianteDTO(String nombre, int documento, String correo, String contrasena, String rol) {
+		super(nombre, documento, correo, contrasena, rol);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -1,17 +1,18 @@
-package co.edu.unbosque.miprimerspring.exception;
+package co.edu.unbosque.proyectocorte2.exception;
+
 
 /**
  * Clase la cual es publica para ser llamada dentro de otras clases
  * la cual es heredada de Exception
  */
-public class CapitalException extends Exception {
-
+public class SmallException extends Exception{
+	
 	/**
 	 * Se crea un constructor el cual no recibe ningun tipo de parametro se llama el
 	 * super como constructor de la clase madre recibiendo un texto.
 	 */
-	public CapitalException() {
-		super("Debe contener una mayuscula.");
-
+	public SmallException() {
+		super("Debe contener al menos una minuscula.");
 	}
+
 }
