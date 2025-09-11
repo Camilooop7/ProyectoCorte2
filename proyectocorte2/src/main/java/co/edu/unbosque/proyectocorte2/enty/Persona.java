@@ -13,8 +13,8 @@ import jakarta.persistence.Table;
 @Table(name = "persona")
 public abstract class Persona {
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-	@Column(unique = true, name = "nombre")
 	private String nombre;
+	@Column(unique = true, name = "documento")
 	private int documento;
 	@Column(unique = true, name = "correo")
 	private String correo;

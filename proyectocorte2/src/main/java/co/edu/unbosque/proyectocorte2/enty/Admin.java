@@ -6,10 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "admin")
 public class Admin extends Persona{
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 	private String cargo;

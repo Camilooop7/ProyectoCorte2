@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "estudiante")
 public class Estudiante extends Persona{
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 	private String carrera;

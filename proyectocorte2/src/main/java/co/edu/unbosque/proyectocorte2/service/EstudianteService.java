@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 
 import co.edu.unbosque.proyectocorte2.dto.EstudianteDTO;
 import co.edu.unbosque.proyectocorte2.enty.Estudiante;
 import co.edu.unbosque.proyectocorte2.repository.EstudianteRepository;
-
+@Service
 public class EstudianteService implements CRUDOperation<EstudianteDTO>{
 
 	@Autowired

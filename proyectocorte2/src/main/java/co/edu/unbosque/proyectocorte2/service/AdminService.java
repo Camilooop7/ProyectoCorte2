@@ -5,11 +5,12 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import co.edu.unbosque.proyectocorte2.dto.AdminDTO;
 import co.edu.unbosque.proyectocorte2.enty.Admin;
 import co.edu.unbosque.proyectocorte2.repository.AdminRepository;
-
+@Service
 public class AdminService  implements CRUDOperation<AdminDTO>  {
 
 	@Autowired
