@@ -1,14 +1,14 @@
-package co.edu.unbosque.proyectocorte2.controller;
+package co.edu.unbosque.proyectocorte.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import co.edu.unbosque.proyectocorte2.dto.LoginEnvioDTO;
-import co.edu.unbosque.proyectocorte2.dto.LoginRespuestaDTO;
-import co.edu.unbosque.proyectocorte2.exception.SesionException;
-import co.edu.unbosque.proyectocorte2.service.LoginService;
+import co.edu.unbosque.proyectocorte.dto.LoginEnvioDTO;
+import co.edu.unbosque.proyectocorte.dto.LoginRespuestaDTO;
+import co.edu.unbosque.proyectocorte.exception.SesionException;
+import co.edu.unbosque.proyectocorte.service.LoginService;
 
 @RestController
 @CrossOrigin(origins = { "*" })
@@ -18,7 +18,7 @@ public class LoginController {
     @Autowired
     private LoginService authService;
 
-    @PostMapping(path = "/sesion")
+    @PostMapping(path = "/inicio")
     public ResponseEntity<?> login(
             @RequestParam String correo,
             @RequestParam String contrasena) {
