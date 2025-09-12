@@ -198,5 +198,19 @@ public class ExceptionCheker {
 		throw new InputMismatchException();
 
 	}
+	
+	  public static void checkerSesion(String correo, String contrasenaIngresada, String contrasenaBD)
+	            throws SesionException {
+
+	        if (correo == null || contrasenaIngresada == null ||
+	            correo.trim().isEmpty() || contrasenaIngresada.trim().isEmpty()) {
+	            throw new SesionException();
+	        }
+
+	        if (contrasenaBD == null || !contrasenaBD.equals(contrasenaIngresada)) {
+	            throw new SesionException();
+	        }
+	    }
+	
 
 }
