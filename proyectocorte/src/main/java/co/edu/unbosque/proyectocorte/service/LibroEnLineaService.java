@@ -8,32 +8,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.unbosque.proyectocorte.dto.AdminDTO;
+import co.edu.unbosque.proyectocorte.dto.LibroEnLineaDTO;
 import co.edu.unbosque.proyectocorte.entity.Admin;
-import co.edu.unbosque.proyectocorte.repository.AdminRepository;
+import co.edu.unbosque.proyectocorte.entity.LibroEnLinea;
+import co.edu.unbosque.proyectocorte.repository.LibroEnLineaRepository;
 
 @Service
-public class AdminService implements CRUDOperation<AdminDTO> {
+public class LibroEnLineaService implements CRUDOperation<LibroEnLineaDTO> {
 
 	@Autowired
-	private AdminRepository adminRepo;
+	private LibroEnLineaRepository libroEnLineaRepo;
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@Override
-	public int create(AdminDTO date) {
-		Admin entity = modelMapper.map(date, Admin.class);
-		adminRepo.save(entity);
+	public int create(LibroEnLineaDTO date) {
+		LibroEnLinea entity = modelMapper.map(date, LibroEnLinea.class);
+		libroEnLineaRepo.save(entity);
 		return 0;
 	}
 
 	@Override
-	public List<AdminDTO> getAll() {
-		List<Admin> entityList = adminRepo.findAll();
-		List<AdminDTO> dtoList = new ArrayList<>();
+	public List<LibroEnLineaDTO> getAll() {
+		List<LibroEnLinea> entityList = libroEnLineaRepo.findAll();
+		List<LibroEnLineaDTO> dtoList = new ArrayList<>();
 
 		entityList.forEach((entity) -> {
-			AdminDTO adminDTO = modelMapper.map(entityList, AdminDTO.class);
-			dtoList.add(adminDTO);
+			LibroEnLineaDTO libroEnLineaDTO = modelMapper.map(entityList, LibroEnLineaDTO.class);
+			dtoList.add(libroEnLineaDTO);
 		});
 
 		return dtoList;
@@ -46,7 +48,7 @@ public class AdminService implements CRUDOperation<AdminDTO> {
 	}
 
 	@Override
-	public int updateById(Long a, AdminDTO date) {
+	public int updateById(Long a, LibroEnLineaDTO date) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

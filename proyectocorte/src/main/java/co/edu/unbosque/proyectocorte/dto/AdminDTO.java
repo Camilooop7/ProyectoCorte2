@@ -4,12 +4,10 @@ import java.util.Objects;
 
 import co.edu.unbosque.proyectocorte.entity.Persona;
 
-
-
-public class AdminDTO extends Persona{
+public class AdminDTO extends Persona {
 	private Long id;
 	private String cargo;
-	 
+
 	public AdminDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -31,7 +29,7 @@ public class AdminDTO extends Persona{
 
 	@Override
 	public String toString() {
-		return "Admin [id=" + id + ", cargo=" + cargo + "]";
+		return super.toString() + "Admin [id=" + id + ", cargo=" + cargo + "]";
 	}
 
 	@Override
@@ -53,6 +51,5 @@ public class AdminDTO extends Persona{
 		AdminDTO other = (AdminDTO) obj;
 		return Objects.equals(cargo, other.cargo) && Objects.equals(id, other.id);
 	}
-	
 
 }

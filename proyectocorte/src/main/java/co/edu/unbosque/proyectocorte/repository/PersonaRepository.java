@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import co.edu.unbosque.proyectocorte.entity.Persona;
 
 public interface PersonaRepository extends JpaRepository<Persona, Long> {
-	    Optional<Persona> findByCorreo(String email);
+	  public Optional<Persona> findByCorreo(String email);
 	    
 }
