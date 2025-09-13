@@ -18,12 +18,12 @@ public class LibroEnLineaDTO extends Libro {
 		this.link = link;
 	}
 
-	public LibroEnLineaDTO(String nombre, String descripcion, String imagen, String link) {
+	public LibroEnLineaDTO(String nombre, String descripcion, byte[] imagen, String link) {
 		super(nombre, descripcion, imagen);
 		this.link = link;
 	}
 
-	public LibroEnLineaDTO(String nombre, String descripcion, String imagen) {
+	public LibroEnLineaDTO(String nombre, String descripcion, byte[] imagen) {
 		super(nombre, descripcion, imagen);
 		// TODO Auto-generated constructor stub
 	}

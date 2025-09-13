@@ -1,33 +1,38 @@
 package co.edu.unbosque.proyectocorte.entity;
 
 import java.util.Objects;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "libro")
 public abstract class Libro {
 
-	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String nombre;
 	private String descripcion;
-	private String imagen;
+
+	@Lob
+	private byte[] imagen; // Ahora es un arreglo de bytes para guardar la imagen como BLOB
 
 	public Libro() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public Libro(String nombre, String descripcion, String imagen) {
+	public Libro(String nombre, String descripcion, byte[] imagen) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.imagen = imagen;
 	}
 
+	// Getters y setters
 	public Long getId() {
 		return id;
 	}
@@ -52,11 +57,11 @@ public abstract class Libro {
 		this.descripcion = descripcion;
 	}
 
-	public String getImagen() {
+	public byte[] getImagen() {
 		return imagen;
 	}
 
-	public void setImagen(String imagen) {
+	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
 
@@ -75,12 +80,11 @@ public abstract class Libro {
 			return false;
 		Libro other = (Libro) obj;
 		return Objects.equals(descripcion, other.descripcion) && Objects.equals(id, other.id)
-				&& Objects.equals(imagen, other.imagen) && Objects.equals(nombre, other.nombre);
+				&& Objects.deepEquals(imagen, other.imagen) && Objects.equals(nombre, other.nombre);
 	}
 
 	@Override
 	public String toString() {
-		return "Libro [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", imagen=" + imagen + "]";
+		return "Libro [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
 	}
-
 }

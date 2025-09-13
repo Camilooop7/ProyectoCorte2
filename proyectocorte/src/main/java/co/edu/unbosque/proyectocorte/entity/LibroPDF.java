@@ -1,37 +1,42 @@
 package co.edu.unbosque.proyectocorte.entity;
 
 import java.util.Objects;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 @Entity
 public class LibroPDF extends Libro {
 
-	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
-	private String nombrePdf;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Lob
+	private byte[] contenidoPdf;
 
 	public LibroPDF() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public LibroPDF(String nombrePdf) {
+	public LibroPDF(Long id, byte[] contenidoPdf) {
 		super();
-		this.nombrePdf = nombrePdf;
+		this.id = id;
+		this.contenidoPdf = contenidoPdf;
 	}
 
-	public LibroPDF(String nombre, String descripcion, String imagen, String nombrePdf) {
+	public LibroPDF(String nombre, String descripcion, byte[] imagen,  byte[] contenidoPdf) {
 		super(nombre, descripcion, imagen);
-		this.nombrePdf = nombrePdf;
+		this.contenidoPdf = contenidoPdf;
 	}
 
-	public LibroPDF(String nombre, String descripcion, String imagen) {
+	public LibroPDF(String nombre, String descripcion, byte[] imagen) {
 		super(nombre, descripcion, imagen);
 		// TODO Auto-generated constructor stub
 	}
 
+	// Getters y setters
 	public Long getId() {
 		return id;
 	}
@@ -40,19 +45,19 @@ public class LibroPDF extends Libro {
 		this.id = id;
 	}
 
-	public String getNombrePdf() {
-		return nombrePdf;
+	public byte[] getContenidoPdf() {
+		return contenidoPdf;
 	}
 
-	public void setNombrePdf(String nombrePdf) {
-		this.nombrePdf = nombrePdf;
+	public void setContenidoPdf(byte[] contenidoPdf) {
+		this.contenidoPdf = contenidoPdf;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(id, nombrePdf);
+		result = prime * result + Objects.hash(id);
 		return result;
 	}
 
@@ -65,12 +70,11 @@ public class LibroPDF extends Libro {
 		if (getClass() != obj.getClass())
 			return false;
 		LibroPDF other = (LibroPDF) obj;
-		return Objects.equals(id, other.id) && Objects.equals(nombrePdf, other.nombrePdf);
+		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + "LibroPDF [id=" + id + ", nombrePdf=" + nombrePdf + "]";
+		return super.toString() + "LibroPDF [id=" + id + "]";
 	}
-
 }

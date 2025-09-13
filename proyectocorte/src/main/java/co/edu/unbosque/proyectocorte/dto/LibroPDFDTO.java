@@ -1,29 +1,29 @@
 package co.edu.unbosque.proyectocorte.dto;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import co.edu.unbosque.proyectocorte.entity.Libro;
 
 public class LibroPDFDTO extends Libro {
-
 	private Long id;
-	private String nombrePdf;
+	private byte[] contenidoPdf;
 
 	public LibroPDFDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
-	public LibroPDFDTO(String nombrePdf) {
+	public LibroPDFDTO(Long id, byte[] contenidoPdf) {
 		super();
-		this.nombrePdf = nombrePdf;
+		this.id = id;
+		this.contenidoPdf = contenidoPdf;
 	}
 
-	public LibroPDFDTO(String nombre, String descripcion, String imagen, String nombrePdf) {
+	public LibroPDFDTO(String nombre, String descripcion, byte[] imagen, byte[] contenidoPdf) {
 		super(nombre, descripcion, imagen);
-		this.nombrePdf = nombrePdf;
+		this.contenidoPdf = contenidoPdf;
 	}
 
-	public LibroPDFDTO(String nombre, String descripcion, String imagen) {
+	public LibroPDFDTO(String nombre, String descripcion, byte[] imagen) {
 		super(nombre, descripcion, imagen);
 		// TODO Auto-generated constructor stub
 	}
@@ -36,19 +36,20 @@ public class LibroPDFDTO extends Libro {
 		this.id = id;
 	}
 
-	public String getNombrePdf() {
-		return nombrePdf;
+	public byte[] getContenidoPdf() {
+		return contenidoPdf;
 	}
 
-	public void setNombrePdf(String nombrePdf) {
-		this.nombrePdf = nombrePdf;
+	public void setContenidoPdf(byte[] contenidoPdf) {
+		this.contenidoPdf = contenidoPdf;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(id, nombrePdf);
+		result = prime * result + Arrays.hashCode(contenidoPdf);
+		result = prime * result + Objects.hash(id);
 		return result;
 	}
 
@@ -61,12 +62,12 @@ public class LibroPDFDTO extends Libro {
 		if (getClass() != obj.getClass())
 			return false;
 		LibroPDFDTO other = (LibroPDFDTO) obj;
-		return Objects.equals(id, other.id) && Objects.equals(nombrePdf, other.nombrePdf);
+		return Arrays.equals(contenidoPdf, other.contenidoPdf) && Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + "LibroPDF [id=" + id + ", nombrePdf=" + nombrePdf + "]";
+		return super.toString() + "LibroPDFDTO [id=" + id + ", contenidoPdf=" + Arrays.toString(contenidoPdf) + "]";
 	}
 
 }
