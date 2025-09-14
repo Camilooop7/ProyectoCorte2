@@ -32,7 +32,7 @@ public class AdminService implements CRUDOperation<AdminDTO> {
 		List<AdminDTO> dtoList = new ArrayList<>();
 
 		entityList.forEach((entity) -> {
-			AdminDTO adminDTO = modelMapper.map(entityList, AdminDTO.class);
+			AdminDTO adminDTO = modelMapper.map(entity, AdminDTO.class);
 			dtoList.add(adminDTO);
 		});
 

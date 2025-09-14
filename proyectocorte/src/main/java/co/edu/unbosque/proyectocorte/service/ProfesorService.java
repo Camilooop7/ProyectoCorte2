@@ -34,7 +34,7 @@ public class ProfesorService implements CRUDOperation<ProfesorDTO> {
 		List<ProfesorDTO> dtoList = new ArrayList<>();
 		
 		entityList.forEach((entity)->{
-			ProfesorDTO profesorDTO = modelMapper.map(entityList, ProfesorDTO.class);
+			ProfesorDTO profesorDTO = modelMapper.map(entity, ProfesorDTO.class);
 			dtoList.add(profesorDTO);
 		});
 

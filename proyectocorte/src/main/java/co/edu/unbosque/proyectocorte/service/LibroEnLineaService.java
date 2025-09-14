@@ -34,7 +34,7 @@ public class LibroEnLineaService implements CRUDOperation<LibroEnLineaDTO> {
 		List<LibroEnLineaDTO> dtoList = new ArrayList<>();
 
 		entityList.forEach((entity) -> {
-			LibroEnLineaDTO libroEnLineaDTO = modelMapper.map(entityList, LibroEnLineaDTO.class);
+			LibroEnLineaDTO libroEnLineaDTO = modelMapper.map(entity, LibroEnLineaDTO.class);
 			dtoList.add(libroEnLineaDTO);
 		});
 

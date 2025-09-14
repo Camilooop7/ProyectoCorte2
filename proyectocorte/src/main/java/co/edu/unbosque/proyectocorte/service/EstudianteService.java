@@ -32,7 +32,7 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO>{
 		List<EstudianteDTO> dtoList = new ArrayList<>();
 		
 		entityList.forEach((entity)->{
-			EstudianteDTO estudianteDTO = modelMapper.map(entityList, EstudianteDTO.class);
+			EstudianteDTO estudianteDTO = modelMapper.map(entity, EstudianteDTO.class);
 			dtoList.add(estudianteDTO);
 		});
 
