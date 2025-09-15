@@ -1,6 +1,7 @@
 package co.edu.unbosque.proyectocorte.service;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,15 @@ import org.springframework.stereotype.Service;
 import co.edu.unbosque.miprimerspring.enty.User;
 import co.edu.unbosque.proyectocorte.dto.ProfesorDTO;
 import co.edu.unbosque.proyectocorte.entity.Profesor;
+import co.edu.unbosque.proyectocorte.exception.CapitalException;
+import co.edu.unbosque.proyectocorte.exception.CharacterException;
+import co.edu.unbosque.proyectocorte.exception.ExceptionCheker;
+import co.edu.unbosque.proyectocorte.exception.MailException;
+import co.edu.unbosque.proyectocorte.exception.NegativeNumberException;
+import co.edu.unbosque.proyectocorte.exception.NumberException;
+import co.edu.unbosque.proyectocorte.exception.SmallException;
+import co.edu.unbosque.proyectocorte.exception.SymbolException;
+import co.edu.unbosque.proyectocorte.exception.TextException;
 import co.edu.unbosque.proyectocorte.repository.ProfesorRepository;
 
 @Service
@@ -25,10 +35,46 @@ public class ProfesorService implements CRUDOperation<ProfesorDTO> {
 	@Override
 	public int create(ProfesorDTO date) {
 		
-		Profesor entity = modelMapper.map(date, Profesor.class);
-		profesorRepository.save(entity);
-		// TODO Auto-generated method stub
-		return 0;
+		try {
+			ExceptionCheker.checkerText(date.getNombre());
+			ExceptionCheker.checkerText(date.getDepartamento());
+			ExceptionCheker.checkerNegativeNumber(date.getDocumento());
+			ExceptionCheker.checkerMail(date.getCorreo());
+			ExceptionCheker.checkerPasword(date.getContrasena());
+			Profesor entity = modelMapper.map(date, Profesor.class);
+			profesorRepository.save(entity);
+			// TODO Auto-generated method stub
+			return 0;
+			
+		} catch (TextException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NegativeNumberException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InputMismatchException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MailException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CapitalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CharacterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NumberException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SymbolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SmallException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 1;
 	}
 	@Override
 	public List<ProfesorDTO> getAll() {
