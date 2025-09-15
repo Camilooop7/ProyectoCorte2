@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.edu.unbosque.miprimerspring.entity.User;
 import co.edu.unbosque.proyectocorte.dto.ProblemaDTO;
 import co.edu.unbosque.proyectocorte.entity.Problema;
 import co.edu.unbosque.proyectocorte.repository.ProblemaRepository;
