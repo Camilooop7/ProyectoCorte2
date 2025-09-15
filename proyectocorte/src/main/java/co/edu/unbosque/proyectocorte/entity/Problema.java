@@ -15,26 +15,26 @@ public class Problema {
 	private String titulo;
 	private int dificultad;
 	private String tema;
-	private String jeuz;
+	private String juez;
 	private String link;
 
 	public Problema() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Problema(String titulo, int dificultad, String tema, String jeuz, String link) {
+	public Problema(String titulo, int dificultad, String tema, String juez, String link) {
 		super();
 		this.titulo = titulo;
 		this.dificultad = dificultad;
 		this.tema = tema;
-		this.jeuz = jeuz;
+		this.juez = juez;
 		this.link = link;
 	}
 
 	@Override
 	public String toString() {
-		return "Problema [id=" + id + ", titulo=" + titulo + ", dificultad=" + dificultad + ", tema=" + tema + ", jeuz="
-				+ jeuz + ", link=" + link + "]";
+		return "Problema [id=" + id + ", titulo=" + titulo + ", dificultad=" + dificultad + ", tema=" + tema + ", juez="
+				+ juez + ", link=" + link + "]";
 	}
 
 	public Long getId() {
@@ -69,12 +69,12 @@ public class Problema {
 		this.tema = tema;
 	}
 
-	public String getJeuz() {
-		return jeuz;
+	public String getJuez() {
+		return juez;
 	}
 
-	public void setJeuz(String jeuz) {
-		this.jeuz = jeuz;
+	public void setJuez(String juez) {
+		this.juez = juez;
 	}
 
 	public String getLink() {
@@ -87,7 +87,7 @@ public class Problema {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dificultad, id, jeuz, link, tema, titulo);
+		return Objects.hash(dificultad, id, juez, link, tema, titulo);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class Problema {
 		if (getClass() != obj.getClass())
 			return false;
 		Problema other = (Problema) obj;
-		return dificultad == other.dificultad && Objects.equals(id, other.id) && Objects.equals(jeuz, other.jeuz)
+		return dificultad == other.dificultad && Objects.equals(id, other.id) && Objects.equals(juez, other.juez)
 				&& Objects.equals(link, other.link) && Objects.equals(tema, other.tema)
 				&& Objects.equals(titulo, other.titulo);
 	}

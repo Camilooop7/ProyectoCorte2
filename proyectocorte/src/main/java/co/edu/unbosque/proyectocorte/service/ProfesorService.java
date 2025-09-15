@@ -2,11 +2,13 @@ package co.edu.unbosque.proyectocorte.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.edu.unbosque.miprimerspring.enty.User;
 import co.edu.unbosque.proyectocorte.dto.ProfesorDTO;
 import co.edu.unbosque.proyectocorte.entity.Profesor;
 import co.edu.unbosque.proyectocorte.repository.ProfesorRepository;
@@ -42,18 +44,31 @@ public class ProfesorService implements CRUDOperation<ProfesorDTO> {
 	}
 	@Override
 	public int deleteById(Long a) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (profesorRepository.existsById(a)) {
+			profesorRepository.deleteById(a);
+			return 0;
+		}
+		return 1;
 	}
 	@Override
 	public int updateById(Long a, ProfesorDTO date) {
-		// TODO Auto-generated method stub
-		return 0;
+		Optional<Profesor> opt = profesorRepository.findById(a);
+		if (opt.isPresent()) {
+			Profesor entity = opt.get();
+			entity.setNombre(date.getNombre());
+			entity.setDocumento(date.getDocumento());
+			entity.setCorreo(date.getCorreo());
+			entity.setContrasena(date.getContrasena());
+			entity.setDepartamento(date.getDepartamento());
+			profesorRepository.save(entity);
+			return 0;
+		}
+		return 1;
 	}
 	@Override
 	public Long count() {
-		// TODO Auto-generated method stub
-		return null;
+		long todo = getAll().size();
+		return todo;
 	}
 	@Override
 	public boolean exist(Long a) {

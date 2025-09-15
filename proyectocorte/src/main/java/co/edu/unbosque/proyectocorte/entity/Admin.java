@@ -30,6 +30,15 @@ public class Admin extends Persona{
 		super(nombre, documento, correo, contrasena, rol);
 		// TODO Auto-generated constructor stub
 	}
+	
+
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
 
 	@Override
 	public String toString() {

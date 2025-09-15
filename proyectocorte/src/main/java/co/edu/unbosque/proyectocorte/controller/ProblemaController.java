@@ -1,0 +1,37 @@
+package co.edu.unbosque.proyectocorte.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import co.edu.unbosque.proyectocorte.dto.ProblemaDTO;
+import co.edu.unbosque.proyectocorte.service.ProblemaService;
+
+@RestController
+@CrossOrigin(origins = { "*" })
+@RequestMapping(path = { "/problema" })
+public class ProblemaController {
+	
+	@Autowired
+	private ProblemaService problemaService;
+	
+	@PostMapping(path = "/crear")
+	public ResponseEntity<String> crear(@RequestParam String titulo, int dificultad, String tema, String juez, String link) {
+		ProblemaDTO newProblema = new ProblemaDTO(titulo, dificultad, tema,juez,link);
+		int status = problemaService.create(newProblema);
+		
+		if (status == 0) {
+			return new ResponseEntity<>("problema creado con exito", HttpStatus.CREATED);
+		}else {
+			
+			return new ResponseEntity<>("Error al crear el problema", HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+	
+
+}

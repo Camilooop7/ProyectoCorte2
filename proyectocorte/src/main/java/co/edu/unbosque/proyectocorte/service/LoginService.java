@@ -37,16 +37,13 @@ public class LoginService {
 
             ExceptionCheker.checkerSesion(correo, pass, p.getContrasena());
 
-            String rol = (p.getRol() == null) ? "" : p.getRol().trim().toUpperCase();
-            String redirect;
+            String rol = (p.getRol() == null) ? "" : p.getRol().trim();
+            String redirect = null;
             switch (rol) {
-                case "ADMIN"      -> redirect = "/admin/dashboard";
-                case "PROFESOR"   -> redirect = "/profesor/inicio";
-                case "ESTUDIANTE" -> redirect = "/estudiante/home";
-                default -> {
-                    rol = "USUARIO";
-                    redirect = "/home";
-                }
+                case "admin"      -> redirect = "/admin/incio";
+                case "profesor"   -> redirect = "/profesor/inicio";
+                case "estudiantes" -> redirect = "/estudiante/inicio";
+            
             }
 
             return new LoginRespuestaDTO(
