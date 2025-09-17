@@ -1,14 +1,18 @@
 package co.edu.unbosque.proyectocorte.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.edu.unbosque.proyectocorte.dto.AdminDTO;
 import co.edu.unbosque.proyectocorte.dto.EstudianteDTO;
 import co.edu.unbosque.proyectocorte.service.EstudianteService;
 
@@ -32,6 +36,19 @@ public class EstudianteController {
 			
 			return new ResponseEntity<>("Error al crear el Estudiante", HttpStatus.NOT_ACCEPTABLE);
 		}
+	}
+	@GetMapping("/mostrar")
+	public  ResponseEntity<String>  mostrarEstudiante( ) {
+		List<EstudianteDTO> listaEstudiante = estudianteService.getAll();
+		if (listaEstudiante.isEmpty()) {
+			return new ResponseEntity<>("No se encontraron usuarios por mostrar", HttpStatus.valueOf(204));
+		}else {
+			StringBuilder stringBuilder = new StringBuilder();
+			listaEstudiante.forEach((dto) -> stringBuilder.append(dto.toString() + "\n"));
+			return new ResponseEntity<>("admin: " + stringBuilder.toString(), HttpStatus.valueOf(202));
+			
+		}
+		
 	}
 
 }
