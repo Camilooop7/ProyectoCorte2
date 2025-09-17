@@ -7,9 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import co.edu.unbosque.proyectocorte.dto.CronogramaDTO;
-import co.edu.unbosque.proyectocorte.dto.ProfesorDTO;
 import co.edu.unbosque.proyectocorte.entity.Cronograma;
-import co.edu.unbosque.proyectocorte.entity.Profesor;
 import co.edu.unbosque.proyectocorte.repository.CronogramaRepository;
 
 public class CronogramaService implements CRUDOperation<CronogramaDTO> {

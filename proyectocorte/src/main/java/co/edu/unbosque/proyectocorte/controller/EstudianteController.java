@@ -36,7 +36,7 @@ public class EstudianteController {
 			return new ResponseEntity<>("Error al crear el Estudiante", HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
-	@GetMapping("/mostrar")
+	@GetMapping(path ="/mostrar")
 	public  ResponseEntity<String>  mostrarEstudiante( ) {
 		List<EstudianteDTO> listaEstudiante = estudianteService.getAll();
 		if (listaEstudiante.isEmpty()) {

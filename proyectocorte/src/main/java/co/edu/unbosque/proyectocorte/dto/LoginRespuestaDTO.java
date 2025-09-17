@@ -7,20 +7,20 @@ public class LoginRespuestaDTO {
 	    private String nombre;
 	    private String correo;
 	    private String rol;           
-	    private String redirectPath;  
+	    private String redicrecion;  
 	    private String mensaje;       
 	    
 	    public LoginRespuestaDTO() {
 			// TODO Auto-generated constructor stub
 		}
 
-		public LoginRespuestaDTO(Long id, String nombre, String correo, String rol, String redirectPath, String mensaje) {
+		public LoginRespuestaDTO(Long id, String nombre, String correo, String rol, String redicrecion, String mensaje) {
 			super();
 			this.id = id;
 			this.nombre = nombre;
 			this.correo = correo;
 			this.rol = rol;
-			this.redirectPath = redirectPath;
+			this.redicrecion = redicrecion;
 			this.mensaje = mensaje;
 		}
 
@@ -56,13 +56,7 @@ public class LoginRespuestaDTO {
 			this.rol = rol;
 		}
 
-		public String getRedirectPath() {
-			return redirectPath;
-		}
 
-		public void setRedirectPath(String redirectPath) {
-			this.redirectPath = redirectPath;
-		}
 
 		public String getMensaje() {
 			return mensaje;
@@ -75,12 +69,12 @@ public class LoginRespuestaDTO {
 		@Override
 		public String toString() {
 			return "LoginResponse [id=" + id + ", nombre=" + nombre + ", correo=" + correo + ", rol=" + rol
-					+ ", redirectPath=" + redirectPath + ", mensaje=" + mensaje + "]";
+					+ ", redicrecion=" + redicrecion + ", mensaje=" + mensaje + "]";
 		}
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(correo, id, mensaje, nombre, redirectPath, rol);
+			return Objects.hash(correo, id, mensaje, nombre, redicrecion, rol);
 		}
 
 		@Override
@@ -94,7 +88,7 @@ public class LoginRespuestaDTO {
 			LoginRespuestaDTO other = (LoginRespuestaDTO) obj;
 			return Objects.equals(correo, other.correo) && Objects.equals(id, other.id)
 					&& Objects.equals(mensaje, other.mensaje) && Objects.equals(nombre, other.nombre)
-					&& Objects.equals(redirectPath, other.redirectPath) && Objects.equals(rol, other.rol);
+					&& Objects.equals(redicrecion, other.redicrecion) && Objects.equals(rol, other.rol);
 		}
 	    
 

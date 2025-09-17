@@ -36,7 +36,7 @@ public class AdminController {
 			return new ResponseEntity<>("Error al crear el admin", HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
-	@GetMapping("/mostrar")
+	@GetMapping(path ="/mostrar")
 	public  ResponseEntity<String>  mostrarAdmin( ) {
 		List<AdminDTO> listaAdmin = adminService.getAll();
 		if (listaAdmin.isEmpty()) {

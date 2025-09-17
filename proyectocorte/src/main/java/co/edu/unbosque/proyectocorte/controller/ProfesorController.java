@@ -36,7 +36,7 @@ public class ProfesorController {
 		}
 	}
 	
-	@GetMapping("/mostrar")
+	@GetMapping(path ="/mostrar")
 	public  ResponseEntity<String>  mostrarEstudiante( ) {
 		List<ProfesorDTO> listaProfesor = profesorService.getAll();
 		if (listaProfesor.isEmpty()) {
