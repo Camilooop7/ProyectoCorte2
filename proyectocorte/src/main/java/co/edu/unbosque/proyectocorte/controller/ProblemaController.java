@@ -1,9 +1,12 @@
 package co.edu.unbosque.proyectocorte.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +33,19 @@ public class ProblemaController {
 		}else {
 			
 			return new ResponseEntity<>("Error al crear el problema", HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+	
+	@GetMapping(path ="/mostrar")
+	public  ResponseEntity<String>  mostrarEstudiante( ) {
+		List<ProblemaDTO> listaProblmea = problemaService.getAll();
+		if (listaProblmea.isEmpty()) {
+			return new ResponseEntity<>("No se encontraron problemas por mostrar", HttpStatus.valueOf(204));
+		}else {
+			StringBuilder stringBuilder = new StringBuilder();
+			listaProblmea.forEach((dto) -> stringBuilder.append(dto.toString() + "\n"));
+			return new ResponseEntity<>("admin: " + stringBuilder.toString(), HttpStatus.valueOf(202));
+			
 		}
 	}
 	

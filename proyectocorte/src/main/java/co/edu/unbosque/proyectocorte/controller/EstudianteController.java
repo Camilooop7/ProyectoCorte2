@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.unbosque.proyectocorte.dto.AdminDTO;
 import co.edu.unbosque.proyectocorte.dto.EstudianteDTO;
 import co.edu.unbosque.proyectocorte.service.EstudianteService;
 
@@ -41,7 +40,7 @@ public class EstudianteController {
 	public  ResponseEntity<String>  mostrarEstudiante( ) {
 		List<EstudianteDTO> listaEstudiante = estudianteService.getAll();
 		if (listaEstudiante.isEmpty()) {
-			return new ResponseEntity<>("No se encontraron usuarios por mostrar", HttpStatus.valueOf(204));
+			return new ResponseEntity<>("No se encontraron estudiantes por mostrar", HttpStatus.valueOf(204));
 		}else {
 			StringBuilder stringBuilder = new StringBuilder();
 			listaEstudiante.forEach((dto) -> stringBuilder.append(dto.toString() + "\n"));
