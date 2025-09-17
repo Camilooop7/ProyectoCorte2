@@ -1,59 +1,155 @@
 package co.edu.unbosque.beans;
 
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import co.edu.unbosque.model.UserDTO;
+import co.edu.unbosque.service.UserService;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
 
-@Named(value = "userBean")
+@Named("userBean")
 @RequestScoped
 public class UserBean {
 
-    public void checkSession() {
-        String usuario = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-        if (usuario == null) {
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+	private String saludo = "";
+	private String correo = "";
+	private String contrasena = "";
+
+	private String newUsername = "";
+	private String newPass = "";
+	
+
+	private List<UserDTO> listUsers = new ArrayList<>();
+	
+	
+	public UserBean() {
+		
+	}
+	
+	
+	@PostConstruct
+    public void init() {
+        cargarUsuarios();
     }
 
-    public void cerrarSesion() {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            ec.invalidateSession(); 
-            ec.redirect(ec.getRequestContextPath() + "/index.xhtml");
-        } catch (IOException e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al redirigir"));
-        }
+    public void cargarUsuarios() {
+        listUsers = UserService.doGetAll("http://localhost:8081/user/getall");
     }
-    
+	
+	
+	
+	public void showStickyLogin(String code, String content) {
+		if (code.equals("201")) {
+			FacesContext.getCurrentInstance().addMessage("sticky-key",
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Hecho", content));
+		} else if (code.equals("406")) {
+			FacesContext.getCurrentInstance().addMessage("sticky-key",
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", content));
+		} else {
+			System.out.println("Error en crear cuenta");
+			System.out.println("Status code: " + code);
+			System.out.println("reason: " + content);
+			FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Error Critico", "Error al crear," + "comuniquese con el administrador"));
+		}
+	}
+	
+	
+	
+	public void crearUsuario() {
+		//newUsername = AESUtil.encrypt(newUsername);
+		//newPass1 = AESUtil.encrypt(newPass1);
+		String json = "{";
+		json += "\"correo\" : \"" + newUsername + "\",";
+		json += "\"password\" : \"" + newPass + "\"";
+		json += "}";
+		String respuesta = UserService.doPost("http://localhost:8081/user/createjson", json);
+		String[] data = respuesta.split("\n");
+		showStickyLogin(data[0], data[1]);
+		newUsername = "";
+		newPass = "";
+		
+	}
+	
+	
+	public void showSticky() {
+		FacesContext.getCurrentInstance().addMessage("sticky-key",
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sticky Message", "Message Content"));
+	}
+	
+	
+	
 
-    public void mostrarAdmin() {
-    	try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("principal.xhtml");
-        } catch (IOException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al redirigir"));
-        }
-    }
+	
 
-    public void mostrarInfo() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Mostrando información..."));
-    }
 
-    public void comprar() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Compra realizada con éxito"));
-    }
-    
-    public String getApplyThemeScript() {
-    	  return "function applyThemeByInputId(id){var el=document.getElementById(id);if(!el)return;document.documentElement.setAttribute('data-theme',el.value);document.body.setAttribute('data-theme',el.value);}";
-    	}
+	public String getSaludo() {
+		return saludo;
+	}
 
+
+	public void setSaludo(String saludo) {
+		this.saludo = saludo;
+	}
+
+
+	public String getCorreo() {
+		return correo;
+	}
+
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
+
+	public String getNewUsername() {
+		return newUsername;
+	}
+
+
+	public void setNewUsername(String newUsername) {
+		this.newUsername = newUsername;
+	}
+
+
+	public String getNewPass() {
+		return newPass;
+	}
+
+
+	public void setNewPass(String newPass) {
+		this.newPass = newPass;
+	}
+
+
+	public List<UserDTO> getListUsers() {
+		return listUsers;
+	}
+
+
+	public void setListUsers(List<UserDTO> listUsers) {
+		this.listUsers = listUsers;
+	}
+	
+	
+	
+	
+	
 }
