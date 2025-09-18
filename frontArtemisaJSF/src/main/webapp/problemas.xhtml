@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/template.xhtml">
+    <ui:define name="contenido">
+        <section class="hero">
+            <h2>❓ Problemas y Retos</h2>
+            <p>
+                Resuelve ejercicios, comparte soluciones y aprende en comunidad.<br/>
+                ¿Te animas a un nuevo desafío?
+            </p>
+        </section>
+        <section class="cards">
+            <div class="card">
+                <img src="https://biblioteca-artemisa.netlify.app/images/matematicas.jpg"
+                     alt="Matemáticas" style="width:90px; border-radius:50%; margin-bottom:10px;" />
+                <h3>Matemáticas</h3>
+                <p>Ejercicios y problemas de lógica y álgebra.</p>
+                <h:commandButton value="Ver problemas" action="#{paginaprincipalbean.irProblemas}" styleClass="btn btn-sm" />
+            </div>
+            <div class="card">
+                <img src="https://biblioteca-artemisa.netlify.app/images/programacion.jpg"
+                     alt="Programación" style="width:90px; border-radius:50%; margin-bottom:10px;" />
+                <h3>Programación</h3>
+                <p>Retos prácticos para mejorar tus habilidades de código.</p>
+                <h:commandButton value="Ver problemas" action="#{paginaprincipalbean.irProblemas}" styleClass="btn btn-sm" />
+            </div>
+            <div class="card">
+                <img src="https://biblioteca-artemisa.netlify.app/images/electronica.jpg"
+                     alt="Electrónica" style="width:90px; border-radius:50%; margin-bottom:10px;" />
+                <h3>Electrónica</h3>
+                <p>Soluciona circuitos y experimenta con tecnología.</p>
+                <h:commandButton value="Ver problemas" action="#{paginaprincipalbean.irProblemas}" styleClass="btn btn-sm" />
+            </div>
+        </section>
+        <section class="hero" style="background: var(--rosa-claro); color: #d6336c;">
+            <h2>¿Tienes un reto para compartir?</h2>
+            <p>Propón tu propio problema y ayuda a otras a aprender.</p>
+            <h:link outcome="problemas" styleClass="btn btn-lg" style="background:var(--naranja);color:white;border-radius:30px;">
+                Proponer reto
+            </h:link>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

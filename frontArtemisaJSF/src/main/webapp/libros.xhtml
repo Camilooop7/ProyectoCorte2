@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/template.xhtml">
+    <ui:define name="contenido">
+        <section class="hero">
+            <h2>📚 Catálogo de Libros</h2>
+            <p>
+                Actualmente contamos con <b>#{paginaprincipalbean.totalLibros}</b> libros disponibles.<br/>
+                Encuentra lecturas recomendadas para inspirarte y aprender.
+            </p>
+        </section>
+        <section class="cards">
+            <div class="card">
+                <img src="https://biblioteca-artemisa.netlify.app/images/libro1.jpg" 
+                     alt="Programación en Java" style="width:100px; border-radius:50%; margin-bottom:10px;" />
+                <h3>Programación en Java</h3>
+                <p>Guía esencial para principiantes y avanzados.</p>
+                <h:commandButton value="Ver detalles" action="#{paginaprincipalbean.irCatalogo}" styleClass="btn btn-sm" />
+            </div>
+            <div class="card">
+                <img src="https://biblioteca-artemisa.netlify.app/images/libro2.jpg" 
+                     alt="Historia del Arte" style="width:100px; border-radius:50%; margin-bottom:10px;" />
+                <h3>Historia del Arte</h3>
+                <p>Descubre el papel de la mujer en el arte universal.</p>
+                <h:commandButton value="Ver detalles" action="#{paginaprincipalbean.irCatalogo}" styleClass="btn btn-sm" />
+            </div>
+            <div class="card">
+                <img src="https://biblioteca-artemisa.netlify.app/images/libro3.jpg" 
+                     alt="Mujeres en la Ciencia" style="width:100px; border-radius:50%; margin-bottom:10px;" />
+                <h3>Mujeres en la Ciencia</h3>
+                <p>Historias de pioneras que cambiaron el mundo.</p>
+                <h:commandButton value="Ver detalles" action="#{paginaprincipalbean.irCatalogo}" styleClass="btn btn-sm" />
+            </div>
+        </section>
+        <section class="hero" style="background: var(--rosa-claro); color: #d6336c;">
+            <h2>¿Quieres recomendar un libro?</h2>
+            <p>Envíanos tu sugerencia y ayúdanos a crecer el catálogo.</p>
+            <h:link outcome="problemas" styleClass="btn btn-lg" style="background:var(--naranja);color:white;border-radius:30px;">
+                Recomendar libro
+            </h:link>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

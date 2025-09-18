@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	<ui:define name="contenido">
+		<section class="hero animate__animated animate__fadeIn">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-7 text-center text-md-start">
+					<h2 class="display-4 mb-3 fw-bold">Eventos y Actividades</h2>
+					<p class="lead mb-4">Participa en talleres, competencias y
+						charlas en la comunidad Artemisa.</p>
+				</div>
+				<div class="col-md-5 text-center">
+					<img
+						src="https://biblioteca-artemisa.netlify.app/images/club-lectura.jpg"
+						alt="Eventos Artemisa"
+						class="img-fluid animate__animated animate__pulse animate__infinite logo-artemisa" />
+				</div>
+			</div>
+		</div>
+		</section>
+		<section class="cards container animate__animated animate__fadeInUp">
+		<div class="row justify-content-center">
+			<div class="col-md-4 mb-3">
+				<h:link outcome="clubLectura" styleClass="card-link">
+					<div class="card text-center py-4 px-2 h-100 card-club">
+						<i class="ri-book-open-line card-icon"></i>
+						<h5 class="mt-2">Club de Lectura</h5>
+						<p>Debate y reflexión sobre libros seleccionados cada mes.</p>
+					</div>
+				</h:link>
+			</div>
+			<div class="col-md-4 mb-3">
+				<h:link outcome="talleres" styleClass="card-link">
+					<div class="card text-center py-4 px-2 h-100 card-taller">
+						<i class="ri-presentation-line card-icon"></i>
+						<h5 class="mt-2">Talleres</h5>
+						<p>Aprende en sesiones prácticas de programación, arte y
+							ciencia.</p>
+					</div>
+				</h:link>
+			</div>
+			<div class="col-md-4 mb-3">
+				<h:link outcome="charlas" styleClass="card-link">
+					<div class="card text-center py-4 px-2 h-100 card-charla">
+						<i class="ri-mic-line card-icon"></i>
+						<h5 class="mt-2">Charlas</h5>
+						<p>Escucha a invitadas especiales y expande tu visión.</p>
+					</div>
+				</h:link>
+			</div>
+		</div>
+		</section>
+	</ui:define>
+</ui:composition>

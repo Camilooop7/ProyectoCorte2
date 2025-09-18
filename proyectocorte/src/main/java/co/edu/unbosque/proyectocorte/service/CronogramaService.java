@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import co.edu.unbosque.proyectocorte.dto.CronogramaDTO;
 import co.edu.unbosque.proyectocorte.entity.Cronograma;
 import co.edu.unbosque.proyectocorte.repository.CronogramaRepository;
 
+@Service
 public class CronogramaService implements CRUDOperation<CronogramaDTO> {
 	@Autowired
 	private CronogramaRepository cronogramaRepository;

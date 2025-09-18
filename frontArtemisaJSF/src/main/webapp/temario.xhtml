@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/template.xhtml">
+    <ui:define name="contenido">
+        <section class="hero">
+            <h2>📖 Temario</h2>
+            <p>
+                Actualmente trabajando en: <b>#{paginaprincipalbean.temarioActual}</b><br/>
+                Descubre los temas que estamos explorando este mes.
+            </p>
+        </section>
+        <section class="cards">
+            <div class="card">
+                <img src="https://biblioteca-artemisa.netlify.app/images/intro-programacion.jpg"
+                     alt="Intro Programación" style="width:90px; border-radius:50%; margin-bottom:10px;" />
+                <h3>Introducción a la Programación</h3>
+                <p>Fundamentos esenciales para empezar a programar.</p>
+                <h:commandButton value="Ver temario" action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
+            </div>
+            <div class="card">
+                <img src="https://biblioteca-artemisa.netlify.app/images/estructuras-datos.jpg"
+                     alt="Estructuras de Datos" style="width:90px; border-radius:50%; margin-bottom:10px;" />
+                <h3>Estructuras de Datos</h3>
+                <p>Organiza y manipula información eficientemente.</p>
+                <h:commandButton value="Ver temario" action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
+            </div>
+            <div class="card">
+                <img src="https://biblioteca-artemisa.netlify.app/images/bases-datos.jpg"
+                     alt="Bases de Datos" style="width:90px; border-radius:50%; margin-bottom:10px;" />
+                <h3>Bases de Datos</h3>
+                <p>Almacena y gestiona datos en diferentes sistemas.</p>
+                <h:commandButton value="Ver temario" action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>
