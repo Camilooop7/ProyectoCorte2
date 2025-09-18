@@ -1,152 +1,71 @@
 package co.edu.unbosque.beans;
 
+import co.edu.unbosque.service.UserService;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import co.edu.unbosque.model.UserDTO;
-import co.edu.unbosque.service.UserService;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
 
 @Named("userBean")
 @RequestScoped
 public class UserBean {
+	private String username;
+	private String password;
 
-	private String saludo = "";
-	private String correo = "";
-	private String contrasena = "";
+	public void doLogin() {
+		try {
+			// Envía la petición con los parámetros como query parameters
+			String respuesta = UserService.doPost("http://localhost:8081/login/inicio", username, password);
 
-	private String newUsername = "";
-	private String newPass = "";
-	
+			// Procesa la respuesta
+			String[] data = respuesta.split("\n");
+			showStickyLogin(data[0], data[1]);
 
-	private List<UserDTO> listUsers = new ArrayList<>();
-	
-	
-//	public UserBean() {
-//		cargarUsuarios();
-//	}
-//	
-//	
-//	
-//
-//    public void cargarUsuarios() {
-//        listUsers = UserService.doGetAll("http://localhost:8081/user/getall");
-//    }
-	
-	
-	
-	public void showStickyLogin(String code, String content) {
-		if (code.equals("201")) {
-			FacesContext.getCurrentInstance().addMessage("sticky-key",
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Hecho", content));
-		} else if (code.equals("406")) {
-			FacesContext.getCurrentInstance().addMessage("sticky-key",
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", content));
-		} else {
-			System.out.println("Error en crear cuenta");
-			System.out.println("Status code: " + code);
-			System.out.println("reason: " + content);
-			FacesContext.getCurrentInstance().addMessage("sticky-key", new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Error Critico", "Error al crear," + "comuniquese con el administrador"));
+			// Limpia los campos del formulario
+			username = "";
+			password = "";
+		} catch (Exception e) {
+			e.printStackTrace();
+			showStickyLogin("500", "Error al iniciar sesión: " + e.getMessage());
 		}
 	}
-	
-	
-	
-	public void crearUsuario() {
-		//newUsername = AESUtil.encrypt(newUsername);
-		//newPass1 = AESUtil.encrypt(newPass1);
-		String json = "{";
-		json += "\"correo\" : \"" + newUsername + "\",";
-		json += "\"password\" : \"" + newPass + "\"";
-		json += "}";
-		String respuesta = UserService.doPost("http://localhost:8081/user/createjson", json);
-		String[] data = respuesta.split("\n");
-		showStickyLogin(data[0], data[1]);
-		newUsername = "";
-		newPass = "";
-		
-	}
-	
-	
-	public void showSticky() {
-		FacesContext.getCurrentInstance().addMessage("sticky-key",
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sticky Message", "Message Content"));
-	}
-	
-	
-	
 
-	
+	public void showStickyLogin(String code, String content) {
+		FacesMessage.Severity severity;
+		String summary;
 
+		switch (code) {
+		case "200":
+			severity = FacesMessage.SEVERITY_INFO;
+			summary = "Éxito";
+			break;
+		case "401":
+			severity = FacesMessage.SEVERITY_WARN;
+			summary = "Advertencia";
+			break;
+		default:
+			severity = FacesMessage.SEVERITY_ERROR;
+			summary = "Error";
+			break;
+		}
 
-	public String getSaludo() {
-		return saludo;
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, content));
 	}
 
-
-	public void setSaludo(String saludo) {
-		this.saludo = saludo;
+	// Getters y Setters
+	public String getUsername() {
+		return username;
 	}
 
-
-	public String getCorreo() {
-		return correo;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-
-	public void setCorreo(String correo) {
-		this.correo = correo;
+	public String getPassword() {
+		return password;
 	}
 
-
-	public String getContrasena() {
-		return contrasena;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
-
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
-	}
-
-
-	public String getNewUsername() {
-		return newUsername;
-	}
-
-
-	public void setNewUsername(String newUsername) {
-		this.newUsername = newUsername;
-	}
-
-
-	public String getNewPass() {
-		return newPass;
-	}
-
-
-	public void setNewPass(String newPass) {
-		this.newPass = newPass;
-	}
-
-
-	public List<UserDTO> getListUsers() {
-		return listUsers;
-	}
-
-
-	public void setListUsers(List<UserDTO> listUsers) {
-		this.listUsers = listUsers;
-	}
-	
-	
-	
-	
-	
 }

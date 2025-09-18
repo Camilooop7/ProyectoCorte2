@@ -14,25 +14,21 @@ import co.edu.unbosque.proyectocorte.service.LoginService;
 @CrossOrigin(origins = { "*" })
 @RequestMapping(path = { "/login" })
 public class LoginController {
+	@Autowired
+	private LoginService authService;
 
-    @Autowired
-    private LoginService authService;
-
-    @PostMapping(path = "/inicio")
-    public ResponseEntity<?> login(
-            @RequestParam String correo,
-            @RequestParam String contrasena) {
-        try {
-            LoginEnvioDTO req = new LoginEnvioDTO();
-            req.setCorreo(correo);
-            req.setContrasena(contrasena);
-
-            LoginRespuestaDTO resp = authService.login(req);
-            return ResponseEntity.ok(resp);
-        } catch (SesionException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno en el login");
-        }
-    }
+	@PostMapping(path = "/inicio")
+	public ResponseEntity<?> login(@RequestParam String correo, @RequestParam String contrasena) {
+		try {
+			LoginEnvioDTO req = new LoginEnvioDTO();
+			req.setCorreo(correo);
+			req.setContrasena(contrasena);
+			LoginRespuestaDTO resp = authService.login(req);
+			return ResponseEntity.ok(resp);
+		} catch (SesionException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno en el login");
+		}
+	}
 }
