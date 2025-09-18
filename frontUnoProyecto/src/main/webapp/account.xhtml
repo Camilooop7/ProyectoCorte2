@@ -37,7 +37,7 @@
 
     <!-- Name -->
     <p:inputText id="name"
-                 value="#{userBean.name}"
+                 value="#"
                  placeholder="Name"
                  styleClass="input"
                  required="true"
@@ -46,7 +46,7 @@
        <br></br><br></br>          
                  
                  <p:inputText id="documento"
-                 value="#{userBean.documento}"
+                 value="#"
                  placeholder="Documento"
                  styleClass="input"
                  required="true"
@@ -57,7 +57,7 @@
     
     
     <p:inputText id="semestre"
-                 value="#{userBean.semestre}"
+                 value="#"
                  placeholder="Semestre"
                  styleClass="input"
                  required="true"
@@ -68,7 +68,7 @@
                  
                  
                  <p:inputText id="carrera"
-                 value="#{userBean.carrera}"
+                 value="#"
                  placeholder="Carrera"
                  styleClass="input"
                  required="true"
@@ -80,7 +80,7 @@
 
     <!-- Email -->
     <p:inputText id="email"
-                 value="#{userBean.email}"
+                 value="#"
                  placeholder="Email"
                  styleClass="input"
                  required="true"
@@ -91,7 +91,7 @@
 
     <!-- Password -->
     <p:password id="password"
-                value="#{userBean.password}"
+                value="#"
                 placeholder="Password"
                 styleClass="input"
                 required="true"
@@ -106,11 +106,11 @@
     <div class="btns">
   <p:commandButton id="createUsuario"
                  value="Create"
-                 action="#{userBean.createAccount}"
+                 action="#"
                  process="@form"
                  update="@form msgs"
                  styleClass="form-btn">
-    <f:setPropertyActionListener target="#{userBean.role}" value="USUARIO" />
+    <f:setPropertyActionListener target="#" value="USUARIO" />
 </p:commandButton>
 
   

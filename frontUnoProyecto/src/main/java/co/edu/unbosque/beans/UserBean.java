@@ -28,19 +28,16 @@ public class UserBean {
 	private List<UserDTO> listUsers = new ArrayList<>();
 	
 	
-	public UserBean() {
-		
-	}
-	
-	
-	@PostConstruct
-    public void init() {
-        cargarUsuarios();
-    }
-
-    public void cargarUsuarios() {
-        listUsers = UserService.doGetAll("http://localhost:8081/user/getall");
-    }
+//	public UserBean() {
+//		cargarUsuarios();
+//	}
+//	
+//	
+//	
+//
+//    public void cargarUsuarios() {
+//        listUsers = UserService.doGetAll("http://localhost:8081/user/getall");
+//    }
 	
 	
 	
