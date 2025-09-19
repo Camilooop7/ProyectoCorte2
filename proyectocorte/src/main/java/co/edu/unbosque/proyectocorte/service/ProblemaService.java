@@ -15,15 +15,12 @@ import co.edu.unbosque.proyectocorte.repository.ProblemaRepository;
 @Service
 public class ProblemaService implements CRUDOperation<ProblemaDTO>{
 
-    private final EstudianteService estudianteService;
 	@Autowired
 	private ProblemaRepository problemaRepository;
 	@Autowired
 	private ModelMapper modelMapper;
 
-    ProblemaService(EstudianteService estudianteService) {
-        this.estudianteService = estudianteService;
-    }
+
 
 	@Override
 	public int create(ProblemaDTO date) {

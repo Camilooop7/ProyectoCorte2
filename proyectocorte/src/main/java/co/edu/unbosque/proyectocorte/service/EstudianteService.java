@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import co.edu.unbosque.proyectocorte.dto.EstudianteDTO;
 import co.edu.unbosque.proyectocorte.entity.Estudiante;
-import co.edu.unbosque.proyectocorte.entity.Profesor;
 import co.edu.unbosque.proyectocorte.exception.CapitalException;
 import co.edu.unbosque.proyectocorte.exception.CharacterException;
 import co.edu.unbosque.proyectocorte.exception.ExceptionCheker;
