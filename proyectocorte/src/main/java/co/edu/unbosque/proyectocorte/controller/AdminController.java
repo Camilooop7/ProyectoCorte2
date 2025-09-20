@@ -16,40 +16,42 @@ import co.edu.unbosque.proyectocorte.dto.AdminDTO;
 import co.edu.unbosque.proyectocorte.service.AdminService;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
 @RestController
 @CrossOrigin(origins = { "*" })
 @RequestMapping(path = { "/admin" })
 public class AdminController {
 	@Autowired
 	private AdminService adminService;
-	
+
 	@PostMapping(path = "/crear")
-	public ResponseEntity<String> crear(@RequestParam String nombre, int documento, String correo, String contrasena,  String rol, String cargo) {
-		AdminDTO newAdmin = new AdminDTO(nombre, documento, correo,contrasena,rol,cargo);
+	public ResponseEntity<String> crear(@RequestParam String nombre, @RequestParam int documento,
+			@RequestParam String correo, @RequestParam String contrasena, @RequestParam String rol,
+			@RequestParam String cargo) {
+		AdminDTO newAdmin = new AdminDTO(nombre, documento, correo, contrasena, rol, cargo);
 		int status = adminService.create(newAdmin);
-		
+
 		if (status == 0) {
 			return new ResponseEntity<>("Admin creado con exito", HttpStatus.CREATED);
-		}else {
-			
+		} else {
+
 			return new ResponseEntity<>("Error al crear el admin", HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
-	@GetMapping(path ="/mostrar")
-	public  ResponseEntity<String>  mostrarAdmin( ) {
+
+	@GetMapping(path = "/mostrar")
+	public ResponseEntity<String> mostrarAdmin() {
 		List<AdminDTO> listaAdmin = adminService.getAll();
 		if (listaAdmin.isEmpty()) {
 			return new ResponseEntity<>("No se encontraron usuarios por mostrar", HttpStatus.valueOf(204));
-		}else {
+		} else {
 			StringBuilder stringBuilder = new StringBuilder();
 			listaAdmin.forEach((dto) -> stringBuilder.append(dto.toString() + "\n"));
 			return new ResponseEntity<>("admin: " + stringBuilder.toString(), HttpStatus.valueOf(202));
-			
+
 		}
-		
+
 	}
-	
+
 	@DeleteMapping(path = "/eliminar")
 	public ResponseEntity<String> eliminar(@RequestParam Long id) {
 
@@ -63,9 +65,5 @@ public class AdminController {
 		}
 
 	}
-	
-	
-	
-	
 
 }

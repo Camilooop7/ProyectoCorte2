@@ -20,36 +20,38 @@ import co.edu.unbosque.proyectocorte.service.ProfesorService;
 @CrossOrigin(origins = { "*" })
 @RequestMapping(path = { "/profesor" })
 public class ProfesorController {
-	
+
 	@Autowired
 	private ProfesorService profesorService;
-	
+
 	@PostMapping(path = "/crear")
-	public ResponseEntity<String> crear(@RequestParam String nombre, int documento, String correo, String contrasena, String rol, String departamento) {
-		ProfesorDTO newProfesor = new ProfesorDTO(nombre, documento, correo,contrasena,rol,departamento);
+	public ResponseEntity<String> crear(@RequestParam String nombre, @RequestParam int documento,
+			@RequestParam String correo, @RequestParam String contrasena, @RequestParam String rol,
+			@RequestParam String departamento) {
+		ProfesorDTO newProfesor = new ProfesorDTO(nombre, documento, correo, contrasena, rol, departamento);
 		int status = profesorService.create(newProfesor);
-		
+
 		if (status == 0) {
 			return new ResponseEntity<>("Profesor creado con exito", HttpStatus.CREATED);
-		}else {
-			
+		} else {
+
 			return new ResponseEntity<>("Error al crear el profesor", HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
-	
-	@GetMapping(path ="/mostrar")
-	public  ResponseEntity<String>  mostrarEstudiante( ) {
+
+	@GetMapping(path = "/mostrar")
+	public ResponseEntity<String> mostrarEstudiante() {
 		List<ProfesorDTO> listaProfesor = profesorService.getAll();
 		if (listaProfesor.isEmpty()) {
 			return new ResponseEntity<>("No se encontraron profesores por mostrar", HttpStatus.valueOf(204));
-		}else {
+		} else {
 			StringBuilder stringBuilder = new StringBuilder();
 			listaProfesor.forEach((dto) -> stringBuilder.append(dto.toString() + "\n"));
 			return new ResponseEntity<>("admin: " + stringBuilder.toString(), HttpStatus.valueOf(202));
-			
+
 		}
 	}
-	
+
 	@DeleteMapping(path = "/eliminar")
 	public ResponseEntity<String> eliminar(@RequestParam Long id) {
 
@@ -63,8 +65,5 @@ public class ProfesorController {
 		}
 
 	}
-
-		
-
 
 }
