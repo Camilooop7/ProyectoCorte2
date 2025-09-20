@@ -8,34 +8,39 @@
 
 <ui:composition template="/templates/template.xhtml">
     <ui:define name="contenido">
-        <section class="hero">
-            <h2>📖 Temario</h2>
-            <p>
+        <section class="hero animate__animated animate__fadeIn" style="margin-top:2rem;">
+            <h2 class="display-4 mb-3 fw-bold">📖 Temario</h2>
+            <p class="lead mb-4">
                 Actualmente trabajando en: <b>#{paginaprincipalbean.temarioActual}</b><br/>
                 Descubre los temas que estamos explorando este mes.
             </p>
         </section>
-        <section class="cards">
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/intro-programacion.jpg"
-                     alt="Intro Programación" style="width:90px; border-radius:50%; margin-bottom:10px;" />
-                <h3>Introducción a la Programación</h3>
-                <p>Fundamentos esenciales para empezar a programar.</p>
-                <h:commandButton value="Ver temario" action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
-            </div>
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/estructuras-datos.jpg"
-                     alt="Estructuras de Datos" style="width:90px; border-radius:50%; margin-bottom:10px;" />
-                <h3>Estructuras de Datos</h3>
-                <p>Organiza y manipula información eficientemente.</p>
-                <h:commandButton value="Ver temario" action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
-            </div>
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/bases-datos.jpg"
-                     alt="Bases de Datos" style="width:90px; border-radius:50%; margin-bottom:10px;" />
-                <h3>Bases de Datos</h3>
-                <p>Almacena y gestiona datos en diferentes sistemas.</p>
-                <h:commandButton value="Ver temario" action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
+        <section class="cards container animate__animated animate__fadeInUp" style="margin-bottom:2rem;">
+            <div class="row justify-content-center">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center py-4 px-2 h-100 card-temario">
+                        <i class="fa-solid fa-laptop-code card-icon"></i>
+                        <h5 class="mt-2">Introducción a la Programación</h5>
+                        <p>Fundamentos esenciales para empezar a programar.</p>
+                        <h:commandButton value="Ver temario" action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center py-4 px-2 h-100 card-temario">
+                        <i class="fa-solid fa-diagram-project card-icon"></i>
+                        <h5 class="mt-2">Estructuras de Datos</h5>
+                        <p>Organiza y manipula información eficientemente.</p>
+                        <h:commandButton value="Ver temario" action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center py-4 px-2 h-100 card-temario">
+                        <i class="fa-solid fa-database card-icon"></i>
+                        <h5 class="mt-2">Bases de Datos</h5>
+                        <p>Almacena y gestiona datos en diferentes sistemas.</p>
+                        <h:commandButton value="Ver temario" action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
+                    </div>
+                </div>
             </div>
         </section>
     </ui:define>

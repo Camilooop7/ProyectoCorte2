@@ -8,34 +8,39 @@
 
 <ui:composition template="/templates/template.xhtml">
     <ui:define name="contenido">
-        <section class="hero">
-            <h2>📚 Catálogo de Libros</h2>
-            <p>
+        <section class="hero animate__animated animate__fadeIn" style="margin-top:2rem;">
+            <h2 class="display-4 mb-3 fw-bold">📚 Catálogo de Libros</h2>
+            <p class="lead mb-4">
                 Actualmente contamos con <b>#{paginaprincipalbean.totalLibros}</b> libros disponibles.<br/>
                 Encuentra lecturas recomendadas para inspirarte y aprender.
             </p>
         </section>
-        <section class="cards">
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/libro1.jpg" 
-                     alt="Programación en Java" style="width:100px; border-radius:50%; margin-bottom:10px;" />
-                <h3>Programación en Java</h3>
-                <p>Guía esencial para principiantes y avanzados.</p>
-                <h:commandButton value="Ver detalles" action="#{paginaprincipalbean.irCatalogo}" styleClass="btn btn-sm" />
-            </div>
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/libro2.jpg" 
-                     alt="Historia del Arte" style="width:100px; border-radius:50%; margin-bottom:10px;" />
-                <h3>Historia del Arte</h3>
-                <p>Descubre el papel de la mujer en el arte universal.</p>
-                <h:commandButton value="Ver detalles" action="#{paginaprincipalbean.irCatalogo}" styleClass="btn btn-sm" />
-            </div>
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/libro3.jpg" 
-                     alt="Mujeres en la Ciencia" style="width:100px; border-radius:50%; margin-bottom:10px;" />
-                <h3>Mujeres en la Ciencia</h3>
-                <p>Historias de pioneras que cambiaron el mundo.</p>
-                <h:commandButton value="Ver detalles" action="#{paginaprincipalbean.irCatalogo}" styleClass="btn btn-sm" />
+        <section class="cards container animate__animated animate__fadeInUp" style="margin-bottom:2rem;">
+            <div class="row justify-content-center">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center py-4 px-2 h-100 card-libros">
+                        <i class="fa-brands fa-java card-icon"></i>
+                        <h5 class="mt-2">Programación en Java</h5>
+                        <p>Guía esencial para principiantes y avanzados.</p>
+                        <h:commandButton value="Ver detalles" action="#{paginaprincipalbean.irCatalogo}" styleClass="btn btn-sm" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center py-4 px-2 h-100 card-libros">
+                        <i class="fa-solid fa-palette card-icon"></i>
+                        <h5 class="mt-2">Historia del Arte</h5>
+                        <p>Descubre el papel de la mujer en el arte universal.</p>
+                        <h:commandButton value="Ver detalles" action="#{paginaprincipalbean.irCatalogo}" styleClass="btn btn-sm" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center py-4 px-2 h-100 card-libros">
+                        <i class="fa-solid fa-flask card-icon"></i>
+                        <h5 class="mt-2">Mujeres en la Ciencia</h5>
+                        <p>Historias de pioneras que cambiaron el mundo.</p>
+                        <h:commandButton value="Ver detalles" action="#{paginaprincipalbean.irCatalogo}" styleClass="btn btn-sm" />
+                    </div>
+                </div>
             </div>
         </section>
         <section class="hero" style="background: var(--rosa-claro); color: #d6336c;">

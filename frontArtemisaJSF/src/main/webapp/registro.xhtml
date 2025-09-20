@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="contenido">
+        <section class="hero animate__animated animate__fadeIn" style="margin-top:2rem;">
+            <h2 class="display-4 mb-3 fw-bold">Crear cuenta en Artemisa</h2>
+            <p class="lead mb-4">Regístrate para acceder a todos los recursos.</p>
+        </section>
+        <section class="cards container animate__animated animate__fadeInUp" style="margin-bottom:2rem;">
+            <div class="row justify-content-center">
+                <div class="col-md-6 mb-3">
+                    <div class="card text-center py-4 px-2 h-100 card-login">
+                        <h:form>
+                            <i class="fa-solid fa-user-plus card-icon" style="font-size:2.5rem; margin-bottom:16px;"></i>
+                            <h5 class="mt-2 mb-3">Registro</h5>
+                            <div class="mb-3">
+                                <h:inputText value="#{registroBean.correo}" required="true" placeholder="Correo" styleClass="input w-100"/>
+                            </div>
+                            <div class="mb-3">
+                                <h:inputSecret value="#{registroBean.password}" required="true" placeholder="Contraseña" styleClass="input w-100"/>
+                            </div>
+                            <div>
+                                <h:commandButton value="Registrar" action="#{registroBean.registrar}" styleClass="btn btn-lg w-100"/>
+                            </div>
+                        </h:form>
+                        <div class="mt-3">
+                            <h:link outcome="login" styleClass="card-link">¿Ya tienes cuenta? Inicia sesión</h:link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>
