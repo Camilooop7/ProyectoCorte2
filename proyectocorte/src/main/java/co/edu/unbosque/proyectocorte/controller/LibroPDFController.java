@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.List;
+
+import co.edu.unbosque.proyectocorte.dto.LibroPDFDTO;
 import co.edu.unbosque.proyectocorte.service.LibroPDFService;
 
 @RestController
@@ -44,5 +47,10 @@ public class LibroPDFController {
 		byte[] pdfContent = libroPDFSer.getPdfContentById(id);
 		return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=\"libro_" + id + ".pdf\"")
 				.body(pdfContent);
+	}
+	
+	@GetMapping("/getall")
+	public ResponseEntity<List<LibroPDFDTO>> getAll() {
+	    return ResponseEntity.ok(libroPDFSer.getAll());
 	}
 }

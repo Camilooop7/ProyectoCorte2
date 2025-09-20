@@ -20,11 +20,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
-    <link rel="stylesheet" href="css/stylemenu.css" />
+    <link rel="stylesheet" href="css/stylelibro.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 
+    
+    
+   
+    
+    
     
 </h:head>
 
@@ -79,100 +84,82 @@
         
         
 
-        <div class="main-content">
-            <section class="home section active" id="home">
-            
-            
-            
-                <div class="container">
-                    <div class="row">
-                        <div class="home-info padd-15">
-                            <h3 class="hello"> Artemisa UEB <span class="name">Sergio - Camilo - Jeisson - Luna</span></h3>
-                            <h3 class="profession">Hola, <span class="typing">Bienvenido :) </span></h3>
-                            <p class="animate__animated animate__lightSpeedInRight">“Soy Artemisa UEB. Aquí encontrarás información, documentos y los mejores consejos para despertar y potenciar tu programador interior.”</p>
-                            <a href="#" class="btn ">butonnn</a>
-                            
-                            
-                            <br></br>
-							<br></br>                            
-                            <div class="boxes">
-  
-<div class="box">
-  <h2>Mejora tu Logica.</h2>
-  <br></br>
-  <h2>Escritura y sintaxis de código.</h2>
-  <br></br>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/C%2B%2B_logo.png"></img>
-</div>
-  
-  
-  
-<div class="box">
-  <h2>Trabajo en equipo.</h2>
-  <br></br>
-  
-  <img src="https://cdn.freebiesupply.com/logos/large/2x/java-4-logo-png-transparent.png"></img>
-</div>
-  
-<div class="box">
-  <h2>Resistencia al fracaso.</h2>
-  <br></br>
-  
-  <img src="https://images.seeklogo.com/logo-png/33/1/python-logo-png_seeklogo-332789.png"></img>
-</div>
-</div>
-                            
-                            
-                            
-                            
-                        </div>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-
-                        <div class="home-img padd-15">
-                            <img src="assets/ueblog.png" alt="hero image"/>
-                        </div>
-                    </div>
-                </div>
-                
-                
-                
-                
-                
-                
-                
-                
-            </section>
-    
-            
-        </div>
-    </div>
-    
-    
-    
-    
-    
-
-    <div class="style-switcher">
-        <div class="style-switcher-toggler s-icon">
-            <i class="fas fa-cog fa-spin"></i>
-        </div>
-
-        <div class="day-night s-icon">
-            <i class="fas "></i>
-        </div>
-
-        <h4>Theme Colors</h4>
-
         
-    </div>
+                           
+							                            
+                            <h:form id="frmLibros">
+    <p:messages id="msgs" showDetail="true" closable="true" />
+
+    <ui:repeat value="#{libroPDFBean.libros}" var="lib">
+        <div style="margin:10px 0; padding:8px; border:1px solid #ddd; border-radius:8px;">
+            <h:outputText value="Libro ID: #{lib.id}" style="display:block; margin-bottom:6px;" />
+
+            <!-- Botón: ver imagen en diálogo -->
+            <p:commandButton value="Imagen"
+                             process="@this"
+                             actionListener="#{libroPDFBean.prepararImagen(lib.id)}"
+                             update=":frmLibros:dlgImg :frmLibros:msgs"
+                             oncomplete="PF('imgDlg').show()"
+                             style="margin-right:8px;" />
+
+            <!-- Botón: descargar PDF (fileDownload ADENTRO del botón) -->
+            <p:commandButton value="PDF"
+                             process="@this"
+                             actionListener="#{libroPDFBean.prepararPdf(lib.id)}"
+                             ajax="false">
+                <p:fileDownload value="#{libroPDFBean.file}" />
+            </p:commandButton>
+        </div>
+    </ui:repeat>
+
+    <!-- Demo si la lista está vacía -->
+    <h:panelGroup rendered="#{empty libroPDFBean.libros}">
+        <div style="margin:10px 0; padding:8px; border:1px dashed #aaa; border-radius:8px;">
+            <h:outputText value="(Demo) Libro ID: 1" style="display:block; margin-bottom:6px;" />
+
+            <p:commandButton value="Imagen (demo)"
+                             process="@this"
+                             actionListener="#{libroPDFBean.prepararImagen(1)}"
+                             update=":frmLibros:dlgImg :frmLibros:msgs"
+                             style="margin-right:8px;" />
+
+            <p:commandButton value="PDF (demo)"
+                             process="@this"
+                             actionListener="#{libroPDFBean.prepararPdf(1)}"
+                             ajax="false">
+                <p:fileDownload value="#{libroPDFBean.file}" />
+            </p:commandButton>
+        </div>
+    </h:panelGroup>
+
+    <!-- Diálogo para la imagen -->
+    <p:dialog id="dlgImg" widgetVar="imgDlg" header="Vista previa" modal="true"
+              responsive="true" dynamic="true" appendTo="@(body)">
+        <p:graphicImage value="#{libroPDFBean.imagenStream}" stream="true" cache="false" />
+    </p:dialog>
+</h:form>
+                            
+                            
+                            
+                            
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+
+                        
+                
+                
+                
+ 
+
+   
 </h:body>
 
 
