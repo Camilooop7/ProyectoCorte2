@@ -102,23 +102,25 @@
 						<div class="cardib">
 							<span class="card__title">PDF_1</span>
 							<h:form styleClass="card__form">
-								<p:inputText id="id" value="#{libroPDFBean.id}"
+								<p:inputText id="codigo" value="#{libroPDFBean.codigo}"
 									placeholder="Ingresa el ID del libro" required="true"
 									requiredMessage="El ID es obligatorio" styleClass="card__input" />
 								<p:commandButton value="Cargar PDF"
 									action="#{libroPDFBean.obtenerInformacionLibro()}"
-									styleClass="card__button" ajax="false" />
-							</h:form>
-							<h:panelGroup rendered="#{not empty libroPDFBean.nombre}">
-								<h3>Nombre: #{libroPDFBean.nombre}</h3>
-								<p>Descripción: #{libroPDFBean.descripcion}</p>
-								<p:graphicImage value="#{libroPDFBean.obtenerImagen()}"
-									style="width: 100px; height: auto;" />
+									styleClass="card__button" ajax="false" update="panelPDF" />
+
+								<h:panelGroup id="panelPDF"
+									rendered="#{not empty libroPDFBean.nombre}">
+									<h3>Nombre: #{libroPDFBean.nombre}</h3>
+									<p>Descripción: #{libroPDFBean.descripcion}</p>
 									<p:commandButton value="Descargar PDF"
-									action="#{libroPDFBean.descargarPdf()}"
-									styleClass="card__button" ajax="false" />
-							</h:panelGroup>
+										action="#{libroPDFBean.descargarPdf()}"
+										styleClass="card__button" ajax="false" />
+								</h:panelGroup>
+
+							</h:form>
 						</div>
+
 					</div>
 				</div>
 			</div>

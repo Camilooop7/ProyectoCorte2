@@ -1,6 +1,7 @@
 package co.edu.unbosque.beans;
 
 import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
@@ -20,7 +21,7 @@ import java.time.Duration;
 @RequestScoped
 public class LibroPDFBean implements Serializable {
 
-	private Long id; // Cambiado a Long para evitar problemas con valores nulos
+	private int codigo;
 	private String nombre;
 	private String descripcion;
 
@@ -29,23 +30,16 @@ public class LibroPDFBean implements Serializable {
 
 	public void descargarPdf() {
 		try {
-			if (id == null) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El ID del libro es obligatorio."));
-				return;
-			}
-
 			HttpRequest requestPdf = HttpRequest.newBuilder().GET()
-					.uri(URI.create("http://localhost:8080/libropdf/pdf/" + id)).build();
+					.uri(URI.create("http://localhost:8081/libropdf/pdf/" + codigo)).build();
 			HttpResponse<byte[]> responsePdf = httpClient.send(requestPdf, HttpResponse.BodyHandlers.ofByteArray());
 
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.getExternalContext().responseReset();
-			facesContext.getExternalContext().setResponseContentType("application/pdf");
-			facesContext.getExternalContext().setResponseHeader("Content-Disposition",
-					"attachment; filename=\"libro_" + id + ".pdf\"");
-			facesContext.getExternalContext().getResponseOutputStream().write(responsePdf.body());
-			facesContext.getExternalContext().getResponseOutputStream().close();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			externalContext.responseReset();
+			externalContext.setResponseContentType("application/pdf");
+			externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"libro"+codigo+".pdf\"");
+			externalContext.getResponseOutputStream().write(responsePdf.body());
 			facesContext.responseComplete();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
@@ -55,14 +49,14 @@ public class LibroPDFBean implements Serializable {
 
 	public void obtenerInformacionLibro() {
 		try {
-			if (id == null) {
+			if (codigo == 0) {
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El ID del libro es obligatorio."));
 				return;
 			}
 
-			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/libropdf/" + id))
-					.build();
+			HttpRequest request = HttpRequest.newBuilder().GET()
+					.uri(URI.create("http://localhost:8081/libropdf/" + codigo)).build();
 			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
 			System.out.println("Respuesta del backend: " + response.body());
@@ -73,7 +67,7 @@ public class LibroPDFBean implements Serializable {
 				this.descripcion = jsonObject.optString("descripcion", "Descripción no disponible");
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-						"Advertencia", "El libro con ID " + id + " no existe."));
+						"Advertencia", "El libro con ID " + codigo + " no existe."));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -84,18 +78,17 @@ public class LibroPDFBean implements Serializable {
 
 	public StreamedContent obtenerImagen() {
 		try {
-			if (id == null) {
+			if (codigo == 0) {
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El ID del libro es obligatorio."));
 				return null;
 			}
-
 			HttpRequest request = HttpRequest.newBuilder().GET()
-					.uri(URI.create("http://localhost:8080/libropdf/imagen/" + id)).build();
+					.uri(URI.create("http://localhost:8081/libropdf/imagen/" + codigo)).build();
 			HttpResponse<byte[]> response = httpClient.send(request, HttpResponse.BodyHandlers.ofByteArray());
 
 			InputStream inputStream = new ByteArrayInputStream(response.body());
-			return DefaultStreamedContent.builder().name("imagen_" + id + ".jpg").contentType("image/jpeg")
+			return DefaultStreamedContent.builder().name("imagen_" + codigo + ".jpg").contentType("image/jpeg")
 					.stream(() -> inputStream).build();
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
@@ -105,16 +98,17 @@ public class LibroPDFBean implements Serializable {
 	}
 
 	// Getters y setters
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getNombre() {
 		return nombre;
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getDescripcion() {

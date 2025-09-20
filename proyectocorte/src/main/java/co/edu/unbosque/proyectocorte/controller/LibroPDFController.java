@@ -42,23 +42,23 @@ public class LibroPDFController {
 		}
 	}
 
-	@GetMapping("/imagen/{id}")
-	public ResponseEntity<byte[]> getImagen(@PathVariable int id) {
-		byte[] imagen = libroPDFService.getImagenByCodigo(id);
+	@GetMapping("/imagen/{codigo}")
+	public ResponseEntity<byte[]> getImagen(@PathVariable int codigo) {
+		byte[] imagen = libroPDFService.getImagenByCodigo(codigo);
 		return ResponseEntity.ok().header("Content-Type", "image/jpeg")
-				.header("Content-Disposition", "inline; filename=\"imagen_" + id + ".jpg\"").body(imagen);
+				.header("Content-Disposition", "inline; filename=\"imagen_" + codigo + ".jpg\"").body(imagen);
 	}
 
-	@GetMapping("/pdf/{id}")
-	public ResponseEntity<byte[]> getPdf(@PathVariable int id) {
-		byte[] pdf = libroPDFService.getPdfContentByCodigo(id);
-		return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=\"libro_" + id + ".pdf\"")
-				.body(pdf);
+	@GetMapping(path = "/pdf/{codigo}")
+	public ResponseEntity<byte[]> descargarPdf(@PathVariable int codigo) {
+		byte[] pdfContent = libroPDFService.getPdfContentByCodigo(codigo);
+		return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=\"libro_" + codigo + ".pdf\"")
+				.body(pdfContent);
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<LibroPDFDTO> getLibroById(@PathVariable int id) {
-		LibroPDFDTO libro = libroPDFService.getLibroByCodigo(id);
+	@GetMapping("/{codigo}")
+	public ResponseEntity<LibroPDFDTO> getLibroById(@PathVariable int codigo) {
+		LibroPDFDTO libro = libroPDFService.getLibroByCodigo(codigo);
 		return ResponseEntity.ok(libro);
 	}
 }
