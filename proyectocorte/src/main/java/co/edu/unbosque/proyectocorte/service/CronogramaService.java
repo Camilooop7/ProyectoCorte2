@@ -41,11 +41,9 @@ public class CronogramaService implements CRUDOperation<CronogramaDTO> {
 
 	@Override
 	public int deleteById(Long a) {
-		if (cronogramaRepository.existsById(a)) {
-			cronogramaRepository.deleteById(a);
-			return 0;
-		}
-		return 1;
+
+		
+		return 0;
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,20 +49,5 @@ public class EstudianteController {
 		}
 		
 	}
-	
-	@DeleteMapping(path = "/eliminar")
-	public ResponseEntity<String> eliminar(@RequestParam Long id) {
-
-		int status = estudianteService.deleteById(id);
-		if (status == 0) {
-			return new ResponseEntity<>("User eliminado con exito", HttpStatus.OK);
-
-		} else {
-
-			return new ResponseEntity<>("Error al elimiar el usuario debino a que no exite", HttpStatus.valueOf(400));
-		}
-
-	}
-
 
 }
