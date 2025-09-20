@@ -54,19 +54,11 @@
 
 			<!-- Botón -->
 			<p:commandButton id="btnLogin" value="Ingresar"
-                 action="#{userBean.doLogin}"
-                 process="@form" update="msgs"
-                 styleClass="login-button"/>
-
+				actionListener="#{userBean.doLogin}" process="@form" update="msgs"
+				styleClass="login-button" />
 		</h:form>
-		
-		
-		
-		
-		
-		
-		
-		<div class="auth-links">
+	</div>
+	<div class="auth-links">
 		<span class="forgot-password"><a href="account.xhtml">USER?</a></span>
 		<span class="forgot-password"><a href="accountD.xhtml">DOCENTE?</a></span>
 		<span class="forgot-password"><a href="accountA.xhtml">ADMIN?</a></span>
@@ -96,9 +88,5 @@
 	</div>
 	<span class="agreement"><a href="#">Learn user licence
 			agreement</a></span>
-		
-
-	</div>
-	
 </h:body>
 </html>

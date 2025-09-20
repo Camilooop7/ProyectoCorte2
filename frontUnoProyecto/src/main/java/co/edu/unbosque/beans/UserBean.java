@@ -12,30 +12,21 @@ public class UserBean {
 	private String username;
 	private String password;
 
-	public String doLogin() {
+	public void doLogin() {
 		try {
+			// Envía la petición con los parámetros como query parameters
 			String respuesta = UserService.doPost("http://localhost:8081/login/inicio", username, password);
 
-			String[] data = respuesta.split("\n"); 
-			String code = (data.length > 0) ? data[0] : "500";
-			String msg = (data.length > 1) ? data[1] : "Respuesta inválida del servidor";
+			// Procesa la respuesta
+			String[] data = respuesta.split("\n");
+			showStickyLogin(data[0], data[1]);
 
-			showStickyLogin(code, msg);
-
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
+			// Limpia los campos del formulario
 			username = "";
 			password = "";
-
-			if ("200".equals(code)) {
-				return "menu?faces-redirect=true";
-			} else {
-				return null; 
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			showStickyLogin("500", "Error al iniciar sesión: " + e.getMessage());
-			return null;
 		}
 	}
 
@@ -61,6 +52,7 @@ public class UserBean {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, content));
 	}
 
+	// Getters y Setters
 	public String getUsername() {
 		return username;
 	}
