@@ -1,40 +1,418 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/template.xhtml">
-    <ui:define name="contenido">
-        <section class="hero">
-            <h2>🔗 Links útiles</h2>
-            <p>
-                Explora recursos recomendados para tu desarrollo académico y personal.<br/>
-                Herramientas, bibliotecas y comunidades.
-            </p>
-        </section>
-        <section class="cards">
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/paletas.jpg"
-                     alt="Paletas de Colores" style="width:80px; border-radius:50%; margin-bottom:10px;" />
-                <h3><a href="https://paletasdecolores.com/" target="_blank">Paletas de Colores</a></h3>
-                <p>Crea combinaciones de colores para tus proyectos.</p>
-            </div>
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/openlibrary.jpg"
-                     alt="Open Library" style="width:80px; border-radius:50%; margin-bottom:10px;" />
-                <h3><a href="https://openlibrary.org/" target="_blank">Open Library</a></h3>
-                <p>Busca y consulta millones de libros online gratis.</p>
-            </div>
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/redalyc.jpg"
-                     alt="Redalyc" style="width:80px; border-radius:50%; margin-bottom:10px;" />
-                <h3><a href="https://www.redalyc.org/" target="_blank">Redalyc</a></h3>
-                <p>Accede a artículos científicos y académicos.</p>
-            </div>
-        </section>
-    </ui:define>
+	<ui:define name="contenido">
+		<section class="hero animate__animated animate__fadeIn"
+			style="margin-top:2rem;">
+		<h2 class="display-4 mb-3 fw-bold">🔗 Links útiles</h2>
+		<p class="lead mb-4">“En Artemisa reunimos links clave para
+			desarrolladores: docs oficiales, estándares, ejemplos de código y
+			repos verificados para avanzar sin perder tiempo.”</p>
+		</section>
+
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+			<p:menuButton value="Opcion">
+				<p:menuitem value="Judge"
+					url="https://domjudgeacademicueb.com/public"
+					icon="bi bi-code-square" />
+				<p:menuitem value="CodeChef" url="https://www.codechef.com/"
+					icon="bi bi-cookie" />
+				<p:menuitem value="Vjudge"
+					url="https://vjudge.net/group/cuevadelprofdiego"
+					icon="bi bi-emoji-angry" />
+				<p:menuitem value="OnlineJudge" url="https://onlinejudge.org/"
+					icon="bi bi-joystick" />
+			</p:menuButton>
+		</h:form>
+
+		<section class="cards container animate__animated animate__fadeInUp"
+			style="margin-bottom:2rem;">
+		<div class="row justify-content-center">
+			<div class="col-md-4 mb-3">
+				<a href="https://paletasdecolores.com/" target="_blank"
+					class="card-link" style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<i class="fa-solid fa-palette card-icon"></i>
+						<h5 class="mt-2">Paletas de Colores</h5>
+						<p>Crea combinaciones de colores para tus proyectos.</p>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-4 mb-3">
+				<a href="https://openlibrary.org/" target="_blank" class="card-link"
+					style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<i class="fa-solid fa-book-open card-icon"></i>
+						<h5 class="mt-2">Open Library</h5>
+						<p>Busca y consulta millones de libros online gratis.</p>
+					</div>
+				</a>
+			</div>
+			<div class="col-md-4 mb-3">
+				<a href="https://www.redalyc.org/" target="_blank" class="card-link"
+					style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<i class="fa-solid fa-file-alt card-icon"></i>
+						<h5 class="mt-2">Redalyc</h5>
+						<p>Accede a artículos científicos y académicos.</p>
+					</div>
+				</a>
+			</div>
+		</div>
+		</section>
+
+		<section class="cards container animate__animated animate__fadeInUp"
+			style="margin-bottom:2rem;">
+
+		<div class="row justify-content-center">
+
+			<div class="col-md-4 mb-3">
+				<a href="https://www.cursosdev.com/coupons" target="_blank"
+					class="card-link" style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+
+						<img src="https://cursosdev.com/storage/plantilla/logo1.png"
+							alt="Producto" loading="lazy"
+							style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 10px;" />
+
+						<h5 class="mt-2">Cursosdev</h5>
+						<p>Cursos para aprender.</p>
+
+						<div class="card__footer mt-3">
+							<span class="card__price">Link:</span> <span
+								style="margin-left: 6px;"> <svg width="16" height="16"
+									viewBox="0 0 24 24" aria-hidden="true"> <path
+									d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+									stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round" /> </svg>
+							</span>
+						</div>
+					</div>
+				</a>
+
+			</div>
+
+			<div class="col-md-4 mb-3">
+				<a href="https://onlinejudge.org/index.php" target="_blank"
+					class="card-link" style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<img
+							src="https://onlinejudge.org/templates/hm_yaml_2_5/img/ojlogo2.svg.png"
+							alt="Onlinejudge" loading="lazy"
+							style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 10px;" />
+						<h5 class="mt-2">Onlinejudge</h5>
+						<p>Hover to reveal stunning effects</p>
+						<div class="card__footer mt-3">
+							<span class="card__price">Link:</span> <span
+								style="margin-left: 6px;"> <svg width="16" height="16"
+									viewBox="0 0 24 24" aria-hidden="true"> <path
+									d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+									stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round" /> </svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+
+			<div class="col-md-4 mb-3">
+				<a href="https://vjudge.net/" target="_blank" class="card-link"
+					style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<img
+							src="https://vjudge.net/static/bundle/11b24ab2156955d8f3fa.ico"
+							alt="VJudge" loading="lazy"
+							style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 10px;" />
+						<h5 class="mt-2">VJudge</h5>
+						<p>Hover to reveal stunning effects</p>
+						<div class="card__footer mt-3">
+							<span class="card__price">Link:</span> <span
+								style="margin-left: 6px;"> <svg width="16" height="16"
+									viewBox="0 0 24 24" aria-hidden="true"> <path
+									d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+									stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round" /> </svg>
+							</span>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+		</section>
+
+
+		<section class="cards container animate__animated animate__fadeInUp"
+			style="margin-bottom:2rem;">
+		<div class="row justify-content-center">
+
+			<div class="col-md-4 mb-3">
+				<a href="https://www.geeksforgeeks.org/" target="_blank"
+					class="card-link" style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<img
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/GeeksforGeeks.svg/1200px-GeeksforGeeks.svg.png"
+							alt="´GeekForGeeks" loading="lazy"
+							style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 10px;" />
+						<h5 class="mt-2">Geeksforgeeks</h5>
+						<p>Hover to reveal stunning effects</p>
+						<div class="card__footer mt-3">
+							<span class="card__price">Link:</span> <span
+								style="margin-left: 6px;"> <svg width="16" height="16"
+									viewBox="0 0 24 24" aria-hidden="true"> <path
+									d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+									stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round" /> </svg>
+							</span>
+						</div>
+						´´
+					</div>
+				</a>
+			</div>
+
+
+			<div class="col-md-4 mb-3">
+				<a href="https://account.hackthebox.com/login" target="_blank"
+					class="card-link" style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<img
+							src="https://redtiseg.com/wp-content/uploads/2022/08/HTB-Logo-Verticall_RGB_DarkText_1024-1024x614.png"
+							alt="Hack The Box" loading="lazy"
+							style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 10px;" />
+						<h5 class="mt-2">Hack The Box</h5>
+						<p>Hover to reveal stunning effects</p>
+						<div class="card__footer mt-3">
+							<span class="card__price">Link:</span> <span
+								style="margin-left: 6px;"> <svg width="16" height="16"
+									viewBox="0 0 24 24" aria-hidden="true"> <path
+									d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+									stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round" /> </svg>
+							</span>
+						</div>
+
+					</div>
+				</a>
+			</div>
+
+
+			<div class="col-md-4 mb-3">
+				<a href="https://www.codechef.com/" target="_blank"
+					class="card-link" style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<img
+							src="https://cdn.codechef.com/sites/all/themes/abessive/cc-logo.png"
+							alt="Codechef" loading="lazy"
+							style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 10px;" />
+						<h5 class="mt-2">Codechef</h5>
+						<p>Hover to reveal stunning effects</p>
+						<div class="card__footer mt-3">
+							<span class="card__price">Link:</span> <span
+								style="margin-left: 6px;"> <svg width="16" height="16"
+									viewBox="0 0 24 24" aria-hidden="true"> <path
+									d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+									stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round" /> </svg>
+							</span>
+						</div>
+
+					</div>
+				</a>
+			</div>
+
+		</div>
+
+		</section>
+
+
+
+		<section class="cards container animate__animated animate__fadeInUp"
+			style="margin-bottom:2rem;">
+		<div class="row justify-content-center">
+
+			<div class="col-md-4 mb-3">
+				<a href="https://www.geeksforgeeks.org/" target="_blank"
+					class="card-link" style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<img
+							src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/GeeksforGeeks.svg/1200px-GeeksforGeeks.svg.png"
+							alt="´GeekForGeeks" loading="lazy"
+							style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 10px;" />
+						<h5 class="mt-2">Geeksforgeeks</h5>
+						<p>Hover to reveal stunning effects</p>
+						<div class="card__footer mt-3">
+							<span class="card__price">Link:</span> <span
+								style="margin-left: 6px;"> <svg width="16" height="16"
+									viewBox="0 0 24 24" aria-hidden="true"> <path
+									d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+									stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round" /> </svg>
+							</span>
+						</div>
+						´´
+					</div>
+				</a>
+			</div>
+
+
+			<div class="col-md-4 mb-3">
+				<a href="https://account.hackthebox.com/login" target="_blank"
+					class="card-link" style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<img
+							src="https://redtiseg.com/wp-content/uploads/2022/08/HTB-Logo-Verticall_RGB_DarkText_1024-1024x614.png"
+							alt="Hack The Box" loading="lazy"
+							style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 10px;" />
+						<h5 class="mt-2">Hack The Box</h5>
+						<p>Hover to reveal stunning effects</p>
+						<div class="card__footer mt-3">
+							<span class="card__price">Link:</span> <span
+								style="margin-left: 6px;"> <svg width="16" height="16"
+									viewBox="0 0 24 24" aria-hidden="true"> <path
+									d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+									stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round" /> </svg>
+							</span>
+						</div>
+
+					</div>
+				</a>
+			</div>
+
+
+			<div class="col-md-4 mb-3">
+				<a href="https://www.codechef.com/" target="_blank"
+					class="card-link" style="text-decoration: none;">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<img
+							src="https://cdn.codechef.com/sites/all/themes/abessive/cc-logo.png"
+							alt="Codechef" loading="lazy"
+							style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 10px;" />
+						<h5 class="mt-2">Codechef</h5>
+						<p>Hover to reveal stunning effects</p>
+						<div class="card__footer mt-3">
+							<span class="card__price">Link:</span> <span
+								style="margin-left: 6px;"> <svg width="16" height="16"
+									viewBox="0 0 24 24" aria-hidden="true"> <path
+									d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2"
+									stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+									stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									stroke-linejoin="round" /> </svg>
+							</span>
+						</div>
+
+					</div>
+				</a>
+			</div>
+
+		</div>
+
+		</section>
+
+
+
+		<div class="cardi">
+			<div class="card__shine"></div>
+			<div class="card__glow"></div>
+			<div class="card__content">
+				<div class="card__badge">LINK</div>
+				<div class="card__image">
+					<img
+						src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Codeforces_logo.svg/2560px-Codeforces_logo.svg.png"
+						alt="Producto" loading="lazy" />
+				</div>
+				<div class="card__text">
+					<p class="card__title">Codeforces</p>
+					<p class="card__description">Hover to reveal stunning effects</p>
+				</div>
+				<div class="card__footer">
+					<div class="card__price">Link:</div>
+					<a class="card__button" href="https://codeforces.com/"
+						target="_blank" rel="noopener noreferrer"
+						aria-label="Abrir CodeChef"> <svg width="16" height="16"
+							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
+							fill="none" stroke="currentColor" stroke-width="2"
+							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+							stroke="currentColor" stroke-width="2" stroke-linecap="round"
+							stroke-linejoin="round" /> </svg>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="cardi">
+			<div class="card__shine"></div>
+			<div class="card__glow"></div>
+			<div class="card__content">
+				<div class="card__badge">LINK</div>
+				<div class="card__image">
+					<img
+						src="https://assets.leetcode.com/static_assets/public/images/LeetCode_logo_rvs.png"
+						alt="Producto" loading="lazy" />
+				</div>
+				<div class="card__text">
+					<p class="card__title">LeetCode</p>
+					<p class="card__description">Hover to reveal stunning effects</p>
+				</div>
+				<div class="card__footer">
+					<div class="card__price">Link:</div>
+					<a class="card__button" href="https://leetcode.com/"
+						target="_blank" rel="noopener noreferrer"
+						aria-label="Abrir CodeChef"> <svg width="16" height="16"
+							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
+							fill="none" stroke="currentColor" stroke-width="2"
+							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+							stroke="currentColor" stroke-width="2" stroke-linecap="round"
+							stroke-linejoin="round" /> </svg>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="cardi">
+			<div class="card__shine"></div>
+			<div class="card__glow"></div>
+			<div class="card__content">
+				<div class="card__badge">LINK</div>
+				<div class="card__image">
+					<img
+						src="https://www.codeogroup.com/wp-content/uploads/2022/08/Logo-Codeo-2020-Noir.jpg"
+						alt="Producto" loading="lazy" />
+				</div>
+				<div class="card__text">
+					<p class="card__title">Codeo</p>
+					<p class="card__description">Hover to reveal stunning effects</p>
+				</div>
+				<div class="card__footer">
+					<div class="card__price">Link:</div>
+					<a class="card__button" href="https://codeo.com/es/"
+						target="_blank" rel="noopener noreferrer"
+						aria-label="Abrir CodeChef"> <svg width="16" height="16"
+							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
+							fill="none" stroke="currentColor" stroke-width="2"
+							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
+							stroke="currentColor" stroke-width="2" stroke-linecap="round"
+							stroke-linejoin="round" /> </svg>
+					</a>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
 </ui:composition>
 </html>

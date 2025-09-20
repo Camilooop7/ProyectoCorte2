@@ -143,7 +143,7 @@ body {
 .card {
 	width: 250px;
 	min-height: 180px;
-	background: var(white);
+	background-color: var(--blanco) !important;
 	border-radius: 20px;
 	box-shadow: 0px 6px 30px rgba(218, 57, 91, 0.10);
 	display: flex;
@@ -154,7 +154,7 @@ body {
 	transition: transform 0.35s, background 0.3s, color 0.25s;
 	cursor: pointer;
 	animation: fadeInUp 1s cubic-bezier(.68, -0.55, .27, 1.55);
-	border: 2px solid var(--rosa-claro);
+	border: 2px solid var(--rosa-claro) !important;
 	margin-bottom: 1rem;
 	position: relative;
 	overflow: hidden;
@@ -163,7 +163,7 @@ body {
 .card i {
 	font-size: 2.8rem;
 	margin-bottom: 0.6rem;
-	color: var(--rosa-intenso);
+	color: var(--rosa-intenso) !important;
 	text-shadow: 0 4px 12px rgba(218, 57, 91, 0.13);
 }
 
@@ -176,7 +176,7 @@ body {
 
 .card p {
 	font-size: 1rem;
-	color: ;
+	color: #444;
 	font-family: 'Montserrat', sans-serif;
 }
 
@@ -262,6 +262,166 @@ body {
 		width: 95vw;
 	}
 }
+
+.cardi {
+    width: 270px;
+    min-height: 280px;
+    background: var(--blanco);
+    border-radius: 22px;
+    box-shadow: 0px 8px 32px rgba(218, 57, 91, 0.12);
+    margin: 1.3rem 1rem 2.2rem 0;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s, box-shadow 0.3s, background 0.3s;
+}
+.card__shine {
+    position: absolute;
+    top: -70px;
+    left: -60px;
+    width: 170px;
+    height: 170px;
+    background: linear-gradient(120deg, var(--rosa-vivo) 30%, var(--naranja) 100%);
+    opacity: 0.16;
+    border-radius: 50%;
+    z-index: 0;
+}
+.card__glow {
+    position: absolute;
+    bottom: -60px;
+    right: -60px;
+    width: 130px;
+    height: 130px;
+    background: var(--rosa-claro);
+    opacity: 0.18;
+    border-radius: 50%;
+    z-index: 0;
+}
+.card__content {
+    position: relative;
+    z-index: 1;
+    padding: 1.2rem 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+.card__badge {
+    background: var(--rosa-intenso);
+    color: var(--blanco);
+    font-size: 0.87rem;
+    font-weight: 600;
+    padding: 0.35rem 1.1rem;
+    border-radius: 16px;
+    margin-bottom: 0.6rem;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 6px rgba(218,57,91,0.10);
+}
+.card__image img {
+    width: 66px;
+    height: 66px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: var(--gris);
+    margin-bottom: 0.7rem;
+    box-shadow: 0 2px 12px rgba(218,57,91,0.09);
+}
+.card__title {
+    font-family: 'Montserrat', serif;
+    font-size: 1.18rem;
+    font-weight: bold;
+    color: var(--rosa-intenso);
+    margin-bottom: 0.18rem;
+    text-align: center;
+}
+.card__description {
+    font-size: 0.97rem;
+    color: #555;
+    text-align: center;
+    margin-bottom: 0.7rem;
+}
+.card__footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    margin-top: 0.6rem;
+}
+.card__price {
+    font-size: 0.85rem;
+    color: var(--rosa-vivo);
+    font-weight: 600;
+}
+.card__button {
+    display: inline-flex;
+    align-items: center;
+    background: var(--naranja);
+    color: #fff;
+    padding: 0.39rem 0.95rem;
+    border-radius: 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(224, 114, 58, 0.09);
+    transition: background 0.25s, transform 0.18s;
+    border: none;
+    outline: none;
+}
+.card__button:hover {
+    background: var(--rosa-intenso);
+    color: var(--blanco);
+    transform: scale(1.07);
+}
+.cardi:hover {
+    transform: translateY(-10px) scale(1.04);
+    box-shadow: 0 12px 36px rgba(224, 114, 58, 0.14);
+    background: linear-gradient(120deg, var(--rosa-vivo) 65%, var(--naranja) 100%);
+}
+.cardi:hover .card__title,
+.cardi:hover .card__price {
+    color: var(--blanco);
+}
+.cardi:hover .card__badge {
+    background: var(--naranja);
+    color: var(--blanco);
+}
+.cardi:hover .card__description {
+    color: #f9f9f9;
+}
+.cardi:hover .card__button {
+    background: var(--rosa-intenso);
+    color: var(--blanco);
+}
+.cardi .card__button svg {
+    margin-left: 0.25rem;
+    fill: currentColor;
+}
+
+/* Responsive for cards */
+@media (max-width: 1200px) {
+    .cardi {
+        width: 45vw;
+        min-width: 220px;
+    }
+}
+@media (max-width: 900px) {
+    .cardi {
+        width: 90vw;
+        min-width: 180px;
+        margin: 1rem 0.5rem 2rem 0;
+    }
+}
+@media (max-width: 600px) {
+    .cardi {
+        width: 97vw;
+        min-width: 150px;
+        margin: 0.7rem auto;
+        display: block;
+    }
+}
+
 
 .active-animation {
     box-shadow: 0 0 0 6px var(--rosa-vivo, #EE809A) !important;

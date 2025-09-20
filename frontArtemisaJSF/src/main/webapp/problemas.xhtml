@@ -8,34 +8,39 @@
 
 <ui:composition template="/templates/template.xhtml">
     <ui:define name="contenido">
-        <section class="hero">
-            <h2>❓ Problemas y Retos</h2>
-            <p>
+        <section class="hero animate__animated animate__fadeIn" style="margin-top:2rem;">
+            <h2 class="display-4 mb-3 fw-bold">❓ Problemas y Retos</h2>
+            <p class="lead mb-4">
                 Resuelve ejercicios, comparte soluciones y aprende en comunidad.<br/>
                 ¿Te animas a un nuevo desafío?
             </p>
         </section>
-        <section class="cards">
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/matematicas.jpg"
-                     alt="Matemáticas" style="width:90px; border-radius:50%; margin-bottom:10px;" />
-                <h3>Matemáticas</h3>
-                <p>Ejercicios y problemas de lógica y álgebra.</p>
-                <h:commandButton value="Ver problemas" action="#{paginaprincipalbean.irProblemas}" styleClass="btn btn-sm" />
-            </div>
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/programacion.jpg"
-                     alt="Programación" style="width:90px; border-radius:50%; margin-bottom:10px;" />
-                <h3>Programación</h3>
-                <p>Retos prácticos para mejorar tus habilidades de código.</p>
-                <h:commandButton value="Ver problemas" action="#{paginaprincipalbean.irProblemas}" styleClass="btn btn-sm" />
-            </div>
-            <div class="card">
-                <img src="https://biblioteca-artemisa.netlify.app/images/electronica.jpg"
-                     alt="Electrónica" style="width:90px; border-radius:50%; margin-bottom:10px;" />
-                <h3>Electrónica</h3>
-                <p>Soluciona circuitos y experimenta con tecnología.</p>
-                <h:commandButton value="Ver problemas" action="#{paginaprincipalbean.irProblemas}" styleClass="btn btn-sm" />
+        <section class="cards container animate__animated animate__fadeInUp" style="margin-bottom:2rem;">
+            <div class="row justify-content-center">
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center py-4 px-2 h-100 card-problemas">
+                        <i class="fa-solid fa-square-root-variable card-icon"></i>
+                        <h5 class="mt-2">Matemáticas</h5>
+                        <p>Ejercicios y problemas de lógica y álgebra.</p>
+                        <h:commandButton value="Ver problemas" action="#{paginaprincipalbean.irProblemas}" styleClass="btn btn-sm" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center py-4 px-2 h-100 card-problemas">
+                        <i class="fa-solid fa-code card-icon"></i>
+                        <h5 class="mt-2">Programación</h5>
+                        <p>Retos prácticos para mejorar tus habilidades de código.</p>
+                        <h:commandButton value="Ver problemas" action="#{paginaprincipalbean.irProblemas}" styleClass="btn btn-sm" />
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center py-4 px-2 h-100 card-problemas">
+                        <i class="fa-solid fa-microchip card-icon"></i>
+                        <h5 class="mt-2">Electrónica</h5>
+                        <p>Soluciona circuitos y experimenta con tecnología.</p>
+                        <h:commandButton value="Ver problemas" action="#{paginaprincipalbean.irProblemas}" styleClass="btn btn-sm" />
+                    </div>
+                </div>
             </div>
         </section>
         <section class="hero" style="background: var(--rosa-claro); color: #d6336c;">
