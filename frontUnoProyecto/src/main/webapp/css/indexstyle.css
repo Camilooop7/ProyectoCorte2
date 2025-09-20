@@ -30,7 +30,6 @@ body {
 }
 .container {
   width: clamp(450px, 80vw, 280px);
- 
   background: #f8f9fd;
   background: linear-gradient(
     0deg,
