@@ -1,8 +1,5 @@
 package co.edu.unbosque.proyectocorte.service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +8,14 @@ import co.edu.unbosque.proyectocorte.dto.LibroPDFDTO;
 import co.edu.unbosque.proyectocorte.entity.LibroPDF;
 import co.edu.unbosque.proyectocorte.repository.LibroPDFRepository;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class LibroPDFService {
-
 	@Autowired
 	private LibroPDFRepository libroPDFRepo;
-
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -25,6 +24,11 @@ public class LibroPDFService {
 		LibroPDF entity = new LibroPDF(nombre, descripcion, imagen.getBytes(), archivoPdf.getBytes());
 		libroPDFRepo.save(entity);
 		return 1;
+	}
+
+	public LibroPDFDTO getLibroById(Long id) {
+		LibroPDF entity = libroPDFRepo.findById(id).orElseThrow();
+		return modelMapper.map(entity, LibroPDFDTO.class);
 	}
 
 	public List<LibroPDFDTO> getAll() {

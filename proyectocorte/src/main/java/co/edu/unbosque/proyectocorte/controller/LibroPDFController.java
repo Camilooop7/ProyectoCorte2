@@ -4,45 +4,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
+import co.edu.unbosque.proyectocorte.dto.LibroPDFDTO;
 import co.edu.unbosque.proyectocorte.service.LibroPDFService;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = { "*" })
-@RequestMapping(path = { "/libro/pdf" })
+@RequestMapping(path = { "/libropdf" })
 public class LibroPDFController {
 
 	@Autowired
-	private LibroPDFService libroPDFSer;
+	private LibroPDFService libroPDFService;
 
-	@PostMapping(path = "/crear")
-	public ResponseEntity<String> crear(@RequestParam("nombre") String nombre,
-			@RequestParam("descripcion") String descripcion, @RequestParam("imagen") MultipartFile imagen,
-			@RequestParam("archivoPdf") MultipartFile archivoPdf) {
-		try {
-			int status = libroPDFSer.create(nombre, descripcion, imagen, archivoPdf);
-			if (status == 1) {
-				return new ResponseEntity<>("Libro PDF creado con éxito", HttpStatus.CREATED);
-			} else {
-				return new ResponseEntity<>("Error al crear el libro PDF", HttpStatus.NOT_ACCEPTABLE);
-			}
-		} catch (IOException e) {
-			return new ResponseEntity<>("Error al procesar los archivos", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	@GetMapping
+	public ResponseEntity<List<LibroPDFDTO>> getAllLibros() {
+		List<LibroPDFDTO> libros = libroPDFService.getAll();
+		return new ResponseEntity<>(libros, HttpStatus.OK);
 	}
 
-	@GetMapping(path = "/descargar-imagen/{id}")
-	public ResponseEntity<byte[]> descargarImagen(@PathVariable Long id) {
-		byte[] imagen = libroPDFSer.getImagenById(id);
-		return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=\"imagen_" + id + ".jpg\"")
+	@GetMapping("/imagen/{id}")
+	public ResponseEntity<byte[]> getImagen(@PathVariable Long id) {
+		byte[] imagen = libroPDFService.getImagenById(id);
+		return ResponseEntity.ok().header("Content-Type", "image/jpeg") // Asegúrate de que el tipo de contenido sea
+																		// correcto
+				.header("Content-Disposition", "inline; filename=\"imagen_" + id + ".jpg\"") // Cambia "attachment" a
+																								// "inline"
 				.body(imagen);
 	}
 
-	@GetMapping(path = "/descargar-pdf/{id}")
-	public ResponseEntity<byte[]> descargarPdf(@PathVariable Long id) {
-		byte[] pdfContent = libroPDFSer.getPdfContentById(id);
+	@GetMapping("/pdf/{id}")
+	public ResponseEntity<byte[]> getPdf(@PathVariable Long id) {
+		byte[] pdf = libroPDFService.getPdfContentById(id);
 		return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=\"libro_" + id + ".pdf\"")
-				.body(pdfContent);
+				.body(pdf);
 	}
+	@GetMapping("/{id}")
+	public ResponseEntity<LibroPDFDTO> getLibroById(@PathVariable Long id) {
+	    LibroPDFDTO libro = libroPDFService.getLibroById(id);
+	    return ResponseEntity.ok(libro);
+	}
+
 }
