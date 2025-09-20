@@ -38,7 +38,8 @@ public class LibroPDFBean implements Serializable {
 			ExternalContext externalContext = facesContext.getExternalContext();
 			externalContext.responseReset();
 			externalContext.setResponseContentType("application/pdf");
-			externalContext.setResponseHeader("Content-Disposition", "attachment; filename=\"libro"+codigo+".pdf\"");
+			externalContext.setResponseHeader("Content-Disposition",
+					"attachment; filename=\"libro" + nombre + ".pdf\"");
 			externalContext.getResponseOutputStream().write(responsePdf.body());
 			facesContext.responseComplete();
 		} catch (Exception e) {
@@ -49,6 +50,7 @@ public class LibroPDFBean implements Serializable {
 
 	public void obtenerInformacionLibro() {
 		try {
+
 			if (codigo == 0) {
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El ID del libro es obligatorio."));
@@ -74,6 +76,7 @@ public class LibroPDFBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 					"No se pudo obtener la información del libro: " + e.getMessage()));
 		}
+		descargarPdf();
 	}
 
 	public StreamedContent obtenerImagen() {

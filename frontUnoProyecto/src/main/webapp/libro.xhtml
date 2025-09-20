@@ -36,6 +36,7 @@
 </h:head>
 
 <h:body>
+
 	<div class="main-container">
 		<div class="aside">
 			<div class="logo">
@@ -105,18 +106,9 @@
 								<p:inputText id="codigo" value="#{libroPDFBean.codigo}"
 									placeholder="Ingresa el ID del libro" required="true"
 									requiredMessage="El ID es obligatorio" styleClass="card__input" />
-								<p:commandButton value="Cargar PDF"
+								<p:commandButton value="Descargar PDF"
 									action="#{libroPDFBean.obtenerInformacionLibro()}"
 									styleClass="card__button" ajax="false" update="panelPDF" />
-
-								<h:panelGroup id="panelPDF"
-									rendered="#{not empty libroPDFBean.nombre}">
-									<h3>Nombre: #{libroPDFBean.nombre}</h3>
-									<p>Descripción: #{libroPDFBean.descripcion}</p>
-									<p:commandButton value="Descargar PDF"
-										action="#{libroPDFBean.descargarPdf()}"
-										styleClass="card__button" ajax="false" />
-								</h:panelGroup>
 
 							</h:form>
 						</div>
