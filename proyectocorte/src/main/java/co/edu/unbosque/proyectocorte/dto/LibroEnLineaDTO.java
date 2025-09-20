@@ -6,7 +6,6 @@ import co.edu.unbosque.proyectocorte.entity.Libro;
 
 public class LibroEnLineaDTO extends Libro {
 
-	private Long id;
 	private String link;
 
 	public LibroEnLineaDTO() {
@@ -18,21 +17,29 @@ public class LibroEnLineaDTO extends Libro {
 		this.link = link;
 	}
 
-	public LibroEnLineaDTO(String nombre, String descripcion, byte[] imagen, String link) {
-		super(nombre, descripcion, imagen);
+	public LibroEnLineaDTO(int codigo, String nombre, String descripcion, byte[] imagen, String link) {
+		super(codigo, nombre, descripcion, imagen);
 		this.link = link;
 	}
 
-	public LibroEnLineaDTO(String nombre, String descripcion, byte[] imagen) {
-		super(nombre, descripcion, imagen);
+	public LibroEnLineaDTO(int codigo, String nombre, String descripcion, byte[] imagen) {
+		super(codigo, nombre, descripcion, imagen);
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(id, link);
+		result = prime * result + Objects.hash(link);
 		return result;
 	}
 
@@ -45,12 +52,12 @@ public class LibroEnLineaDTO extends Libro {
 		if (getClass() != obj.getClass())
 			return false;
 		LibroEnLineaDTO other = (LibroEnLineaDTO) obj;
-		return Objects.equals(id, other.id) && Objects.equals(link, other.link);
+		return Objects.equals(link, other.link);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + "LibroEnLinea [id=" + id + ", link=" + link + "]";
+		return super.toString() + "LibroEnLinea [link=" + link + "]";
 	}
 
 }

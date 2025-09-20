@@ -14,39 +14,44 @@ import java.util.List;
 
 @Service
 public class LibroPDFService {
+
 	@Autowired
 	private LibroPDFRepository libroPDFRepo;
+
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public int create(String nombre, String descripcion, MultipartFile imagen, MultipartFile archivoPdf)
+	public int create(int codigo, String nombre, String descripcion, MultipartFile imagen, MultipartFile archivoPdf)
 			throws IOException {
-		LibroPDF entity = new LibroPDF(nombre, descripcion, imagen.getBytes(), archivoPdf.getBytes());
+		LibroPDF entity = new LibroPDF(codigo, nombre, descripcion, imagen.getBytes(), archivoPdf.getBytes());
 		libroPDFRepo.save(entity);
 		return 1;
 	}
 
-	public LibroPDFDTO getLibroById(Long id) {
-		LibroPDF entity = libroPDFRepo.findById(id).orElseThrow();
+	public LibroPDFDTO getLibroByCodigo(int codigo) {
+		LibroPDF entity = libroPDFRepo.findByCodigo(codigo)
+				.orElseThrow(() -> new RuntimeException("Libro con ID " + codigo + " no encontrado"));
 		return modelMapper.map(entity, LibroPDFDTO.class);
 	}
 
 	public List<LibroPDFDTO> getAll() {
 		List<LibroPDF> entityList = libroPDFRepo.findAll();
 		List<LibroPDFDTO> dtoList = new ArrayList<>();
-		entityList.forEach((entity) -> {
+		entityList.forEach(entity -> {
 			LibroPDFDTO libroPDFDTO = modelMapper.map(entity, LibroPDFDTO.class);
 			dtoList.add(libroPDFDTO);
 		});
 		return dtoList;
 	}
 
-	public byte[] getImagenById(Long id) {
-		return libroPDFRepo.findById(id).orElseThrow().getImagen();
+	public byte[] getImagenByCodigo(int id) {
+		return libroPDFRepo.findByCodigo(id)
+				.orElseThrow(() -> new RuntimeException("Libro con ID " + id + " no encontrado")).getImagen();
 	}
 
-	public byte[] getPdfContentById(Long id) {
-		return libroPDFRepo.findById(id).orElseThrow().getContenidoPdf();
+	public byte[] getPdfContentByCodigo(int id) {
+		return libroPDFRepo.findByCodigo(id)
+				.orElseThrow(() -> new RuntimeException("Libro con ID " + id + " no encontrado")).getContenidoPdf();
 	}
 
 	public int deleteById(Long id) {

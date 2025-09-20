@@ -1,57 +1,31 @@
 package co.edu.unbosque.proyectocorte.dto;
 
-import java.util.Objects;
+import java.util.Arrays;
 
-public class LibroPDFDTO {
-	private Long id;
-	private String nombre;
-	private String descripcion;
-	private byte[] imagen;
+import co.edu.unbosque.proyectocorte.entity.Libro;
+
+public class LibroPDFDTO extends Libro {
+
 	private byte[] contenidoPdf;
 
-	// Constructores
 	public LibroPDFDTO() {
 	}
 
-	public LibroPDFDTO(Long id, String nombre, String descripcion, byte[] imagen, byte[] contenidoPdf) {
-		this.id = id;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.imagen = imagen;
+	public LibroPDFDTO(byte[] contenidoPdf) {
+		super();
+		this.contenidoPdf = contenidoPdf;
+	}
+
+	public LibroPDFDTO(int codigo, String nombre, String descripcion, byte[] imagen, byte[] contenidoPdf) {
+		super(codigo, nombre, descripcion, imagen);
 		this.contenidoPdf = contenidoPdf;
 	}
 
 	// Getters y setters
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public byte[] getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
+	public LibroPDFDTO(int codigo, String nombre, String descripcion, byte[] imagen) {
+		super(codigo, nombre, descripcion, imagen);
+		// TODO Auto-generated constructor stub
 	}
 
 	public byte[] getContenidoPdf() {
@@ -64,17 +38,27 @@ public class LibroPDFDTO {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, nombre, descripcion);
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Arrays.hashCode(contenidoPdf);
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null || getClass() != obj.getClass())
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
 			return false;
 		LibroPDFDTO other = (LibroPDFDTO) obj;
-		return Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(descripcion, other.descripcion);
+		return Arrays.equals(contenidoPdf, other.contenidoPdf);
 	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "LibroPDF [contenidoPdf=" + Arrays.toString(contenidoPdf) + "]";
+	}
+
 }

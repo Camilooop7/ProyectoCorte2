@@ -9,6 +9,8 @@ import co.edu.unbosque.proyectocorte.entity.LibroPDF;
 public interface LibroPDFRepository extends JpaRepository<LibroPDF, Long> {
 	public Optional<LibroPDF> findByNombre(String nombre);
 
+	public Optional<LibroPDF> findByCodigo(int codigo);
+
 	public void deleteByNombre(String nombre);
 
 }

@@ -19,92 +19,105 @@ import java.time.Duration;
 @Named("libroPDFBean")
 @RequestScoped
 public class LibroPDFBean implements Serializable {
-    private long id;
-    private String nombre;
-    private String descripcion;
-    private static final HttpClient httpClient = HttpClient.newBuilder()
-            .version(HttpClient.Version.HTTP_1_1)
-            .connectTimeout(Duration.ofSeconds(10))
-            .build();
 
-    public void descargarPdf() {
-        try {
-            // Obtener información del libro
-            obtenerInformacionLibro();
+	private Long id; // Cambiado a Long para evitar problemas con valores nulos
+	private String nombre;
+	private String descripcion;
 
-            // Descargar el PDF
-            HttpRequest requestPdf = HttpRequest.newBuilder()
-                    .GET()
-                    .uri(URI.create("http://localhost:8080/libropdf/pdf/" + id))
-                    .build();
-            HttpResponse<byte[]> responsePdf = httpClient.send(requestPdf, HttpResponse.BodyHandlers.ofByteArray());
+	private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1)
+			.connectTimeout(Duration.ofSeconds(10)).build();
 
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            facesContext.getExternalContext().responseReset();
-            facesContext.getExternalContext().setResponseContentType("application/pdf");
-            facesContext.getExternalContext().setResponseHeader("Content-Disposition",
-                    "attachment; filename=\"libro_" + id + ".pdf\"");
-            facesContext.getExternalContext().getResponseOutputStream().write(responsePdf.body());
-            facesContext.getExternalContext().getResponseOutputStream().close();
-            facesContext.responseComplete();
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo descargar el PDF: " + e.getMessage()));
-        }
-    }
+	public void descargarPdf() {
+		try {
+			if (id == null) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El ID del libro es obligatorio."));
+				return;
+			}
 
-    public void obtenerInformacionLibro() {
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .GET()
-                    .uri(URI.create("http://localhost:8080/libropdf/" + id))
-                    .build();
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+			HttpRequest requestPdf = HttpRequest.newBuilder().GET()
+					.uri(URI.create("http://localhost:8080/libropdf/pdf/" + id)).build();
+			HttpResponse<byte[]> responsePdf = httpClient.send(requestPdf, HttpResponse.BodyHandlers.ofByteArray());
 
-            // Parsear la respuesta JSON usando org.json.JSONObject
-            JSONObject jsonObject = new JSONObject(response.body());
-            this.nombre = jsonObject.optString("nombre", "Nombre no disponible");
-            this.descripcion = jsonObject.optString("descripcion", "Descripción no disponible");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo obtener la información del libro: " + e.getMessage()));
-        }
-    }
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.getExternalContext().responseReset();
+			facesContext.getExternalContext().setResponseContentType("application/pdf");
+			facesContext.getExternalContext().setResponseHeader("Content-Disposition",
+					"attachment; filename=\"libro_" + id + ".pdf\"");
+			facesContext.getExternalContext().getResponseOutputStream().write(responsePdf.body());
+			facesContext.getExternalContext().getResponseOutputStream().close();
+			facesContext.responseComplete();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					"No se pudo descargar el PDF: " + e.getMessage()));
+		}
+	}
 
-    public StreamedContent obtenerImagen() {
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .GET()
-                    .uri(URI.create("http://localhost:8080/libropdf/imagen/" + id))
-                    .build();
-            HttpResponse<byte[]> response = httpClient.send(request, HttpResponse.BodyHandlers.ofByteArray());
-            InputStream inputStream = new ByteArrayInputStream(response.body());
-            return DefaultStreamedContent.builder()
-                    .name("imagen_" + id + ".jpg")
-                    .contentType("image/jpeg")
-                    .stream(() -> inputStream)
-                    .build();
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo cargar la imagen: " + e.getMessage()));
-            return null;
-        }
-    }
+	public void obtenerInformacionLibro() {
+		try {
+			if (id == null) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El ID del libro es obligatorio."));
+				return;
+			}
 
-    // Getters y setters
-    public long getId() {
-        return id;
-    }
+			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8080/libropdf/" + id))
+					.build();
+			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-    public void setId(long id) {
-        this.id = id;
-    }
+			System.out.println("Respuesta del backend: " + response.body());
 
-    public String getNombre() {
-        return nombre;
-    }
+			if (response.body().trim().startsWith("{")) {
+				JSONObject jsonObject = new JSONObject(response.body());
+				this.nombre = jsonObject.optString("nombre", "Nombre no disponible");
+				this.descripcion = jsonObject.optString("descripcion", "Descripción no disponible");
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+						"Advertencia", "El libro con ID " + id + " no existe."));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					"No se pudo obtener la información del libro: " + e.getMessage()));
+		}
+	}
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+	public StreamedContent obtenerImagen() {
+		try {
+			if (id == null) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El ID del libro es obligatorio."));
+				return null;
+			}
+
+			HttpRequest request = HttpRequest.newBuilder().GET()
+					.uri(URI.create("http://localhost:8080/libropdf/imagen/" + id)).build();
+			HttpResponse<byte[]> response = httpClient.send(request, HttpResponse.BodyHandlers.ofByteArray());
+
+			InputStream inputStream = new ByteArrayInputStream(response.body());
+			return DefaultStreamedContent.builder().name("imagen_" + id + ".jpg").contentType("image/jpeg")
+					.stream(() -> inputStream).build();
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+					"No se pudo cargar la imagen: " + e.getMessage()));
+			return null;
+		}
+	}
+
+	// Getters y setters
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
 }

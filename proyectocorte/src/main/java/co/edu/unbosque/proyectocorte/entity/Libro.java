@@ -1,6 +1,8 @@
 package co.edu.unbosque.proyectocorte.entity;
 
 import java.util.Objects;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +17,8 @@ public abstract class Libro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	@Column(unique = true, name = "codigo")
+	private int codigo;
 	private String nombre;
 	private String descripcion;
 
@@ -25,8 +28,9 @@ public abstract class Libro {
 	public Libro() {
 	}
 
-	public Libro(String nombre, String descripcion, byte[] imagen) {
+	public Libro(int codigo, String nombre, String descripcion, byte[] imagen) {
 		super();
+		this.codigo = codigo;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.imagen = imagen;
@@ -63,6 +67,14 @@ public abstract class Libro {
 
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
+	}
+
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 	@Override

@@ -105,8 +105,8 @@
 								<p:inputText id="id" value="#{libroPDFBean.id}"
 									placeholder="Ingresa el ID del libro" required="true"
 									requiredMessage="El ID es obligatorio" styleClass="card__input" />
-								<p:commandButton value="Descargar PDF"
-									action="#{libroPDFBean.descargarPdf()}"
+								<p:commandButton value="Cargar PDF"
+									action="#{libroPDFBean.obtenerInformacionLibro()}"
 									styleClass="card__button" ajax="false" />
 							</h:form>
 							<h:panelGroup rendered="#{not empty libroPDFBean.nombre}">
@@ -114,6 +114,9 @@
 								<p>Descripción: #{libroPDFBean.descripcion}</p>
 								<p:graphicImage value="#{libroPDFBean.obtenerImagen()}"
 									style="width: 100px; height: auto;" />
+									<p:commandButton value="Descargar PDF"
+									action="#{libroPDFBean.descargarPdf()}"
+									styleClass="card__button" ajax="false" />
 							</h:panelGroup>
 						</div>
 					</div>

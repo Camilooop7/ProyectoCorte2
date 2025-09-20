@@ -3,15 +3,11 @@ package co.edu.unbosque.proyectocorte.entity;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
 
 public class LibroEnLinea extends Libro {
 
-	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 	private String link;
 
 	public LibroEnLinea() {
@@ -23,21 +19,29 @@ public class LibroEnLinea extends Libro {
 		this.link = link;
 	}
 
-	public LibroEnLinea(String nombre, String descripcion, byte[] imagen, String link) {
-		super(nombre, descripcion, imagen);
+	public LibroEnLinea(int codigo, String nombre, String descripcion, byte[] imagen, String link) {
+		super(codigo, nombre, descripcion, imagen);
 		this.link = link;
 	}
 
-	public LibroEnLinea(String nombre, String descripcion, byte[] imagen) {
-		super(nombre, descripcion, imagen);
+	public LibroEnLinea(int codigo, String nombre, String descripcion, byte[] imagen) {
+		super(codigo, nombre, descripcion, imagen);
 		// TODO Auto-generated constructor stub
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(id, link);
+		result = prime * result + Objects.hash(link);
 		return result;
 	}
 
@@ -50,12 +54,12 @@ public class LibroEnLinea extends Libro {
 		if (getClass() != obj.getClass())
 			return false;
 		LibroEnLinea other = (LibroEnLinea) obj;
-		return Objects.equals(id, other.id) && Objects.equals(link, other.link);
+		return Objects.equals(link, other.link);
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + "LibroEnLinea [id=" + id + ", link=" + link + "]";
+		return super.toString() + "LibroEnLinea [link=" + link + "]";
 	}
 
 }

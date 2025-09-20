@@ -18,11 +18,11 @@ public class LibroEnLineaController {
 	private LibroEnLineaService libroEnLineaSer;
 
 	@PostMapping(path = "/crear")
-	public ResponseEntity<String> crear(@RequestParam("nombre") String nombre,
+	public ResponseEntity<String> crear(@RequestParam("codigo") int codigo,@RequestParam("nombre") String nombre,
 			@RequestParam("descripcion") String descripcion, @RequestParam("imagen") MultipartFile imagen,
 			@RequestParam("link") String link) {
 		try {
-			LibroEnLineaDTO nuevo = new LibroEnLineaDTO(nombre, descripcion, imagen.getBytes(), link);
+			LibroEnLineaDTO nuevo = new LibroEnLineaDTO(codigo,nombre, descripcion, imagen.getBytes(), link);
 			int status = libroEnLineaSer.create(nuevo);
 			if (status == 0) {
 				return new ResponseEntity<>("Libro en línea creado con éxito", HttpStatus.CREATED);

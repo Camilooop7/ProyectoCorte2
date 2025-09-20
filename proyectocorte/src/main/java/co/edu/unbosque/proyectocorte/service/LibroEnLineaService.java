@@ -7,9 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import co.edu.unbosque.proyectocorte.dto.AdminDTO;
 import co.edu.unbosque.proyectocorte.dto.LibroEnLineaDTO;
-import co.edu.unbosque.proyectocorte.entity.Admin;
 import co.edu.unbosque.proyectocorte.entity.LibroEnLinea;
 import co.edu.unbosque.proyectocorte.repository.LibroEnLineaRepository;
 
