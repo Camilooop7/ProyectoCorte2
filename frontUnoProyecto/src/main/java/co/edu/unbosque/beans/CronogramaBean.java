@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.unbosque.service.CronogramaService;
 import co.edu.unbosque.service.RegistroService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
@@ -23,7 +24,6 @@ public class CronogramaBean {
 	private static final String BASE_CREATE = "http://localhost:8081/cronograma/crear";
 	private static final String BASE_ROOT = "http://localhost:8081";
 
-	// Crear
 	public void doCreate() {
 		try {
 			if (isBlank(nombre) || isBlank(link) || isBlank(fecha) || !isFechaISO(fecha)) {
@@ -31,7 +31,7 @@ public class CronogramaBean {
 				return;
 			}
 
-			String resp = RegistroService.doPostCronograma(BASE_CREATE, nombre, link, fecha);
+			String resp = CronogramaService.crear(BASE_CREATE, nombre, link, fecha);
 			String[] data = resp.split("\n", 2);
 			String code = (data.length > 0) ? data[0] : "500";
 			String body = (data.length > 1) ? data[1] : "Sin cuerpo de respuesta";
@@ -50,11 +50,10 @@ public class CronogramaBean {
 		}
 	}
 
-	// Listar (texto plano)
 	public void listar() {
 		listado.clear();
 
-		String resp = RegistroService.doGetCronogramaMostrar(BASE_ROOT);
+		String resp = CronogramaService.mostrarTexto(BASE_ROOT);
 		String[] data = resp.split("\n", 2);
 		String code = (data.length > 0) ? data[0] : "500";
 		String body = (data.length > 1) ? data[1] : "";
@@ -64,7 +63,6 @@ public class CronogramaBean {
 				if (!line.isBlank())
 					listado.add(line.trim());
 			}
-			// mostramos como éxito para mantener UX
 			show("201", "Se cargaron " + listado.size() + " registros.");
 		} else if ("204".equals(code)) {
 			show("406", "No hay cronogramas para mostrar.");
