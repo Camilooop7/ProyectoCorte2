@@ -15,7 +15,7 @@ import co.edu.unbosque.proyectocorte.service.LoginService;
 @RequestMapping(path = { "/login" })
 public class LoginController {
 	@Autowired
-	private LoginService authService;
+	private LoginService loginService;
 
 	@PostMapping(path = "/inicio")
 	public ResponseEntity<?> login(@RequestParam String correo, @RequestParam String contrasena) {
@@ -23,7 +23,7 @@ public class LoginController {
 			LoginEnvioDTO req = new LoginEnvioDTO();
 			req.setCorreo(correo);
 			req.setContrasena(contrasena);
-			LoginRespuestaDTO resp = authService.login(req);
+			LoginRespuestaDTO resp = loginService.login(req);
 			return ResponseEntity.ok(resp);
 		} catch (SesionException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
