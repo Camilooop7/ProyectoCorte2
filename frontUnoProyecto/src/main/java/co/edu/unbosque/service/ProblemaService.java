@@ -63,7 +63,7 @@ public class ProblemaService {
 	    }
 
 	    
-	    public static String eliminar(String baseRootEj, long id) {
+	    public static String eliminar(String baseRootEj, Long id) {
 	        try {
 	            String fullUrl = baseRootEj + "/problema/eliminar?id=" + id;
 
