@@ -39,7 +39,7 @@ public class ProblemaController {
 	}
 
 	@GetMapping(path = "/mostrar")
-	public ResponseEntity<String> mostrarEstudiante() {
+	public ResponseEntity<String> mostrarProblema() {
 		List<ProblemaDTO> listaProblmea = problemaService.getAll();
 		if (listaProblmea.isEmpty()) {
 			return new ResponseEntity<>("No se encontraron problemas por mostrar", HttpStatus.valueOf(204));
