@@ -101,7 +101,7 @@
 					<div class="containercard">
 						<!-- PDF 1 -->
 						<div class="cardib">
-							<span class="card__title">PDF_1</span>
+							<span class="card__title">Descargat PDF</span>
 							<h:form styleClass="card__form">
 								<p:inputText id="codigo" value="#{libroPDFBean.codigo}"
 									placeholder="Ingresa el ID del libro" required="true"
@@ -112,6 +112,43 @@
 
 							</h:form>
 						</div>
+						<div class="cardib">
+							<span class="card__title">Crear PDF</span>
+							<h:form styleClass="card__form">
+								<p:growl id="messages" showDetail="true" />
+								<p:panel id="cropperPanel" />
+
+								<p:inputText id="nombre" value="#{libroPDFBean.nombre}"
+									placeholder="Ingresa el nombre del libro" required="true"
+									requiredMessage="El nombre es obligatorio"
+									styleClass="card__input" />
+								<p:inputText id="codigo" value="#{libroPDFBean.codigo}"
+									placeholder="Ingresa el código del libro" required="true"
+									requiredMessage="El código es obligatorio"
+									styleClass="card__input" />
+								<p:inputText id="descripcion"
+									value="#{libroPDFBean.descripcion}"
+									placeholder="Ingresa la descripción del libro" required="true"
+									requiredMessage="La descripción es obligatoria"
+									styleClass="card__input" />
+
+								<p:fileUpload mode="advanced" multiple="false"
+									listener="#{libroPDFBean.handleFileUploadImagen}">
+									<p:validateFile 
+										allowTypes="/(\.|\/)(jpg|png)$/" />
+								</p:fileUpload>
+ <!-- estos -->
+								<p:fileUpload mode="advanced" multiple="false"
+									listener="#{libroPDFBean.handleFileUploadPdf}">
+									<p:validateFile  allowTypes="/(\.|\/)(pdf)$/" />
+								</p:fileUpload>
+
+								<p:commandButton value="Crear PDF"
+									action="#{libroPDFBean.crearLibro()}" styleClass="card__button"
+									ajax="false" />
+							</h:form>
+						</div>
+
 
 					</div>
 				</div>
