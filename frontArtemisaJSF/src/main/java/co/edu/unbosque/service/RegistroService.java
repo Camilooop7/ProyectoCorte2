@@ -9,28 +9,29 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
-public class UserService {
+public class RegistroService {
 	private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1)
 			.connectTimeout(Duration.ofSeconds(5)).build();
 
-	public static String doPost(String url, String correo, String contrasena) {
+	public static String doPost(String url, String nombre, String documento, String correo, String contrasena,
+			String rol, String carrera, String semestre) {
 		try {
-			// Codifica los parámetros para la URL
+			String encodedNombre = URLEncoder.encode(nombre, StandardCharsets.UTF_8);
+			String encodedDocumento = URLEncoder.encode(documento, StandardCharsets.UTF_8);
 			String encodedCorreo = URLEncoder.encode(correo, StandardCharsets.UTF_8);
 			String encodedContrasena = URLEncoder.encode(contrasena, StandardCharsets.UTF_8);
+			String encodedRol = URLEncoder.encode(rol, StandardCharsets.UTF_8);
+			String encodedCarrera = URLEncoder.encode(carrera, StandardCharsets.UTF_8);
+			String encodedSemestre = URLEncoder.encode(semestre, StandardCharsets.UTF_8);
 
-			// Construye la URL con los parámetros
-			String fullUrl = url + "?correo=" + encodedCorreo + "&contrasena=" + encodedContrasena;
+			String fullUrl = url + "?nombre=" + encodedNombre + "&documento=" + encodedDocumento + "&correo="
+					+ encodedCorreo + "&contrasena=" + encodedContrasena + "&rol=" + encodedRol + "&carrera="
+					+ encodedCarrera + "&semestre=" + encodedSemestre;
 
-			// Crea la solicitud HTTP
-			HttpRequest request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.noBody()) // No se envía
-																										// cuerpo, solo
-																										// parámetros en
-																										// la URL
+			HttpRequest request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.noBody())
 					.uri(URI.create(fullUrl)).setHeader("User-Agent", "Java 11 HttpClient Bot")
 					.header("Content-Type", "application/x-www-form-urlencoded").build();
 
-			// Envía la solicitud y obtiene la respuesta
 			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 			return response.statusCode() + "\n" + response.body();
 		} catch (InterruptedException | IOException e) {
