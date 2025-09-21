@@ -1,33 +1,55 @@
 package co.edu.unbosque.model;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 
 
+public class CronogramaDTO implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-public class CronogramaDTO {
+	private Long id;
+
 	
-	private  Long id;
-	public String nombre;
-	public String link;
-	private Date fecha;
+	private String nombre;
+
 	
+	private String link;
+
+	
+	private LocalDate fecha; 
+
 	public CronogramaDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
-	
-
-	public CronogramaDTO(String nombre, String link, Date fecha) {
-		super();
+	public CronogramaDTO(String nombre, String link, LocalDate fecha) {
 		this.nombre = nombre;
 		this.link = link;
 		this.fecha = fecha;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof CronogramaDTO))
+			return false;
+		CronogramaDTO that = (CronogramaDTO) o;
+		return Objects.equals(id, that.id) && Objects.equals(nombre, that.nombre) && Objects.equals(link, that.link)
+				&& Objects.equals(fecha, that.fecha);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, nombre, link, fecha);
+	}
 
+	@Override
+	public String toString() {
+		return "CronogramaDTO{" + "id=" + id + ", nombre='" + nombre + '\'' + ", link='" + link + '\'' + ", fecha="
+				+ fecha + '}';
+	}
 	public Long getId() {
 		return id;
 	}
@@ -52,27 +74,13 @@ public class CronogramaDTO {
 		this.link = link;
 	}
 
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
-
-
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "Cronograma [id=" + id + ", nombre=" + nombre + ", link=" + link + "]";
-	}
-
-
-
-
-
 	
-
 }
