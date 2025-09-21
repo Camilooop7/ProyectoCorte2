@@ -157,8 +157,10 @@
     </div>
 
     <!-- DIALOGOS -->
-    <p:dialog header="Teoria Básica" widgetVar="dlgTeoria" modal="false" closable="true" resizable="false" width="1000">
-         <h3>Aquí va la información de programación dinámica.</h3>
+    <p:dialog header="Teoria Básica" widgetVar="dlgTeoria" modal="false" closable="true" resizable="false" width="1000" height="500"
+          style="overflow:auto;">
+          
+        
 
     <p>
         Durante las competencias, dependiendo de la modalidad de la misma, existen ciertas reglas
@@ -209,9 +211,15 @@
         ejercicio se realiza por medio de la consola (<strong>STDIN/STDOUT</strong>), aunque algunas
         competencias sí utilizan entornos gráficos y entornos web (Uva Online Judge, 2012).
     </p>
+    
+    
+    
+    
+    
     </p:dialog>
 
-    <p:dialog header="Algoritmos de Búsqueda" widgetVar="dlgBusqueda" modal="false" closable="true" resizable="false" width="1000">
+    <p:dialog header="Algoritmos de Búsqueda" widgetVar="dlgBusqueda" modal="false" closable="true" resizable="false" width="1000" height="300"
+          style="overflow:auto;">
 
     <p>
         La búsqueda binaria, también conocida como búsqueda de intervalo medio o búsqueda logarítmica, es un algoritmo de búsqueda que encuentra la posición de un valor en un arreglo ordenado. Compara el valor con el elemento en el medio del arreglo, si no son iguales, la mitad en la cual el valor no puede estar es eliminada y la búsqueda sigue en la mitad restante hasta que el valor se encuentre. 
@@ -220,10 +228,26 @@
     </p>
     
     
+    <a href="https://www.geeksforgeeks.org/dsa/searching-algorithms/" class="be" target="_blank" rel="noopener noreferrer">
+    Click me
+</a>
+    
+    
     </p:dialog>
 
-    <p:dialog header="Algoritmos de Ordenamiento" widgetVar="dlgOrdenamiento" modal="false" closable="true" resizable="false" width="1000">
-        <h:outputText value="Aquí va la información de los algoritmos de ordenamiento."/>
+    <p:dialog header="Algoritmos de Ordenamiento" widgetVar="dlgOrdenamiento" modal="false" closable="true" resizable="false" width="1000" height="300"
+          style="overflow:auto;">
+        
+        <p>
+        Un algoritmo de ordenamiento es un conjunto de instrucciones que reorganiza los elementos de una lista o vector en un orden específico, como de menor a mayor, alfabéticamente, o en orden inverso. 
+    </p>
+    
+    
+    <a href="https://www.geeksforgeeks.org/dsa/sorting-algorithms/" class="be" target="_blank" rel="noopener noreferrer">
+    Click me
+</a>
+        
+        
     </p:dialog>
 
     <p:dialog header="Programación Dinámica"
@@ -231,7 +255,18 @@
           modal="false"
           closable="true"
           resizable="false"
-          width="1000">
+          width="1000" height="300"
+          style="overflow:auto;">
+
+<p>
+        La programación dinámica es una técnica para resolver problemas complejos dividiéndolos en subproblemas más sencillos, almacenando sus soluciones para reutilizarlas y así encontrar de manera eficiente la solución óptima del problema original.
+    </p>
+    
+    <a href="https://www.geeksforgeeks.org/competitive-programming/dynamic-programming/" class="be" target="_blank" rel="noopener noreferrer">
+    Click me
+</a>
+
+
 
    
 </p:dialog>
