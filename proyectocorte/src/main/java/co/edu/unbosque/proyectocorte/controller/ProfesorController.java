@@ -40,14 +40,14 @@ public class ProfesorController {
 	}
 
 	@GetMapping(path = "/mostrar")
-	public ResponseEntity<String> mostrarEstudiante() {
+	public ResponseEntity<String> mostrarProfesor() {
 		List<ProfesorDTO> listaProfesor = profesorService.getAll();
 		if (listaProfesor.isEmpty()) {
 			return new ResponseEntity<>("No se encontraron profesores por mostrar", HttpStatus.valueOf(204));
 		} else {
 			StringBuilder stringBuilder = new StringBuilder();
 			listaProfesor.forEach((dto) -> stringBuilder.append(dto.toString() + "\n"));
-			return new ResponseEntity<>("admin: " + stringBuilder.toString(), HttpStatus.valueOf(202));
+			return new ResponseEntity<>("profesor: " + stringBuilder.toString(), HttpStatus.valueOf(202));
 
 		}
 	}

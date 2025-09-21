@@ -1,6 +1,5 @@
 package co.edu.unbosque.service;
 
-import org.primefaces.component.schedule.Schedule;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,14 +19,11 @@ public class ExtenderService {
 	public Map<String, ExtenderExample> createExtenderExamples() {
 		Properties properties = new Properties();
 
-		// 1) Context ClassLoader (el más fiable en servidores)
 		InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(FILE_NAME);
 
-		// 2) Class.getResourceAsStream sin slash
 		if (in == null) {
 			in = ExtenderService.class.getResourceAsStream(FILE_NAME);
 		}
-		// 3) Class.getResourceAsStream con slash
 		if (in == null) {
 			in = ExtenderService.class.getResourceAsStream("/" + FILE_NAME);
 		}

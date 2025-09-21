@@ -738,3 +738,24 @@ button {
 	animation: explode 0.5s forwards;
 	box-shadow: 0 0 30px #077d97;
 }
+
+
+.dialog-texto h3,
+.dialog-texto h4 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.dialog-texto p {
+  margin-bottom: 15px;
+  line-height: 1.6; 
+}
+
+.dialog-texto ul {
+  margin: 0 0 20px 20px; 
+  padding: 0;
+}
+
+.dialog-texto ul li {
+  margin-bottom: 10px; 
+}

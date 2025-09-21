@@ -101,41 +101,140 @@
 							
 							
 							                           
-  
-						
-							
-							
-							                           
-  
 
-
+ 
 <h:form id="form">
     <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
 
     <div class="card">
-        
         <p:accordionPanel widgetVar="basic" scrollIntoView="center" styleClass="acc-custom">
-        	<p:tab title="Teoria Basica">
+            
+            <!-- TAB TEORIA -->
+            <p:tab title="Teoria Basica">
                 <p class="m-0">Teoria Basica para empezar a programar.</p>
-    			<div class="btn-container"><button class="btn-effect-2">Teoria data</button></div>
-  				
+                <div class="btn-container">
+                    <p:commandButton value="Teoria data"
+                                     type="button"
+                                     onclick="PF('dlgTeoria').show();"
+                                     styleClass="btn-effect-2"/>
+                </div>
             </p:tab>
+            
+            <!-- TAB BUSQUEDA -->
             <p:tab title="Algoritmos de busqueda">
-                <p class="m-0">Alogitmo de busqueda para competitiva y resolución de problemas.</p>
-                <div class="btn-container"><button class="btn-effect-2">Algoritmo de busqueda</button></div>
+                <p class="m-0">Algoritmo de búsqueda para competitiva y resolución de problemas.</p>
+                <div class="btn-container">
+                    <p:commandButton value="Algoritmo de búsqueda"
+                                     type="button"
+                                     onclick="PF('dlgBusqueda').show();"
+                                     styleClass="btn-effect-2"/>
+                </div>
             </p:tab>
+            
+            <!-- TAB ORDENAMIENTO -->
             <p:tab title="Algoritmos de ordenamiento">
-                <p class="m-0">Alogitmo de busqueda para competitiva y resolución de problemas.</p>
-                <div class="btn-container"><button class="btn-effect-2">Ordenamiento</button></div>
+                <p class="m-0">Algoritmos de ordenamiento para resolución de problemas.</p>
+                <div class="btn-container">
+                    <p:commandButton value="Ordenamiento"
+                                     type="button"
+                                     onclick="PF('dlgOrdenamiento').show();"
+                                     styleClass="btn-effect-2"/>
+                </div>
             </p:tab>
+            
+            <!-- TAB PROGRAMACION -->
             <p:tab title="Programación dinamica">
-                <p class="m-0">Alogitmo de busqueda para competitiva y resolución de problemas.</p>
-                <div class="btn-container"><button class="btn-effect-2">Programación Dinamica</button></div>
-                
+                <p class="m-0">Algoritmos de programación dinámica para problemas complejos.</p>
+                <div class="btn-container">
+                    <p:commandButton value="Programación Dinámica"
+                                     type="button"
+                                     onclick="PF('dlgPD').show();"
+                                     styleClass="btn-effect-2"/>
+                </div>
             </p:tab>
             
         </p:accordionPanel>
     </div>
+
+    <!-- DIALOGOS -->
+    <p:dialog header="Teoria Básica" widgetVar="dlgTeoria" modal="false" closable="true" resizable="false" width="1000">
+         <h3>Aquí va la información de programación dinámica.</h3>
+
+    <p>
+        Durante las competencias, dependiendo de la modalidad de la misma, existen ciertas reglas
+        que se deben cumplir para mantener la igualdad entre los competidores y evitar cualquier
+        tipo de trampas.
+    </p>
+
+    <h4>Competencias presenciales:</h4>
+    <ul>
+        <li>Durante las competencias está prohibido el uso de elementos electrónicos tales como
+            celulares, dispositivos de almacenamiento extraíbles, reproductores de música,
+            auriculares, entre otros. De ser encontrado con alguno de estos, el participante será
+            retirado del recinto y perderá el derecho a continuar en la competencia por intento de
+            fraude.
+        </li>
+        <li>El ingreso a páginas web distintas a la plataforma oficial de la competencia será
+            penalizado con la descalificación inmediata de la competencia.
+        </li>
+        <li>El consumo de bebidas y alimentos dentro de las aulas no está permitido.</li>
+        <li>Durante la competencia los equipos no podrán hablar ni intercambiar material entre ellos.
+            De ser sorprendidos por primera vez incumpliendo esta norma, se les hará una advertencia,
+            pero si ya es la segunda vez serán descalificados.
+        </li>
+        <li>La copia de código de fuentes externas como páginas web o redes sociales se considera
+            plagio.</li>
+        <li>Está permitido el uso de material como libros de texto, códigos impresos, textos
+            matemáticos, diccionarios, entre otros.</li>
+        <li>Cada equipo tendrá a su disposición una sola máquina durante la competencia.</li>
+        <li>En la competencia los equipos serán conformados por máximo tres competidores.</li>
+    </ul>
+
+    <h4>Competencias virtuales:</h4>
+    <ul>
+        <li>Durante la competencia los equipos no podrán hablar ni intercambiar material entre ellos.
+            De ser sorprendidos por primera vez incumpliendo esta norma, se les hará una advertencia,
+            pero si ya es la segunda vez serán descalificados.
+        </li>
+        <li>En la competencia los equipos serán conformados por máximo tres competidores.</li>
+        <li>La copia de código de fuentes externas como páginas web o redes sociales se considera
+            plagio.</li>
+        <li>No se admite cualquier tipo de ataques informáticos que intenten vulnerar la integridad
+            de los sistemas usados en las competencias.
+        </li>
+    </ul>
+
+    <p>
+        Durante la mayoría de las competencias, la forma de entrada y salida de información de cada
+        ejercicio se realiza por medio de la consola (<strong>STDIN/STDOUT</strong>), aunque algunas
+        competencias sí utilizan entornos gráficos y entornos web (Uva Online Judge, 2012).
+    </p>
+    </p:dialog>
+
+    <p:dialog header="Algoritmos de Búsqueda" widgetVar="dlgBusqueda" modal="false" closable="true" resizable="false" width="1000">
+
+    <p>
+        La búsqueda binaria, también conocida como búsqueda de intervalo medio o búsqueda logarítmica, es un algoritmo de búsqueda que encuentra la posición de un valor en un arreglo ordenado. Compara el valor con el elemento en el medio del arreglo, si no son iguales, la mitad en la cual el valor no puede estar es eliminada y la búsqueda sigue en la mitad restante hasta que el valor se encuentre. 
+
+		La búsqueda binaria es computada en el peor de los casos en un tiempo logarítmico, realizando O (log n) comparaciones, donde n es el número de elementos del arreglo y log es el logaritmo.
+    </p>
+    
+    
+    </p:dialog>
+
+    <p:dialog header="Algoritmos de Ordenamiento" widgetVar="dlgOrdenamiento" modal="false" closable="true" resizable="false" width="1000">
+        <h:outputText value="Aquí va la información de los algoritmos de ordenamiento."/>
+    </p:dialog>
+
+    <p:dialog header="Programación Dinámica"
+          widgetVar="dlgPD"
+          modal="false"
+          closable="true"
+          resizable="false"
+          width="1000">
+
+   
+</p:dialog>
 </h:form>
                     
    <br></br> <br></br> <br></br>                 
