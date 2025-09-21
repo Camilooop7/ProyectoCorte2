@@ -4,133 +4,76 @@ import co.edu.unbosque.service.UserService;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
-import jakarta.enterprise.context.SessionScoped;
-import java.io.Serializable;
+import jakarta.enterprise.context.RequestScoped;
 
 @Named("userBean")
-@SessionScoped
-public class UserBean implements Serializable {
+@RequestScoped
+public class UserBean {
+	private String username;
+	private String password;
 
-	private String correo;
-	private String contrasena;
-	private String nuevoCorreo;
-	private String nuevoUsuario;
-	private String nuevaContrasena;
-
-	private boolean loggedIn = false;
-
-	public String login() {
+	public String doLogin() {
 		try {
-			String respuesta = UserService.doPost("http://localhost:8081/login/inicio", correo, contrasena);
+			String respuesta = UserService.doPost("http://localhost:8081/login/inicio", username, password);
+
 			String[] data = respuesta.split("\n");
-			if ("200".equals(data[0])) {
-				loggedIn = true;
-				showMessage(FacesMessage.SEVERITY_INFO, "¡Bienvenida!", data[1]);
-				clearLoginFields();
-				return "index?faces-redirect=true";
+			String code = (data.length > 0) ? data[0] : "500";
+			String msg = (data.length > 1) ? data[1] : "Respuesta inválida del servidor";
+
+			showStickyLogin(code, msg);
+
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+
+			username = "";
+			password = "";
+
+			if ("200".equals(code)) {
+				return "menu?faces-redirect=true";
 			} else {
-				loggedIn = false;
-				showMessage(FacesMessage.SEVERITY_WARN, "Advertencia", data[1]);
 				return null;
 			}
 		} catch (Exception e) {
-			loggedIn = false;
-			showMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al iniciar sesión: " + e.getMessage());
+			e.printStackTrace();
+			showStickyLogin("500", "Error al iniciar sesión: " + e.getMessage());
 			return null;
 		}
 	}
 
-	public String registrar() {
-		try {
-			String respuesta = UserService.doPostRegistro("http://localhost:8081/login/registro", nuevoCorreo,
-					nuevaContrasena, nuevoUsuario);
-			String[] data = respuesta.split("\n");
-			if ("200".equals(data[0])) {
-				loggedIn = true;
-				showMessage(FacesMessage.SEVERITY_INFO, "¡Cuenta creada!", data[1]);
-				clearRegisterFields();
-				clearLoginFields();
-				return "index?faces-redirect=true";
-			} else {
-				loggedIn = false;
-				showMessage(FacesMessage.SEVERITY_WARN, "Advertencia", data[1]);
-				return null;
-			}
-		} catch (Exception e) {
-			loggedIn = false;
-			showMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al crear la cuenta: " + e.getMessage());
-			return null;
+	public void showStickyLogin(String code, String content) {
+		FacesMessage.Severity severity;
+		String summary;
+
+		switch (code) {
+		case "200":
+			severity = FacesMessage.SEVERITY_INFO;
+			summary = "Éxito";
+			break;
+		case "401":
+			severity = FacesMessage.SEVERITY_WARN;
+			summary = "Advertencia";
+			break;
+		default:
+			severity = FacesMessage.SEVERITY_ERROR;
+			summary = "Error";
+			break;
 		}
+
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, content));
 	}
 
-	public String logout() {
-		loggedIn = false;
-		clearLoginFields();
-		clearRegisterFields();
-		return "login?faces-redirect=true";
+	public String getUsername() {
+		return username;
 	}
 
-	private void showMessage(FacesMessage.Severity severity, String summary, String detail) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	private void clearLoginFields() {
-		correo = "";
-		contrasena = "";
+	public String getPassword() {
+		return password;
 	}
 
-	private void clearRegisterFields() {
-		nuevoCorreo = "";
-		nuevoUsuario = "";
-		nuevaContrasena = "";
-	}
-
-	// --- Getters & Setters ---
-	public String getCorreo() {
-		return correo;
-	}
-
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
-
-	public String getContrasena() {
-		return contrasena;
-	}
-
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
-	}
-
-	public String getNuevoCorreo() {
-		return nuevoCorreo;
-	}
-
-	public void setNuevoCorreo(String nuevoCorreo) {
-		this.nuevoCorreo = nuevoCorreo;
-	}
-
-	public String getNuevoUsuario() {
-		return nuevoUsuario;
-	}
-
-	public void setNuevoUsuario(String nuevoUsuario) {
-		this.nuevoUsuario = nuevoUsuario;
-	}
-
-	public String getNuevaContrasena() {
-		return nuevaContrasena;
-	}
-
-	public void setNuevaContrasena(String nuevaContrasena) {
-		this.nuevaContrasena = nuevaContrasena;
-	}
-
-	public boolean isLoggedIn() {
-		return loggedIn;
-	}
-
-	public void setLoggedIn(boolean loggedIn) {
-		this.loggedIn = loggedIn;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
