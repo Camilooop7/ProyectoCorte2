@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="contenido">
+
+		<section class="hero animate__animated animate__fadeIn"
+			style="margin-top:2rem;">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-md-7 text-center text-md-start">
+					<h2 class="display-4 mb-3 fw-bold">Bienvenida a la Biblioteca
+						Artemisa 🌸</h2>
+					<p class="lead mb-4">
+						Un espacio para mujeres curiosas, creativas y apasionadas por el
+						aprendizaje.<br /> Explora libros, eventos, recursos y desafíos
+						pensados para ti.
+					</p>
+					<h:link outcome="libros"
+						styleClass="btn btn-lg btn-explorar-libros">
+						<i class="bx bxs-book-open"></i> Explorar libros
+                        </h:link>
+				</div>
+				<div class="col-md-5 text-center">
+					<img src="https://cdn-icons-png.flaticon.com/512/5520/5520840.png"
+						alt="Logo Biblioteca Artemisa"
+						class="img-fluid animate__animated animate__pulse animate__infinite logo-artemisa" />
+				</div>
+			</div>
+		</div>
+		</section>
+
+		<section class="cards container animate__animated animate__fadeInUp"
+			style="margin-bottom:2rem;">
+		<div class="row justify-content-center">
+			<div class="col-md-3 mb-3">
+				<h:link outcome="libros" styleClass="card-link">
+					<div class="card text-center py-4 px-2 h-100 card-libros">
+						<i class="ri-book-2-line card-icon"></i>
+						<h5 class="mt-2">Libros</h5>
+						<p>Explora nuestra colección de libros recomendada.</p>
+					</div>
+				</h:link>
+			</div>
+			<div class="col-md-3 mb-3">
+				<h:link outcome="eventos" styleClass="card-link">
+					<div class="card text-center py-4 px-2 h-100 card-eventos">
+						<i class="ri-calendar-event-line card-icon"></i>
+						<h5 class="mt-2">Eventos</h5>
+						<p>Participa en competencias presenciales y virtuales.</p>
+					</div>
+				</h:link>
+			</div>
+			<div class="col-md-3 mb-3">
+				<h:link outcome="problemas" styleClass="card-link">
+					<div class="card text-center py-4 px-2 h-100 card-problemas">
+						<i class="ri-lightbulb-line card-icon"></i>
+						<h5 class="mt-2">Problemas</h5>
+						<p>Resuelve retos y mejora tus habilidades.</p>
+					</div>
+				</h:link>
+			</div>
+			<div class="col-md-3 mb-3">
+				<h:link outcome="links" styleClass="card-link">
+					<div class="card text-center py-4 px-2 h-100 card-links">
+						<i class="ri-links-line card-icon"></i>
+						<h5 class="mt-2">Links</h5>
+						<p>Encuentra páginas de entrenamiento en el lenguaje que
+							desees.</p>
+					</div>
+				</h:link>
+			</div>
+		</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>
