@@ -1,55 +1,26 @@
 package co.edu.unbosque.model;
 
-import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
-
-
-public class CronogramaDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class CronogramaDTO {
 
 	private Long id;
-
-	
-	private String nombre;
-
-	
-	private String link;
-
-	
-	private LocalDate fecha; 
+	public String nombre;
+	public String link;
+	private Date fecha;
 
 	public CronogramaDTO() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public CronogramaDTO(String nombre, String link, LocalDate fecha) {
+	public CronogramaDTO(String nombre, String link, Date fecha) {
+		super();
 		this.nombre = nombre;
 		this.link = link;
 		this.fecha = fecha;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (!(o instanceof CronogramaDTO))
-			return false;
-		CronogramaDTO that = (CronogramaDTO) o;
-		return Objects.equals(id, that.id) && Objects.equals(nombre, that.nombre) && Objects.equals(link, that.link)
-				&& Objects.equals(fecha, that.fecha);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, nombre, link, fecha);
-	}
-
-	@Override
-	public String toString() {
-		return "CronogramaDTO{" + "id=" + id + ", nombre='" + nombre + '\'' + ", link='" + link + '\'' + ", fecha="
-				+ fecha + '}';
-	}
 	public Long getId() {
 		return id;
 	}
@@ -74,13 +45,35 @@ public class CronogramaDTO implements Serializable {
 		this.link = link;
 	}
 
-	public LocalDate getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(LocalDate fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Cronograma [id=" + id + ", nombre=" + nombre + ", link=" + link + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(fecha, id, link, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CronogramaDTO other = (CronogramaDTO) obj;
+		return Objects.equals(fecha, other.fecha) && Objects.equals(id, other.id) && Objects.equals(link, other.link)
+				&& Objects.equals(nombre, other.nombre);
+	}
+
 }

@@ -120,6 +120,7 @@ public class LibroPDFBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 					"No se pudo obtener la información del libro: " + e.getMessage()));
 		}
+		descargarPdf();
 	}
 
 	public void handleFileUploadImagen(FileUploadEvent event) {
