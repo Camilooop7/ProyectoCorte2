@@ -30,7 +30,7 @@
 
 <h:body>
 
-<div class="main-container">
+    <div class="main-container">
         <div class="aside">
             <div class="logo">
                 <a href="#"><span>A</span>rtemisa <br></br><span>UEB</span></a>
@@ -43,136 +43,136 @@
             <ul class="nav">
                 <li><a href="menu.xhtml" class="active"><i class="fa fa-home"></i>Home</a></li>
                 <li><a href="temario.xhtml"><i class="bi bi-card-heading"></i>Temario</a></li>
-                <li><a href="#services" ><i class="bi bi-balloon-heart"></i>Problemas</a></li>
-                <li><a href="libro.xhtml" ><i class="bi bi-book-half"></i>Libros</a></li>
-                <li><a href="link.xhtml" ><i class="bi bi-link"></i>Links Valiosos</a></li>
-                <li><a href="cronograma.xhtml" ><i class="bi bi-calendar-week"></i>Eventos</a></li>
-                
-                
-                <div class="card">
-    <h:form>
-        <p:growl id="messages" showDetail="true"/>
+                <li><a href="#services"><i class="bi bi-balloon-heart"></i>Problemas</a></li>
+                <li><a href="libro.xhtml"><i class="bi bi-book-half"></i>Libros</a></li>
+                <li><a href="link.xhtml"><i class="bi bi-link"></i>Links Valiosos</a></li>
+                <li><a href="cronograma.xhtml"><i class="bi bi-calendar-week"></i>Eventos</a></li>
 
-       
-        <p:menuButton  value="Opcion">
-            
-            
-            <p:menuitem value="Judge" url="https://domjudgeacademicueb.com/public" icon="bi bi-code-square"/>
-            <p:menuitem value="CodeChef" url="https://www.codechef.com/" icon="bi bi-cookie"/>
-            <p:menuitem value="Vjudge" url="https://vjudge.net/group/cuevadelprofdiego" icon="bi bi-emoji-angry"/>
-            <p:menuitem value="OnlineJudge" url="https://onlinejudge.org/" icon="bi bi-joystick"/>
-        </p:menuButton>
-    </h:form>
-</div>
-                
-                
+                <div class="card">
+                    <h:form>
+                        <p:growl id="messages" showDetail="true" />
+
+                        <p:menuButton value="Opción">
+                            <p:menuitem value="Judge" url="https://domjudgeacademicueb.com/public" icon="bi bi-code-square" />
+                            <p:menuitem value="CodeChef" url="https://www.codechef.com/" icon="bi bi-cookie" />
+                            <p:menuitem value="Vjudge" url="https://vjudge.net/group/cuevadelprofdiego" icon="bi bi-emoji-angry" />
+                            <p:menuitem value="OnlineJudge" url="https://onlinejudge.org/" icon="bi bi-joystick" />
+                        </p:menuButton>
+                    </h:form>
+                </div>
             </ul>
-            
-            
-            
-            
-            
-            
         </div>
-        
-        
-        
-        
 
         <div class="main-content">
             <section class="home section active" id="home">
-            
-            
-            
+
                 <div class="container">
                     <div class="row">
                         <div class="home-info padd-15">
-                            <h3 class="hello"> Artemisa UEB <span class="name">Sergio - Camilo - Jeisson - Luna</span></h3>
+                            <h3 class="hello">Artemisa UEB <span class="name">Sergio - Camilo - Jeisson - Luna</span></h3>
                             <h3 class="profession">Hola, <span class="typing">Bienvenido :) </span></h3>
-                            <p class="animate__animated animate__lightSpeedInRight">“Soy Artemisa UEB. Aquí encontrarás información, documentos y los mejores consejos para despertar y potenciar tu programador interior.”</p>
-                            
-                            
-                            
-                            <br></br>
-							<br></br>                            
-                            <div class="boxes">
-  
-<div class="box">
-  <h2>Mejora tu Logica.</h2>
-  <br></br>
-  <h2>Escritura y sintaxis de código.</h2>
-  <br></br>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/C%2B%2B_logo.png"></img>
-</div>
-  
-  
-  
-<div class="box">
-  <h2>Trabajo en equipo.</h2>
-  <br></br>
-  
-  <img src="https://cdn.freebiesupply.com/logos/large/2x/java-4-logo-png-transparent.png"></img>
-</div>
-  
-<div class="box">
-  <h2>Resistencia al fracaso.</h2>
-  <br></br>
-  
-  <img src="https://images.seeklogo.com/logo-png/33/1/python-logo-png_seeklogo-332789.png"></img>
-</div>
-</div>
-                            
-                            
-                            
-                            
-                        </div>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+                            <p class="animate__animated animate__lightSpeedInRight">
+                                “Soy Artemisa UEB. Aquí encontrarás información, documentos y los mejores consejos para despertar y potenciar tu programador interior.”
+                            </p>
 
-                        <div class="home-img padd-15">
-                            <img src="assets/ueblog.png" alt="hero image"/>
+                            <br></br>
+                            <br></br>
+
+                            <div class="card">
+                                <h:form id="form">
+                                    <p:growl id="messages" showDetail="true" life="4000" />
+
+                                    <p:schedule id="schedule"
+                                                value="#{cronogramaBean.eventModel}"
+                                                widgetVar="myschedule"
+                                                locale="#{cronogramaBean.locale}"
+                                                
+                                                clientTimeZone="#{cronogramaBean.clientTimeZone}"
+                                                view="#{cronogramaBean.view}"
+                                                leftHeaderTemplate="#{cronogramaBean.leftHeaderTemplate}"
+                                                centerHeaderTemplate="#{cronogramaBean.centerHeaderTemplate}"
+                                                rightHeaderTemplate="#{cronogramaBean.rightHeaderTemplate}"
+                                                height="#{cronogramaBean.height}"
+                                                extender="#{cronogramaBean.extenderCode}">
+
+                                        <p:ajax event="dateSelect"
+                                                listener="#{cronogramaBean.onDateSelect}"
+                                                update="eventDetails"
+                                                oncomplete="PF('eventDialog').show();" />
+
+                                        <p:ajax event="eventSelect"
+                                                listener="#{cronogramaBean.onEventSelect}"
+                                                update="eventDetails"
+                                                oncomplete="PF('eventDialog').show();" />
+
+                                        <p:ajax event="eventMove"
+                                                listener="#{cronogramaBean.onEventMove}"
+                                                update="messages" />
+
+                                        <p:ajax event="eventResize"
+                                                listener="#{cronogramaBean.onEventResize}"
+                                                update="messages" />
+                                    </p:schedule>
+
+                                    <p:dialog id="eventDialog"
+                                              widgetVar="eventDialog"
+                                              header="Detalles del evento"
+                                              modal="true"
+                                              showEffect="fade"
+                                              hideEffect="fade"
+                                              appendTo="@(body)">
+
+                                        <h:panelGrid id="eventDetails" columns="2" cellpadding="7">
+
+                                            <p:outputLabel for="title" value="Título" styleClass="font-bold" />
+                                            <p:inputText id="title" value="#{cronogramaBean.event.title}" required="true" />
+
+                                            <p:outputLabel for="from" value="Inicio" styleClass="font-bold" />
+                                            <p:datePicker id="from"
+                                                          value="#{cronogramaBean.event.startDate}"
+                                                          pattern="dd/MM/yyyy"
+                                                          showTime="true"
+                                                          appendTo="@(body)" />
+
+                                            <p:outputLabel for="to" value="Fin" styleClass="font-bold" />
+                                            <p:datePicker id="to"
+                                                          value="#{cronogramaBean.event.endDate}"
+                                                          pattern="dd/MM/yyyy"
+                                                          showTime="true"
+                                                          appendTo="@(body)" />
+
+                                            <p:outputLabel for="allDay" value="Todo el día" styleClass="font-bold" />
+                                            <h:selectBooleanCheckbox id="allDay" value="#{cronogramaBean.event.allDay}" />
+                                        </h:panelGrid>
+
+                                        <div class="flex justify-content-between mt-3">
+                                            <p:commandButton type="reset" value="Limpiar" styleClass="font-bold ui-button-outlined" />
+
+                                            <p:commandButton id="addButton"
+                                                             value="Guardar"
+                                                             action="#{cronogramaBean.addEvent}"
+                                                             update=":form:schedule,:form:messages"
+                                                             oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+
+                                            <p:commandButton value="Eliminar"
+                                                             styleClass="ui-button-danger"
+                                                             process="@this"
+                                                             update=":form:schedule,:form:messages"
+                                                             onstart="if(!PF('myschedule').getSelectedEvent()){return false;}"
+                                                             onclick="PrimeFaces.addSubmitParam(this, 'eventId', PF('myschedule').getSelectedEvent().id);"
+                                                             actionListener="#{cronogramaBean.onEventDelete}"
+                                                             oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                                        </div>
+                                    </p:dialog>
+                                </h:form>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                
-                
-                
-                
-                
-                
-                
             </section>
-    
-            
         </div>
     </div>
-    
-    
-    
-    
-    
 
-    <div class="style-switcher">
-        <div class="style-switcher-toggler s-icon">
-            <i class="fas fa-cog fa-spin"></i>
-        </div>
-
-        <div class="day-night s-icon">
-            <i class="fas "></i>
-        </div>
-
-        <h4>Theme Colors</h4>
-
-        
-    </div>
 </h:body>
 
 
