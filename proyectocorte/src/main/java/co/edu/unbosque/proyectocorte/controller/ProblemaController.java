@@ -20,36 +20,37 @@ import co.edu.unbosque.proyectocorte.service.ProblemaService;
 @CrossOrigin(origins = { "*" })
 @RequestMapping(path = { "/problema" })
 public class ProblemaController {
-	
+
 	@Autowired
 	private ProblemaService problemaService;
-	
+
 	@PostMapping(path = "/crear")
-	public ResponseEntity<String> crear(@RequestParam String titulo, int dificultad, String tema, String juez, String link) {
-		ProblemaDTO newProblema = new ProblemaDTO(titulo, dificultad, tema,juez,link);
+	public ResponseEntity<String> crear(@RequestParam String titulo, @RequestParam int dificultad,
+			@RequestParam String tema, @RequestParam String juez, @RequestParam String link) {
+		ProblemaDTO newProblema = new ProblemaDTO(titulo, dificultad, tema, juez, link);
 		int status = problemaService.create(newProblema);
-		
+
 		if (status == 0) {
 			return new ResponseEntity<>("problema creado con exito", HttpStatus.CREATED);
-		}else {
-			
+		} else {
+
 			return new ResponseEntity<>("Error al crear el problema", HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
-	
-	@GetMapping(path ="/mostrar")
-	public  ResponseEntity<String>  mostrarEstudiante( ) {
+
+	@GetMapping(path = "/mostrar")
+	public ResponseEntity<String> mostrarEstudiante() {
 		List<ProblemaDTO> listaProblmea = problemaService.getAll();
 		if (listaProblmea.isEmpty()) {
 			return new ResponseEntity<>("No se encontraron problemas por mostrar", HttpStatus.valueOf(204));
-		}else {
+		} else {
 			StringBuilder stringBuilder = new StringBuilder();
 			listaProblmea.forEach((dto) -> stringBuilder.append(dto.toString() + "\n"));
 			return new ResponseEntity<>("admin: " + stringBuilder.toString(), HttpStatus.valueOf(202));
-			
+
 		}
 	}
-	
+
 	@DeleteMapping(path = "/eliminar")
 	public ResponseEntity<String> eliminar(@RequestParam Long id) {
 
@@ -63,7 +64,5 @@ public class ProblemaController {
 		}
 
 	}
-
-	
 
 }

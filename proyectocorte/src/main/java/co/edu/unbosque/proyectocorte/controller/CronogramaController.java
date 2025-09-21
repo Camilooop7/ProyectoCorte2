@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.unbosque.proyectocorte.dto.CronogramaDTO;
-import co.edu.unbosque.proyectocorte.dto.ProfesorDTO;
 import co.edu.unbosque.proyectocorte.service.CronogramaService;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -29,7 +29,8 @@ public class CronogramaController {
 	
 	
 	@PostMapping(path ="/crear")
-	public ResponseEntity<String> crearCronogrma(@RequestBody String nombre, String link, Date Fecha) {
+	public ResponseEntity<String> crearCronogrma(  @RequestParam String nombre,
+			  @RequestParam String link, @DateTimeFormat(iso = ISO.DATE) Date Fecha) {
 		
 		CronogramaDTO newCronograma = new CronogramaDTO(nombre, link, Fecha);
 		int status = cronogramaService.create(newCronograma);
