@@ -25,7 +25,11 @@ public class ProblemaController {
 	private ProblemaService problemaService;
 	
 	@PostMapping(path = "/crear")
-	public ResponseEntity<String> crear(@RequestParam String titulo, int dificultad, String tema, String juez, String link) {
+	public ResponseEntity<String> crear(  @RequestParam String titulo,
+            @RequestParam int dificultad,
+            @RequestParam String tema,
+            @RequestParam String juez,
+            @RequestParam String link) {
 		ProblemaDTO newProblema = new ProblemaDTO(titulo, dificultad, tema,juez,link);
 		int status = problemaService.create(newProblema);
 		
