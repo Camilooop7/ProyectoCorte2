@@ -70,18 +70,16 @@
                             “Soy Artemisa UEB. Aquí encontrarás información, documentos y los mejores consejos para despertar y potenciar tu programador interior.”
                         </p>
 
-                        <!-- === FORM PRINCIPAL === -->
                         <h:form id="form" width="1500" >
                             <p:growl id="msgs" showDetail="true" life="5000" width="1500"/>
 
-                            <!-- FAB -->
                             <p:commandButton id="fabNuevo"
                                              icon="pi pi-plus"
                                              styleClass="ui-button-rounded ui-button-help fab"
                                              type="button"
-                                             onclick="PF('dlgNuevoProblema').show()" />
+                                             onclick="PF('dlgNuevoProblema').show()"
+                                             rendered="#{auth.admin or auth.profesor}" />
 
-                            <!-- DIALOG CREAR -->
                             <p:dialog id="dlgNuevoProblema"
                                       header="Nuevo problema"
                                       widgetVar="dlgNuevoProblema"
@@ -90,7 +88,8 @@
                                       draggable="false"
                                       resizable="false"
                                       closeOnEscape="true"
-                                      styleClass="w-30rem">
+                                      styleClass="w-30rem"
+                                      rendered="#{auth.admin or auth.profesor}">
 
                                 <p:messages id="msgsDlg" showDetail="true" closable="true" />
 
@@ -134,7 +133,6 @@
                                 </div>
                             </p:dialog>
 
-                            <!-- Botón Listar -->
                             <div class="mb-2">
                                 <p:commandButton value="Listar problemas"
                                                  action="#{problemaBean.listarProblemas}"
@@ -143,15 +141,15 @@
                                                  icon="pi pi-list" />
                             </div>
 
-                            <!-- TABLA TIPADA -->
                             <p:dataTable id="tabla"
-                                         value="#{problemaBean.lista}"
-                                         var="p"
-                                         rows="10"
-                                         paginator="true"
-                                         emptyMessage="No hay problemas para mostrar"
-                                         styleClass="container"
-                                         responsiveLayout="scroll">
+             value="#{problemaBean.lista}"
+             var="p"
+             rows="10"
+             paginator="true"
+             emptyMessage="No hay problemas para mostrar"
+             style="width:100%"
+             tableStyle="width:100%; table-layout:auto;"
+             responsiveLayout="scroll">
 
                                 <p:column headerText="ID" style="width:6rem; text-align:center;">
                                     <h:outputText value="#{p.id}" />

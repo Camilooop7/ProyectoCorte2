@@ -63,7 +63,8 @@
                                 <h:form id="crudForm">
                                     <p:growl id="msgs" showDetail="true" life="4000" />
 
-                                    <p:panel header="Crear Cronograma">
+                                    <!-- Panel de creación SOLO admin/profesor -->
+                                    <p:panel header="Crear Cronograma" rendered="#{auth.admin or auth.profesor}">
                                         <h:panelGrid columns="2" columnClasses="col-3,col-9" cellpadding="6">
 
                                             <p:outputLabel for="nombre" value="Nombre" />
@@ -99,6 +100,11 @@
                                                              icon="pi pi-list" />
                                         </div>
                                     </p:panel>
+
+                                    <!-- Nota visible para no autorizados -->
+                                    <h:panelGroup rendered="#{not (auth.admin or auth.profesor)}" styleClass="alert alert-secondary mb-3">
+                                        Solo <strong>profesores</strong> y <strong>administradores</strong> pueden crear cronogramas.
+                                    </h:panelGroup>
 
                                     <p:panel id="listPanel" header="Cronogramas" styleClass="mt-3">
                                         <p:dataTable value="#{cronogramaBean.listado}" var="row" rows="10" paginator="true"
