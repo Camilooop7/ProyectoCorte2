@@ -44,8 +44,6 @@
                 <li><a href="link.xhtml"><i class="bi bi-link"></i>Links Valiosos</a></li>
                 <li><a href="cronograma.xhtml"><i class="bi bi-calendar-week"></i>Eventos</a></li>
             </ul>
-
-            
         </div>
 
         <div class="main-content">
@@ -92,12 +90,12 @@
                                             <p:commandButton value="Crear"
                                                              action="#{cronogramaBean.doCreate}"
                                                              process="@form"
-                                                             update="crudForm:msgs crudForm:listPanel"
+                                                             update="crudForm:msgs crudForm:listPanel crudForm:cal"
                                                              icon="pi pi-check" />
                                             <p:commandButton value="Listar"
                                                              action="#{cronogramaBean.listar}"
                                                              process="@this"
-                                                             update="crudForm:listPanel crudForm:msgs"
+                                                             update="crudForm:listPanel crudForm:msgs crudForm:cal"
                                                              icon="pi pi-list" />
                                         </div>
                                     </p:panel>

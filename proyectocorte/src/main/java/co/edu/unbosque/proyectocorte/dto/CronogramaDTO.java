@@ -1,6 +1,7 @@
 package co.edu.unbosque.proyectocorte.dto;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Objects;
 
 
@@ -11,7 +12,7 @@ public class CronogramaDTO {
 	private  Long id;
 	public String nombre;
 	public String link;
-	private Date fecha;
+	private LocalDate fecha;
 	
 	public CronogramaDTO() {
 		// TODO Auto-generated constructor stub
@@ -19,7 +20,7 @@ public class CronogramaDTO {
 
 	
 
-	public CronogramaDTO(String nombre, String link, Date fecha) {
+	public CronogramaDTO(String nombre, String link, LocalDate fecha) {
 		super();
 		this.nombre = nombre;
 		this.link = link;
@@ -52,24 +53,23 @@ public class CronogramaDTO {
 		this.link = link;
 	}
 
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
 
 
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 
 
 
 	@Override
-	public String toString() {
-		return "Cronograma [id=" + id + ", nombre=" + nombre + ", link=" + link + "]";
-	}
-
-
+    public String toString() {
+        String f = fecha != null ? new SimpleDateFormat("yyyy-MM-dd").format(fecha) : "";
+        return "Cronograma [id=" + id + ", nombre=" + nombre + ", link=" + link + ", fecha=" + f + "]";
+    }
 
 	@Override
 	public int hashCode() {

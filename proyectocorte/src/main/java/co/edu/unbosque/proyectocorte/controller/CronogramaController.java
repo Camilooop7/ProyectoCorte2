@@ -1,5 +1,6 @@
 package co.edu.unbosque.proyectocorte.controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,33 +29,39 @@ public class CronogramaController {
 	private CronogramaService cronogramaService;
 	
 	
-	@PostMapping(path ="/crear")
-	public ResponseEntity<String> crearCronogrma(  @RequestParam String nombre,
-			  @RequestParam String link, @DateTimeFormat(iso = ISO.DATE) Date Fecha) {
-		
-		CronogramaDTO newCronograma = new CronogramaDTO(nombre, link, Fecha);
-		int status = cronogramaService.create(newCronograma);
-		
-		if (status == 0) {
-			return new ResponseEntity<>("cronogrma creado con exito", HttpStatus.CREATED);
-		}else {
-			
-			return new ResponseEntity<>("Error al crear el cronogrma", HttpStatus.NOT_ACCEPTABLE);
-		}
+	@PostMapping(path = "/crear")
+	public ResponseEntity<String> crearCronograma(
+	        @RequestParam String nombre,
+	        @RequestParam String link,
+	        @RequestParam("fecha") @DateTimeFormat(iso = ISO.DATE) LocalDate fecha
+	) {
+	  
+	    CronogramaDTO newCronograma = new CronogramaDTO(nombre, link, fecha);
+	    int status = cronogramaService.create(newCronograma);
+
+	    if (status == 0) return new ResponseEntity<>("cronograma creado con exito", HttpStatus.CREATED);
+	    return new ResponseEntity<>("Error al crear el cronograma", HttpStatus.NOT_ACCEPTABLE);
 	}
 	
-	@GetMapping(path ="/mostrar")
-	public  ResponseEntity<String>  mostrarConograma( ) {
-		List<CronogramaDTO> listaCronograma = cronogramaService.getAll();
-		if (listaCronograma.isEmpty()) {
-			return new ResponseEntity<>("No se encontraron profesores por mostrar", HttpStatus.valueOf(204));
-		}else {
-			StringBuilder stringBuilder = new StringBuilder();
-			listaCronograma.forEach((dto) -> stringBuilder.append(dto.toString() + "\n"));
-			return new ResponseEntity<>("admin: " + stringBuilder.toString(), HttpStatus.valueOf(202));
-			
-		}
+	@GetMapping(path = "/mostrar")
+	public ResponseEntity<String> mostrarCronograma() {
+	    List<CronogramaDTO> lista = cronogramaService.getAll();
+	    if (lista.isEmpty()) {
+	        return new ResponseEntity<>("No se encontraron cronogramas por mostrar", HttpStatus.NO_CONTENT);
+	    }
+	    StringBuilder sb = new StringBuilder();
+	    for (CronogramaDTO dto : lista) {
+	        String nombre   = dto.getNombre() == null ? "" : dto.getNombre();
+	        String link     = dto.getLink()   == null ? "" : dto.getLink();
+	        String fechaStr = dto.getFecha()  == null ? "" : dto.getFecha().toString(); // yyyy-MM-dd
+	        sb.append("nombre: ").append(nombre)
+	          .append(", link: ").append(link)
+	          .append(", fecha: ").append(fechaStr)
+	          .append("\n");
+	    }
+	    return new ResponseEntity<>(sb.toString(), HttpStatus.ACCEPTED); // 202
 	}
+	
 	
 	@DeleteMapping(path = "/eliminar")
 	public ResponseEntity<String> eliminar(@RequestParam Long id) {
