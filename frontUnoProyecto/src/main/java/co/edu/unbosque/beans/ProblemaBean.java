@@ -23,14 +23,14 @@ public class ProblemaBean implements Serializable {
 	private String juez;
 	private String link;
 
+	// ID para eliminar por diálogo
+	private Long deleteId;
+
 	private List<String> listado = new ArrayList<>();
-
-
 	private List<ProblemaRow> lista = new ArrayList<>();
 
 	private static final String BASE_CREATE = "http://localhost:8081/problema/crear";
 	private static final String BASE_ROOT = "http://localhost:8081";
-
 
 	public static class ProblemaRow {
 		private Long id;
@@ -101,7 +101,7 @@ public class ProblemaBean implements Serializable {
 		}
 	}
 
-
+	/* Crear */
 	public void crear() {
 		try {
 			String resp = ProblemaService.crear(BASE_CREATE, titulo, dificultad, tema, juez, link);
@@ -121,7 +121,7 @@ public class ProblemaBean implements Serializable {
 		}
 	}
 
-
+	/* Listar */
 	public void listarProblemas() {
 		listado.clear();
 		lista.clear();
@@ -153,6 +153,36 @@ public class ProblemaBean implements Serializable {
 		}
 	}
 
+	/* Eliminar por ID desde el diálogo */
+	public void eliminarById() {
+		if (deleteId == null || deleteId <= 0) {
+			showWarn("Ingresa un ID válido para eliminar.");
+			return;
+		}
+		eliminar(deleteId);
+		deleteId = null;
+	}
+
+	/* Lógica de eliminación */
+	private void eliminar(Long id) {
+		try {
+			String resp = ProblemaService.eliminar(BASE_ROOT, id);
+			String[] data = resp.split("\n", 2);
+			String code = (data.length > 0) ? data[0] : "500";
+			String body = (data.length > 1) ? data[1] : "";
+
+			if ("200".equals(code)) {
+				showInfo(body.isBlank() ? "Problema eliminado con éxito" : body);
+				listarProblemas();
+			} else {
+				showWarn(body.isBlank() ? "No se pudo eliminar (¿ID inexistente?)." : body);
+			}
+		} catch (Exception e) {
+			showError("Error al eliminar: " + e.getMessage());
+		}
+	}
+
+	/* Parser de línea plano que devuelve el backend */
 	private ProblemaRow parseLinea(String raw) {
 		if (raw == null)
 			return null;
@@ -203,7 +233,6 @@ public class ProblemaBean implements Serializable {
 		link = "";
 	}
 
-
 	private void showInfo(String msg) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", msg));
 	}
@@ -216,6 +245,7 @@ public class ProblemaBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
 	}
 
+	/* Getters/Setters */
 	public String getTitulo() {
 		return titulo;
 	}
@@ -254,6 +284,14 @@ public class ProblemaBean implements Serializable {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+
+	public Long getDeleteId() {
+		return deleteId;
+	}
+
+	public void setDeleteId(Long deleteId) {
+		this.deleteId = deleteId;
 	}
 
 	public List<String> getListado() {

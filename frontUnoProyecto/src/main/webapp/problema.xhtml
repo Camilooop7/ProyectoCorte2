@@ -71,7 +71,7 @@
                         </p>
 
                         <h:form id="form" width="1500" >
-                            <p:growl id="msgs" showDetail="true" life="5000" width="1500"/>
+                            <p:growl id="msgs" showDetail="true" life="5000" width="1500" autoUpdate="true"/>
 
                             <p:commandButton id="fabNuevo"
                                              icon="pi pi-plus"
@@ -133,23 +133,66 @@
                                 </div>
                             </p:dialog>
 
-                            <div class="mb-2">
+                            <div class="mb-2 d-flex gap-2">
                                 <p:commandButton value="Listar problemas"
                                                  action="#{problemaBean.listarProblemas}"
                                                  process="@this"
                                                  update=":form:tabla :form:msgs"
                                                  icon="pi pi-list" />
+
+                                <p:commandButton value="Eliminar por ID"
+                                                 type="button"
+                                                 icon="pi pi-trash"
+                                                 styleClass="ui-button-danger"
+                                                 onclick="PF('dlgEliminarProblema').show()"
+                                                 rendered="#{auth.admin or auth.profesor}"/>
                             </div>
 
+                            <p:dialog id="dlgEliminarProblema"
+                                      header="Eliminar problema por ID"
+                                      widgetVar="dlgEliminarProblema"
+                                      modal="false"
+                                      closable="true"
+                                      resizable="false"
+                                      appendTo="@form"
+                                      rendered="#{auth.admin or auth.profesor}">
+                                <h:panelGrid columns="2" columnClasses="col-4,col-8" cellpadding="6">
+                                    <p:outputLabel for="delId" value="ID a eliminar" />
+                                    <p:inputNumber id="delId"
+                                                   value="#{problemaBean.deleteId}"
+                                                   minValue="1"
+                                                   decimalPlaces="0"
+                                                   required="true"
+                                                   requiredMessage="Ingresa un ID válido"/>
+                                </h:panelGrid>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Eliminar"
+                                                     icon="pi pi-check"
+                                                     styleClass="ui-button-danger"
+                                                     process="delId @this"
+                                                     partialSubmit="true"
+                                                     action="#{problemaBean.eliminarById}"
+                                                     update=":form:msgs :form:tabla"
+                                                     oncomplete="PF('dlgEliminarProblema').hide()"
+                                                     resetValues="true"/>
+                                    <p:commandButton value="Cancelar"
+                                                     icon="pi pi-times"
+                                                     type="button"
+                                                     styleClass="ui-button-secondary ui-button-outlined"
+                                                     onclick="PF('dlgEliminarProblema').hide()"/>
+                                </f:facet>
+                            </p:dialog>
+
                             <p:dataTable id="tabla"
-             value="#{problemaBean.lista}"
-             var="p"
-             rows="10"
-             paginator="true"
-             emptyMessage="No hay problemas para mostrar"
-             style="width:100%"
-             tableStyle="width:100%; table-layout:auto;"
-             responsiveLayout="scroll">
+                                         value="#{problemaBean.lista}"
+                                         var="p"
+                                         rows="10"
+                                         paginator="true"
+                                         emptyMessage="No hay problemas para mostrar"
+                                         style="width:100%"
+                                         tableStyle="width:100%; table-layout:auto;"
+                                         responsiveLayout="scroll">
 
                                 <p:column headerText="ID" style="width:6rem; text-align:center;">
                                     <h:outputText value="#{p.id}" />
