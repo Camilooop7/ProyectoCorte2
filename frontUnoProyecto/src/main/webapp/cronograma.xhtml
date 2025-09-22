@@ -61,9 +61,13 @@
 
                             <div class="card" style="padding:1rem;">
                                 <h:form id="crudForm">
-                                    <p:growl id="msgs" showDetail="true" life="4000" />
+                                    <p:growl id="msgs" showDetail="true" life="4000" autoUpdate="true" />
 
-                                    <!-- Panel de creación SOLO admin/profesor -->
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closeOnEscape="true" responsive="true">
+                                        <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes ui-button-danger"/>
+                                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no ui-button-secondary ui-button-outlined"/>
+                                    </p:confirmDialog>
+
                                     <p:panel header="Crear Cronograma" rendered="#{auth.admin or auth.profesor}">
                                         <h:panelGrid columns="2" columnClasses="col-3,col-9" cellpadding="6">
 
@@ -87,7 +91,7 @@
 
                                         </h:panelGrid>
 
-                                        <div class="flex gap-2 mt-2">
+                                        <div class="d-flex gap-2 mt-2">
                                             <p:commandButton value="Crear"
                                                              action="#{cronogramaBean.doCreate}"
                                                              process="@form"
@@ -96,26 +100,57 @@
                                             <p:commandButton value="Listar"
                                                              action="#{cronogramaBean.listar}"
                                                              process="@this"
-                                                             update="crudForm:listPanel crudForm:msgs crudForm:cal"
+                                                             update="crudForm:msgs crudForm:listPanel crudForm:cal"
                                                              icon="pi pi-list" />
+
+                                            <p:commandButton value="Eliminar por ID"
+                                                             type="button"
+                                                             icon="pi pi-trash"
+                                                             styleClass="ui-button-danger"
+                                                             onclick="PF('delDlg').show()"/>
                                         </div>
                                     </p:panel>
 
-                                    <!-- Nota visible para no autorizados -->
                                     <h:panelGroup rendered="#{not (auth.admin or auth.profesor)}" styleClass="alert alert-secondary mb-3">
                                         Solo <strong>profesores</strong> y <strong>administradores</strong> pueden crear cronogramas.
                                     </h:panelGroup>
 
-                                    <p:panel id="listPanel" header="Cronogramas" styleClass="mt-3">
-                                        <p:dataTable value="#{cronogramaBean.listado}" var="row" rows="10" paginator="true"
-                                                     emptyMessage="No hay cronogramas para mostrar">
-                                            <p:column headerText="Registro">
-                                                <h:outputText value="#{row}" />
-                                            </p:column>
-                                        </p:dataTable>
+                                    <p:dialog header="Eliminar evento por ID"
+                                              widgetVar="delDlg"
+                                              modal="false"
+                                              dismissableMask="true"
+                                              closable="true"
+                                              resizable="false"
+                                              appendTo="@form">
+                                        <h:panelGrid columns="2" columnClasses="col-4,col-8" cellpadding="6">
+                                            <p:outputLabel for="delId" value="ID a eliminar"/>
+                                            <p:inputNumber id="delId"
+                                                           value="#{cronogramaBean.deleteId}"
+                                                           minValue="1"
+                                                           decimalPlaces="0"
+                                                           required="true"
+                                                           requiredMessage="Ingresa un ID válido"/>
+                                        </h:panelGrid>
 
-                                        <p:separator styleClass="my-3" />
+                                        <f:facet name="footer">
+                                            <p:commandButton value="Eliminar"
+                                                             icon="pi pi-check"
+                                                             styleClass="ui-button-danger"
+                                                             process="delId @this"
+                                                             partialSubmit="true"
+                                                             action="#{cronogramaBean.eliminarById}"
+                                                             update="crudForm:msgs crudForm:listPanel crudForm:cal"
+                                                             oncomplete="PF('delDlg').hide()"
+                                                             resetValues="true"/>
+                                            <p:commandButton value="Cancelar"
+                                                             icon="pi pi-times"
+                                                             type="button"
+                                                             styleClass="ui-button-secondary ui-button-outlined"
+                                                             onclick="PF('delDlg').hide()"/>
+                                        </f:facet>
+                                    </p:dialog>
 
+                                    <p:panel id="listPanel" header="Cronograma" styleClass="mt-3">
                                         <h3 class="mb-2">Calendario</h3>
                                         <p:schedule id="cal"
                                                     value="#{cronogramaBean.calModel}"

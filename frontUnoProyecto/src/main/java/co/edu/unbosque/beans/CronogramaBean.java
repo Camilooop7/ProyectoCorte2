@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,7 +30,9 @@ public class CronogramaBean implements Serializable {
 	private String link;
 	private LocalDate fecha;
 
-	private List<String> listado = new ArrayList<>();
+	private Long deleteId;
+
+	private List<FilaCronograma> filas = new ArrayList<>();
 
 	private ScheduleModel scheduleprime = new DefaultScheduleModel();
 
@@ -39,18 +40,17 @@ public class CronogramaBean implements Serializable {
 	private static final String BASE_ROOT = "http://localhost:8081";
 	private static final DateTimeFormatter ISO = DateTimeFormatter.ISO_DATE;
 
+	private static final Pattern ID_P = Pattern.compile("\\b(id|ID)\\s*[:=]\\s*(\\d+)\\b");
 	private static final Pattern DATE_P = Pattern.compile("\\b(\\d{4}-\\d{2}-\\d{2})\\b");
 	private static final Pattern URL_P = Pattern.compile("\\bhttps?://\\S+\\b", Pattern.CASE_INSENSITIVE);
-	private static final Pattern NOMBRE_LABEL_P = Pattern.compile("(?i)\\b(nombre|titulo)\\s*[:=]\\s*([^,;|}]+)");
-	private static final Pattern LINK_LABEL_P = Pattern.compile("(?i)\\b(link|url)\\s*[:=]\\s*(https?://\\S+)");
-	private static final Pattern FECHA_LABEL_P = Pattern
-			.compile("(?i)\\b(fecha|date)\\s*[:=]\\s*(\\d{4}-\\d{2}-\\d{2})");
+	private static final Pattern NOMBRE_P = Pattern.compile("(?i)\\b(nombre|titulo)\\s*[:=]\\s*([^,;|}]+)");
+	private static final Pattern LINK_P = Pattern.compile("(?i)\\b(link|url)\\s*[:=]\\s*(https?://\\S+)");
+	private static final Pattern FECHA_P = Pattern.compile("(?i)\\b(fecha|date)\\s*[:=]\\s*(\\d{4}-\\d{2}-\\d{2})");
 
 	@PostConstruct
 	public void init() {
-		
 		try {
-			listar(); 
+			listar();
 		} catch (Exception ignore) {
 		}
 	}
@@ -76,11 +76,9 @@ public class CronogramaBean implements Serializable {
 			show(code, body);
 
 			if ("201".equals(code) || "200".equals(code)) {
-				// limpiar campos
 				nombre = "";
 				link = "";
 				fecha = null;
-
 				listar();
 			}
 
@@ -91,7 +89,7 @@ public class CronogramaBean implements Serializable {
 	}
 
 	public void listar() {
-		listado.clear();
+		filas.clear();
 		try {
 			String resp = CronogramaService.mostrarTexto(BASE_ROOT);
 			String[] data = resp.split("\n", 2);
@@ -100,13 +98,19 @@ public class CronogramaBean implements Serializable {
 
 			if ("202".equals(code) || "200".equals(code)) {
 				if (body != null && !body.isBlank()) {
-					for (String line : body.split("\\R")) {
-						if (!line.isBlank()) {
-							listado.add(line.trim());
+					String[] lines = body.split("\\R");
+					for (String raw : lines) {
+						String line = raw.trim();
+						if (line.isEmpty())
+							continue;
+
+						FilaCronograma f = parseLine(line);
+						if (f != null && f.getFecha() != null) {
+							filas.add(f);
 						}
 					}
 					rebuildCalModel();
-					show("201", "Se cargaron " + listado.size() + " registros.");
+					show("201", "Se cargaron " + filas.size() + " registros.");
 				} else {
 					scheduleprime = new DefaultScheduleModel();
 					show("204", "No hay cronogramas para mostrar.");
@@ -124,79 +128,100 @@ public class CronogramaBean implements Serializable {
 		}
 	}
 
+	public void eliminarById() {
+		if (deleteId == null || deleteId <= 0) {
+			show("406", "Ingresa un ID válido para eliminar.");
+			return;
+		}
+		eliminar(deleteId);
+		deleteId = null;
+	}
+
+	public void eliminar(Long id) {
+		if (id == null) {
+			show("406", "ID inválido para eliminar.");
+			return;
+		}
+		try {
+			String resp = CronogramaService.eliminar(BASE_ROOT, id);
+			String[] data = resp.split("\n", 2);
+			String code = (data.length > 0) ? data[0] : "500";
+			String body = (data.length > 1) ? data[1] : "";
+
+			if ("200".equals(code)) {
+				show("200", body.isBlank() ? "Evento eliminado con éxito" : body);
+				listar(); // refresca lista y calendario
+			} else {
+				show(code, body.isBlank() ? "No se pudo eliminar." : body);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			show("500", "Error al eliminar: " + e.getMessage());
+		}
+	}
+
 	private void rebuildCalModel() {
 		DefaultScheduleModel model = new DefaultScheduleModel();
 
-		for (String line : listado) {
-			Parsed p = parseLine(line);
-			if (p.fecha == null)
+		for (FilaCronograma f : filas) {
+			LocalDate fecha = f.getFecha();
+			if (fecha == null)
 				continue;
 
-			String title = !isBlank(p.nombre) ? p.nombre : sanitizeTitle(line);
+			String title = isBlank(f.getNombre()) ? "Evento" : sanitizeTitle(f.getNombre());
+			LocalDateTime start = fecha.atTime(9, 0);
+			LocalDateTime end = fecha.atTime(10, 0);
 
-			
-			LocalDateTime start = p.fecha.atTime(9, 0);
-			LocalDateTime end = p.fecha.atTime(10, 0);
-
-			DefaultScheduleEvent<?> evt = DefaultScheduleEvent.builder().title(title).startDate(start) 
-																										
-					.endDate(end) 
+			DefaultScheduleEvent<?> evt = DefaultScheduleEvent.builder().title(title).startDate(start).endDate(end)
 					.overlapAllowed(true).build();
 
-			if (!isBlank(p.link)) {
-				evt.setUrl(p.link); 
+			if (!isBlank(f.getLink())) {
+				evt.setUrl(f.getLink());
 			}
-
 			model.addEvent(evt);
 		}
-
 		this.scheduleprime = model;
 	}
 
-	private Parsed parseLine(String line) {
-		Parsed out = new Parsed();
-
+	private FilaCronograma parseLine(String line) {
 		if (isBlank(line))
-			return out;
+			return null;
 
-		Matcher mNombre = NOMBRE_LABEL_P.matcher(line);
-		if (mNombre.find()) {
-			out.nombre = trimClean(mNombre.group(2));
-		}
-		Matcher mLink = LINK_LABEL_P.matcher(line);
-		if (mLink.find()) {
-			out.link = trimClean(mLink.group(2));
-		}
-		Matcher mFecha = FECHA_LABEL_P.matcher(line);
+		Long id = longOrNull(findGroup(ID_P, line, 2));
+
+		String nombre = trimClean(findGroup(NOMBRE_P, line, 2));
+		String link = trimClean(findGroup(LINK_P, line, 2));
+
+		LocalDate fecha = null;
+		Matcher mFecha = FECHA_P.matcher(line);
 		if (mFecha.find()) {
 			try {
-				out.fecha = LocalDate.parse(mFecha.group(2), ISO);
+				fecha = LocalDate.parse(mFecha.group(2), ISO);
 			} catch (Exception ignore) {
 			}
 		}
-
-		if (isBlank(out.link)) {
+		if (isBlank(link)) {
 			Matcher mUrl = URL_P.matcher(line);
 			if (mUrl.find())
-				out.link = trimClean(mUrl.group());
+				link = trimClean(mUrl.group());
 		}
-		if (out.fecha == null) {
+		if (fecha == null) {
 			Matcher mDate = DATE_P.matcher(line);
 			if (mDate.find()) {
 				try {
-					out.fecha = LocalDate.parse(mDate.group(1), ISO);
+					fecha = LocalDate.parse(mDate.group(1), ISO);
 				} catch (Exception ignore) {
 				}
 			}
 		}
-		if (isBlank(out.nombre)) {
-			String name = line.replaceAll("(?i)\\b(nombre|titulo|link|url|fecha|date)\\s*[:=]", " ")
+		if (isBlank(nombre)) {
+			String name = line.replaceAll("(?i)\\b(id|nombre|titulo|link|url|fecha|date)\\s*[:=]", " ")
 					.replaceAll("\\{\\}|\\[\\]|[{}\\[\\]]", " ").replaceAll(URL_P.pattern(), " ")
 					.replaceAll(DATE_P.pattern(), " ").replaceAll("[,;|]", " ").trim();
-			out.nombre = sanitizeTitle(name);
+			nombre = sanitizeTitle(name);
 		}
 
-		return out;
+		return new FilaCronograma(id, nombre, link, fecha);
 	}
 
 	private String sanitizeTitle(String s) {
@@ -208,10 +233,13 @@ public class CronogramaBean implements Serializable {
 		return t;
 	}
 
+	private static String findGroup(Pattern p, String s, int group) {
+		Matcher m = p.matcher(s);
+		return m.find() ? m.group(group) : null;
+	}
+
 	private String trimClean(String s) {
-		if (s == null)
-			return null;
-		return s.replaceAll("[\"']", "").trim();
+		return s == null ? null : s.replaceAll("[\"']", "").trim();
 	}
 
 	private boolean isBlank(String s) {
@@ -223,6 +251,14 @@ public class CronogramaBean implements Serializable {
 			return false;
 		String lower = s.toLowerCase();
 		return lower.startsWith("http://") || lower.startsWith("https://");
+	}
+
+	private static Long longOrNull(String s) {
+		try {
+			return s == null ? null : Long.valueOf(s.trim());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	private void show(String code, String content) {
@@ -271,22 +307,72 @@ public class CronogramaBean implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public List<String> getListado() {
-		return listado;
+	public Long getDeleteId() {
+		return deleteId;
 	}
 
-	public void setListado(List<String> listado) {
-		this.listado = listado != null ? listado : new ArrayList<>();
-		rebuildCalModel();
+	public void setDeleteId(Long deleteId) {
+		this.deleteId = deleteId;
+	}
+
+	public List<FilaCronograma> getFilas() {
+		return filas;
+	}
+
+	public void setFilas(List<FilaCronograma> filas) {
+		this.filas = filas != null ? filas : new ArrayList<>();
 	}
 
 	public ScheduleModel getCalModel() {
 		return scheduleprime;
 	}
 
-	private static class Parsed {
-		String nombre;
-		String link;
-		LocalDate fecha;
+	public static class FilaCronograma implements Serializable {
+		private Long id;
+		private String nombre;
+		private String link;
+		private LocalDate fecha;
+
+		public FilaCronograma() {
+		}
+
+		public FilaCronograma(Long id, String nombre, String link, LocalDate fecha) {
+			this.id = id;
+			this.nombre = nombre;
+			this.link = link;
+			this.fecha = fecha;
+		}
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getNombre() {
+			return nombre;
+		}
+
+		public void setNombre(String nombre) {
+			this.nombre = nombre;
+		}
+
+		public String getLink() {
+			return link;
+		}
+
+		public void setLink(String link) {
+			this.link = link;
+		}
+
+		public LocalDate getFecha() {
+			return fecha;
+		}
+
+		public void setFecha(LocalDate fecha) {
+			this.fecha = fecha;
+		}
 	}
 }
