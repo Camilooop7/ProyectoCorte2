@@ -6,6 +6,7 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.unbosque.proyectocorte.dto.LibroEnLineaDTO;
 import co.edu.unbosque.proyectocorte.entity.LibroEnLinea;
@@ -53,8 +54,7 @@ public class LibroEnLineaService implements CRUDOperation<LibroEnLineaDTO> {
 
 	@Override
 	public Long count() {
-		// TODO Auto-generated method stub
-		return null;
+		return libroEnLineaRepo.count();
 	}
 
 	@Override
@@ -62,5 +62,22 @@ public class LibroEnLineaService implements CRUDOperation<LibroEnLineaDTO> {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Transactional
+	public int deleteByCodigo(int codigo) {
+		if (libroEnLineaRepo.existsByCodigo(codigo)) {
+			libroEnLineaRepo.deleteByCodigo(codigo);
+			return 1;
+		}
+		return 0;
+	}
 
+	public boolean exist(int codigo) {
+		return libroEnLineaRepo.existsByCodigo(codigo);
+	}
+
+	public LibroEnLineaDTO getLibroByCodigo(int codigo) {
+		LibroEnLinea entity = libroEnLineaRepo.findByCodigo(codigo)
+				.orElseThrow(() -> new RuntimeException("Libro con ID " + codigo + " no encontrado"));
+		return modelMapper.map(entity, LibroEnLineaDTO.class);
+	}
 }

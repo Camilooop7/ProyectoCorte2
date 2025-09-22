@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,18 +21,14 @@ public abstract class Libro {
 	private String nombre;
 	private String descripcion;
 
-	@Lob
-	private byte[] imagen; // Ahora es un arreglo de bytes para guardar la imagen como BLOB
-
 	public Libro() {
 	}
 
-	public Libro(int codigo, String nombre, String descripcion, byte[] imagen) {
+	public Libro(int codigo, String nombre, String descripcion) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.imagen = imagen;
 	}
 
 	// Getters y setters
@@ -61,14 +56,6 @@ public abstract class Libro {
 		this.descripcion = descripcion;
 	}
 
-	public byte[] getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
-	}
-
 	public int getCodigo() {
 		return codigo;
 	}
@@ -79,7 +66,7 @@ public abstract class Libro {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(descripcion, id, imagen, nombre);
+		return Objects.hash(codigo, descripcion, id, nombre);
 	}
 
 	@Override
@@ -91,12 +78,13 @@ public abstract class Libro {
 		if (getClass() != obj.getClass())
 			return false;
 		Libro other = (Libro) obj;
-		return Objects.equals(descripcion, other.descripcion) && Objects.equals(id, other.id)
-				&& Objects.deepEquals(imagen, other.imagen) && Objects.equals(nombre, other.nombre);
+		return codigo == other.codigo && Objects.equals(descripcion, other.descripcion) && Objects.equals(id, other.id)
+				&& Objects.equals(nombre, other.nombre);
 	}
 
 	@Override
 	public String toString() {
-		return "Libro [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
+		return "Libro [id=" + id + ", codigo=" + codigo + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
 	}
+
 }

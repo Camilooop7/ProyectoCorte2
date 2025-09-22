@@ -8,19 +8,17 @@ public class LibroPDFDTO {
 	private Long id;
 	private String nombre;
 	private String descripcion;
-	private byte[] imagen;
 	private byte[] contenidoPdf;
 
 	public LibroPDFDTO() {
 	}
 
-	public LibroPDFDTO(int codigo, Long id, String nombre, String descripcion, byte[] imagen, byte[] contenidoPdf) {
+	public LibroPDFDTO(int codigo, Long id, String nombre, String descripcion, byte[] contenidoPdf) {
 		super();
 		this.codigo = codigo;
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.imagen = imagen;
 		this.contenidoPdf = contenidoPdf;
 	}
 
@@ -56,14 +54,6 @@ public class LibroPDFDTO {
 		this.descripcion = descripcion;
 	}
 
-	public byte[] getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(byte[] imagen) {
-		this.imagen = imagen;
-	}
-
 	public byte[] getContenidoPdf() {
 		return contenidoPdf;
 	}
@@ -77,7 +67,6 @@ public class LibroPDFDTO {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(contenidoPdf);
-		result = prime * result + Arrays.hashCode(imagen);
 		result = prime * result + Objects.hash(codigo, descripcion, id, nombre);
 		return result;
 	}
@@ -93,13 +82,13 @@ public class LibroPDFDTO {
 		LibroPDFDTO other = (LibroPDFDTO) obj;
 		return codigo == other.codigo && Arrays.equals(contenidoPdf, other.contenidoPdf)
 				&& Objects.equals(descripcion, other.descripcion) && Objects.equals(id, other.id)
-				&& Arrays.equals(imagen, other.imagen) && Objects.equals(nombre, other.nombre);
+				&& Objects.equals(nombre, other.nombre);
 	}
 
 	@Override
 	public String toString() {
 		return "LibroPDFDTO [codigo=" + codigo + ", id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", imagen=" + Arrays.toString(imagen) + ", contenidoPdf=" + Arrays.toString(contenidoPdf) + "]";
+				+ ", contenidoPdf=" + Arrays.toString(contenidoPdf) + "]";
 	}
 
 }

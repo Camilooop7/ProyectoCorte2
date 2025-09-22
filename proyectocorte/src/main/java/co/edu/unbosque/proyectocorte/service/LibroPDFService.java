@@ -3,6 +3,7 @@ package co.edu.unbosque.proyectocorte.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import co.edu.unbosque.proyectocorte.dto.LibroPDFDTO;
 import co.edu.unbosque.proyectocorte.entity.LibroPDF;
@@ -21,9 +22,8 @@ public class LibroPDFService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public int create(int codigo, String nombre, String descripcion, MultipartFile imagen, MultipartFile archivoPdf)
-			throws IOException {
-		LibroPDF entity = new LibroPDF(codigo, nombre, descripcion, imagen.getBytes(), archivoPdf.getBytes());
+	public int create(int codigo, String nombre, String descripcion, MultipartFile archivoPdf) throws IOException {
+		LibroPDF entity = new LibroPDF(codigo, nombre, descripcion, archivoPdf.getBytes());
 		libroPDFRepo.save(entity);
 		return 1;
 	}
@@ -44,19 +44,14 @@ public class LibroPDFService {
 		return dtoList;
 	}
 
-	public byte[] getImagenByCodigo(int id) {
-		return libroPDFRepo.findByCodigo(id)
-				.orElseThrow(() -> new RuntimeException("Libro con ID " + id + " no encontrado")).getImagen();
-	}
-
 	public byte[] getPdfContentByCodigo(int id) {
 		return libroPDFRepo.findByCodigo(id)
 				.orElseThrow(() -> new RuntimeException("Libro con ID " + id + " no encontrado")).getContenidoPdf();
 	}
-
-	public int deleteById(Long id) {
-		if (libroPDFRepo.existsById(id)) {
-			libroPDFRepo.deleteById(id);
+	@Transactional
+	public int deleteByCodigo(int codigo) {
+		if (libroPDFRepo.existsByCodigo(codigo)) {
+			libroPDFRepo.deleteByCodigo(codigo);
 			return 1;
 		}
 		return 0;
@@ -66,7 +61,7 @@ public class LibroPDFService {
 		return libroPDFRepo.count();
 	}
 
-	public boolean exist(Long id) {
-		return libroPDFRepo.existsById(id);
+	public boolean exist(int codigo) {
+		return libroPDFRepo.existsByCodigo(codigo);
 	}
 }

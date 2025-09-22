@@ -9,18 +9,17 @@ import jakarta.inject.Named;
 @Named("profesorBean")
 @RequestScoped
 public class RegistroPBean {
-	private String name; 
+	private String name;
 	private String documento;
-	private String facultad; 
-	private String email; 
-	private String password; 
+	private String facultad;
+	private String email;
+	private String password;
 	private String role = "PROFESOR";
 
 	public void createAccount() {
 		try {
 			String respuesta = ProfesorRegistroService.doPostProfesor("http://localhost:8081/profesor/crear", name,
-					documento, email, password, role, facultad 
-			);
+					documento, email, password, role, facultad);
 
 			String[] data = respuesta.split("\n", 2);
 			String code = (data.length > 0) ? data[0] : "500";
@@ -34,7 +33,7 @@ public class RegistroPBean {
 				facultad = "";
 				email = "";
 				password = "";
-				
+
 			}
 
 		} catch (Exception e) {
@@ -62,7 +61,6 @@ public class RegistroPBean {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(sev, summary, content));
 	}
 
-	
 	public String getName() {
 		return name;
 	}

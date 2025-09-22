@@ -18,15 +18,13 @@ public class LibroPDF extends Libro {
 		this.contenidoPdf = contenidoPdf;
 	}
 
-	public LibroPDF(int codigo, String nombre, String descripcion, byte[] imagen, byte[] contenidoPdf) {
-		super(codigo, nombre, descripcion, imagen);
+	public LibroPDF(int codigo, String nombre, String descripcion, byte[] contenidoPdf) {
+		super(codigo, nombre, descripcion);
 		this.contenidoPdf = contenidoPdf;
 	}
 
-	// Getters y setters
-
-	public LibroPDF(int codigo, String nombre, String descripcion, byte[] imagen) {
-		super(codigo, nombre, descripcion, imagen);
+	public LibroPDF(int codigo, String nombre, String descripcion) {
+		super(codigo, nombre, descripcion);
 		// TODO Auto-generated constructor stub
 	}
 
