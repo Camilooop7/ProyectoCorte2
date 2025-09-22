@@ -23,7 +23,6 @@ public class AdminRegistroService {
 			String encodedRol = URLEncoder.encode(rol, StandardCharsets.UTF_8);
 			String encodedCargo = URLEncoder.encode(cargo, StandardCharsets.UTF_8);
 
-		
 			String fullUrl = url + "?nombre=" + encodedNombre + "&documento=" + encodedDocumento + "&correo="
 					+ encodedCorreo + "&contrasena=" + encodedContrasena + "&rol=" + encodedRol + "&cargo="
 					+ encodedCargo;
@@ -41,4 +40,4 @@ public class AdminRegistroService {
 		}
 	}
 
-}	
+}
