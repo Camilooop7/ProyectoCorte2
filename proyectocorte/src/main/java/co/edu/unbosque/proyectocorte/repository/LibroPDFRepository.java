@@ -11,6 +11,8 @@ public interface LibroPDFRepository extends JpaRepository<LibroPDF, Long> {
 
 	public Optional<LibroPDF> findByCodigo(int codigo);
 
-	public void deleteByNombre(String nombre);
+	public void deleteByCodigo(int codigo);
+
+	public boolean existsByCodigo(int codigo);
 
 }

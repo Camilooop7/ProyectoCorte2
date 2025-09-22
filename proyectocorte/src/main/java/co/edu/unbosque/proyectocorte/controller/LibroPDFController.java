@@ -28,10 +28,9 @@ public class LibroPDFController {
 
 	@PostMapping(path = "/crear")
 	public ResponseEntity<String> crear(@RequestParam("codigo") int codigo, @RequestParam("nombre") String nombre,
-			@RequestParam("descripcion") String descripcion, @RequestParam("imagen") MultipartFile imagen,
-			@RequestParam("archivoPdf") MultipartFile archivoPdf) {
+			@RequestParam("descripcion") String descripcion, @RequestParam("archivoPdf") MultipartFile archivoPdf) {
 		try {
-			int status = libroPDFService.create(codigo, nombre, descripcion, imagen, archivoPdf);
+			int status = libroPDFService.create(codigo, nombre, descripcion, archivoPdf);
 			if (status == 1) {
 				return new ResponseEntity<>("Libro PDF creado con éxito", HttpStatus.CREATED);
 			} else {
@@ -40,13 +39,6 @@ public class LibroPDFController {
 		} catch (IOException e) {
 			return new ResponseEntity<>("Error al procesar los archivos", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
-
-	@GetMapping("/imagen/{codigo}")
-	public ResponseEntity<byte[]> getImagen(@PathVariable int codigo) {
-		byte[] imagen = libroPDFService.getImagenByCodigo(codigo);
-		return ResponseEntity.ok().header("Content-Type", "image/jpeg")
-				.header("Content-Disposition", "inline; filename=\"imagen_" + codigo + ".jpg\"").body(imagen);
 	}
 
 	@GetMapping(path = "/pdf/{codigo}")
@@ -61,4 +53,14 @@ public class LibroPDFController {
 		LibroPDFDTO libro = libroPDFService.getLibroByCodigo(codigo);
 		return ResponseEntity.ok(libro);
 	}
+	@DeleteMapping("/eliminar/{codigo}")
+	public ResponseEntity<String> eliminarLibroPorCodigo(@PathVariable int codigo) {
+	    int status = libroPDFService.deleteByCodigo(codigo);
+	    if (status == 1) {
+	        return new ResponseEntity<>("Libro PDF eliminado con éxito", HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>("Libro PDF no encontrado", HttpStatus.NOT_FOUND);
+	    }
+	}
+
 }

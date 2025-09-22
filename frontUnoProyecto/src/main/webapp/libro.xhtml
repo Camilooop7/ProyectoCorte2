@@ -108,90 +108,111 @@
 									requiredMessage="El ID es obligatorio" styleClass="card__input" />
 								<p:commandButton value="Descargar PDF"
 									action="#{libroPDFBean.obtenerInformacionLibro()}"
-									styleClass="card__button" ajax="false" update="panelPDF" />
+									styleClass="card__button" ajax="false" />
 
 							</h:form>
 						</div>
 						<div class="cardib">
+							<span class="card__title">Eliminar Libro PDF</span>
+							<h:form styleClass="card__form">
+								<p:inputText id="codigo" value="#{libroPDFBean.codigo}"
+									placeholder="Ingresa el ID del libro" required="true"
+									requiredMessage="El ID es obligatorio" styleClass="card__input" />
+								<p:commandButton value="Eliminar Libro PDF"
+									action="#{libroPDFBean.eliminarLibro()}"
+									styleClass="card__button" ajax="false" />
+							</h:form>
+						</div>
+
+						<div class="cardib">
 							<span class="card__title">Crear PDF</span>
 							<h:form styleClass="card__form" enctype="multipart/form-data">
-    <p:growl id="messages" showDetail="true" />
+								<p:growl id="messages" showDetail="true" />
+								<p:inputText id="nombreCrear" value="#{libroPDFBean.nombre}"
+									placeholder="Ingresa el nombre del libro" required="true"
+									requiredMessage="El nombre es obligatorio"
+									styleClass="card__input" />
+								<p:inputText id="codigoCrear" value="#{libroPDFBean.codigo}"
+									placeholder="Ingresa el código del libro" required="true"
+									requiredMessage="El código es obligatorio"
+									styleClass="card__input" />
+								<p:inputText id="descripcionCrear"
+									value="#{libroPDFBean.descripcion}"
+									placeholder="Ingresa la descripción del libro" required="true"
+									requiredMessage="La descripción es obligatoria"
+									styleClass="card__input" />
+								<p:fileUpload mode="advanced" auto="true"
+									update="messages pdfPrev"
+									listener="#{libroPDFBean.handleFileUploadPdf}">
+									<p:validateFile allowTypes="/(\.|\/)(pdf)$/" />
+								</p:fileUpload>
+								<h:panelGroup id="pdfPrev" layout="block"
+									style="margin-top:10px">
+									<p:media value="#{libroPDFBean.pdfStream}" player="pdf"
+										contentType="application/pdf" width="100%" height="500px"
+										cache="false" />
+								</h:panelGroup>
+								<p:commandButton value="Crear Libro"
+									action="#{libroPDFBean.crearLibro}" styleClass="card__button"
+									ajax="false" />
+							</h:form>
+						</div>
 
-    <p:panel id="cropperPanel" />
-
-    <!-- Datos del libro -->
-    <p:inputText id="nombre"
-                 value="#{libroPDFBean.nombre}"
-                 placeholder="Ingresa el nombre del libro"
-                 required="true"
-                 requiredMessage="El nombre es obligatorio"
-                 styleClass="card__input" />
-
-    <p:inputText id="codigo"
-                 value="#{libroPDFBean.codigo}"
-                 placeholder="Ingresa el código del libro"
-                 required="true"
-                 requiredMessage="El código es obligatorio"
-                 styleClass="card__input" />
-
-    <p:inputText id="descripcion"
-                 value="#{libroPDFBean.descripcion}"
-                 placeholder="Ingresa la descripción del libro"
-                 required="true"
-                 requiredMessage="La descripción es obligatoria"
-                 styleClass="card__input" />
-
-    <!-- Subida de IMAGEN -->
-    <p:fileUpload mode="advanced"
-                  multiple="false"
-                  auto="true"
-                  update="messages imgPrev"
-                  listener="#{libroPDFBean.handleFileUploadImagen}">
-        <p:validateFile allowTypes="/(\.|\/)(jpg|jpeg|png)$/" />
-    </p:fileUpload>
-
-    <!-- Preview de IMAGEN -->
-    <h:panelGroup id="imgPrev" layout="block" style="margin-top:10px">
-        <ui:fragment rendered="#{not empty libroPDFBean.imageBase64}">
-            <img src="#{libroPDFBean.imageBase64}"
-                 alt="Vista previa"
-                 style="max-width: 100%; height: auto; border-radius:8px; margin-top:10px"/>
-        </ui:fragment>
-    </h:panelGroup>
-
-    <!-- Subida de PDF -->
-    <p:fileUpload mode="advanced"
-                  multiple="false"
-                  auto="true"
-                  update="messages pdfPrev"
-                  listener="#{libroPDFBean.handleFileUploadPdf}">
-        <p:validateFile allowTypes="/(\.|\/)(pdf)$/" />
-    </p:fileUpload>
-
-    <!-- Preview de PDF -->
-    <h:panelGroup id="pdfPrev" layout="block" style="margin-top:10px">
-        <ui:fragment >
-            <p:media value="#{libroPDFBean.pdfStream}"
-                     player="pdf"
-                     contentType="application/pdf"
-                     width="100%"
-                     height="500px"
-                     cache="false"/>
-        </ui:fragment>
-    </h:panelGroup>
-
-    <!-- Botones -->
-    <p:commandButton value="Crear Libro"
-                     action="#{libroPDFBean.crearLibro}"
-                     styleClass="card__button"
-                     ajax="false" />
-
-    <p:commandButton value="Descargar PDF"
-                     action="#{libroPDFBean.descargarPdf}"
-                     styleClass="card__button"
-                     ajax="false"
-                      />
-</h:form>
+					</div>
+					<div class="containercard">
+						<!-- link 1 -->
+						<div class="cardib">
+							<span class="card__title">Libro en línea</span>
+							<h:form styleClass="card__form">
+								<p:inputText id="codigo" value="#{libroEnLineaBean.codigo}"
+									placeholder="Ingresa el ID del libro" required="true"
+									requiredMessage="El ID es obligatorio" styleClass="card__input" />
+								<p:commandButton value="Abrir Libro"
+									action="#{libroEnLineaBean.obtenerInformacionLibro()}"
+									styleClass="card__button" ajax="false" />
+							</h:form>
+						</div>
+						<div class="cardib">
+							<span class="card__title">Eliminar Libro en linea</span>
+							<h:form styleClass="card__form">
+								<p:inputText id="codigo" value="#{libroEnLineaBean.codigo}"
+									placeholder="Ingresa el ID del libro" required="true"
+									requiredMessage="El ID es obligatorio" styleClass="card__input" />
+								<p:commandButton value="Eliminar Libro en linea"
+									action="#{libroEnLineaBean.eliminarLibro()}"
+									styleClass="card__button" ajax="false" />
+							</h:form>
+						</div>
+						<div class="cardib">
+							<span class="card__title">Crear Libro en línea</span>
+							<h:form styleClass="card__form">
+								<p:growl id="messages" showDetail="true" />
+								<p:panel id="cropperPanel" />
+								<!-- Datos del libro -->
+								<p:inputText id="nombreEnLinea"
+									value="#{libroEnLineaBean.nombre}"
+									placeholder="Ingresa el nombre del libro" required="true"
+									requiredMessage="El nombre es obligatorio"
+									styleClass="card__input" />
+								<p:inputText id="codigoEnLinea"
+									value="#{libroEnLineaBean.codigo}"
+									placeholder="Ingresa el código del libro" required="true"
+									requiredMessage="El código es obligatorio"
+									styleClass="card__input" />
+								<p:inputText id="descripcionEnLinea"
+									value="#{libroEnLineaBean.descripcion}"
+									placeholder="Ingresa la descripción del libro" required="true"
+									requiredMessage="La descripción es obligatoria"
+									styleClass="card__input" />
+								<p:inputText id="linkEnLinea" value="#{libroEnLineaBean.link}"
+									placeholder="Ingresa el enlace del libro" required="true"
+									requiredMessage="El enlace es obligatorio"
+									styleClass="card__input" />
+								<!-- Botones -->
+								<p:commandButton value="Crear Libro en Línea"
+									action="#{libroEnLineaBean.crearLibro}"
+									styleClass="card__button" ajax="false" />
+							</h:form>
 						</div>
 
 

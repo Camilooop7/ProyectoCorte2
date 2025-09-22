@@ -9,6 +9,10 @@ import co.edu.unbosque.proyectocorte.entity.LibroEnLinea;
 public interface LibroEnLineaRepository extends JpaRepository<LibroEnLinea, Long> {
 	public Optional<LibroEnLinea> findByNombre(String nombre);
 
-	public void deleteByNombre(String nombre);
+	public Optional<LibroEnLinea> findByCodigo(int codigo);
+
+	public void deleteByCodigo(int codigo);
+
+	public boolean existsByCodigo(int codigo);
 
 }

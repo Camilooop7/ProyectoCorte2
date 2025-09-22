@@ -19,13 +19,13 @@ public class LibroEnLinea extends Libro {
 		this.link = link;
 	}
 
-	public LibroEnLinea(int codigo, String nombre, String descripcion, byte[] imagen, String link) {
-		super(codigo, nombre, descripcion, imagen);
+	public LibroEnLinea(int codigo, String nombre, String descripcion, String link) {
+		super(codigo, nombre, descripcion);
 		this.link = link;
 	}
 
-	public LibroEnLinea(int codigo, String nombre, String descripcion, byte[] imagen) {
-		super(codigo, nombre, descripcion, imagen);
+	public LibroEnLinea(int codigo, String nombre, String descripcion) {
+		super(codigo, nombre, descripcion);
 		// TODO Auto-generated constructor stub
 	}
 
