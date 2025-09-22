@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -7,173 +7,169 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <meta charset="UTF-8" />
-    <title>artemisa</title>
+  <meta charset="UTF-8" />
+  <title>artemisa</title>
 
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5520/5520840.png" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5520/5520840.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
-    <link rel="stylesheet" href="css/stylecronograma.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
+  <link rel="stylesheet" href="css/stylecronograma.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 </h:head>
 
 <h:body>
 
-    <div class="main-container">
-        <div class="aside">
-            <div class="logo">
-                <a href="#"><span>A</span>rtemisa <br /><span>UEB</span></a>
-            </div>
+  <div class="main-container">
+    <div class="aside">
+      <div class="logo">
+        <a href="#"><span>A</span>rtemisa <br /><span>UEB</span></a>
+      </div>
 
-            <div class="nav-toggler">
-                <span></span>
-            </div>
+      <div class="nav-toggler"><span></span></div>
 
-            <ul class="nav">
-                <li><a href="menu.xhtml" class="active"><i class="fa fa-home"></i>Home</a></li>
-                <li><a href="temario.xhtml"><i class="bi bi-card-heading"></i>Temario</a></li>
-                <li><a href="problema.xhtml"><i class="bi bi-balloon-heart"></i>Problemas</a></li>
-                <li><a href="libro.xhtml"><i class="bi bi-book-half"></i>Libros</a></li>
-                <li><a href="link.xhtml"><i class="bi bi-link"></i>Links Valiosos</a></li>
-                <li><a href="cronograma.xhtml"><i class="bi bi-calendar-week"></i>Eventos</a></li>
-            </ul>
-        </div>
-
-        <div class="main-content">
-            <section class="home section active" id="home">
-                <div class="container">
-                    <div class="row">
-                        <div class="home-info padd-15">
-                            <h3 class="hello">Artemisa UEB <span class="name">Sergio - Camilo - Jeisson - Luna</span></h3>
-                            <h3 class="profession">Hola, <span class="typing">aca puedes vizualizar el cronograma. </span></h3>
-                            <p class="animate__animated animate__lightSpeedInRight">
-                                “Soy Artemisa UEB. Aquí encontrarás tu cronograma en el que podras vizualizar todos los evntos disponibles en el calendario.”
-                            </p>
-
-                            <br /><br />
-
-                            <div class="card" style="padding:1rem;">
-                                <h:form id="crudForm">
-                                    <p:growl id="msgs" showDetail="true" life="4000" autoUpdate="true" />
-
-                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" closeOnEscape="true" responsive="true">
-                                        <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes ui-button-danger"/>
-                                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no ui-button-secondary ui-button-outlined"/>
-                                    </p:confirmDialog>
-
-                                    <p:panel header="Crear Cronograma" rendered="#{auth.admin or auth.profesor}">
-                                        <h:panelGrid columns="2" columnClasses="col-3,col-9" cellpadding="6">
-
-                                            <p:outputLabel for="nombre" value="Nombre" />
-                                            <p:inputText id="nombre" value="#{cronogramaBean.nombre}" required="true" label="Nombre" maxlength="100" />
-
-                                            <p:outputLabel for="link" value="Link" />
-                                            <p:inputText id="link" value="#{cronogramaBean.link}" required="true" label="Link">
-                                                <f:validateRegex pattern="https?://.+" />
-                                            </p:inputText>
-
-                                            <p:outputLabel for="fecha" value="Fecha (yyyy-MM-dd)" />
-                                            <p:datePicker id="fecha"
-                                                          value="#{cronogramaBean.fecha}"
-                                                          pattern="yyyy-MM-dd"
-                                                          showIcon="true"
-                                                          showButtonBar="true"
-                                                          touchUI="true">
-                                                <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
-                                            </p:datePicker>
-
-                                        </h:panelGrid>
-
-                                        <div class="d-flex gap-2 mt-2">
-                                            <p:commandButton value="Crear"
-                                                             action="#{cronogramaBean.doCreate}"
-                                                             process="@form"
-                                                             update="crudForm:msgs crudForm:listPanel crudForm:cal"
-                                                             icon="pi pi-check" />
-                                            <p:commandButton value="Listar"
-                                                             action="#{cronogramaBean.listar}"
-                                                             process="@this"
-                                                             update="crudForm:msgs crudForm:listPanel crudForm:cal"
-                                                             icon="pi pi-list" />
-
-                                            <p:commandButton value="Eliminar por ID"
-                                                             type="button"
-                                                             icon="pi pi-trash"
-                                                             styleClass="ui-button-danger"
-                                                             onclick="PF('delDlg').show()"/>
-                                        </div>
-                                    </p:panel>
-
-                                    <h:panelGroup rendered="#{not (auth.admin or auth.profesor)}" styleClass="alert alert-secondary mb-3">
-                                        Solo <strong>profesores</strong> y <strong>administradores</strong> pueden crear cronogramas.
-                                    </h:panelGroup>
-
-                                    <p:dialog header="Eliminar evento por ID"
-                                              widgetVar="delDlg"
-                                              modal="false"
-                                              dismissableMask="true"
-                                              closable="true"
-                                              resizable="false"
-                                              appendTo="@form">
-                                        <h:panelGrid columns="2" columnClasses="col-4,col-8" cellpadding="6">
-                                            <p:outputLabel for="delId" value="ID a eliminar"/>
-                                            <p:inputNumber id="delId"
-                                                           value="#{cronogramaBean.deleteId}"
-                                                           minValue="1"
-                                                           decimalPlaces="0"
-                                                           required="true"
-                                                           requiredMessage="Ingresa un ID válido"/>
-                                        </h:panelGrid>
-
-                                        <f:facet name="footer">
-                                            <p:commandButton value="Eliminar"
-                                                             icon="pi pi-check"
-                                                             styleClass="ui-button-danger"
-                                                             process="delId @this"
-                                                             partialSubmit="true"
-                                                             action="#{cronogramaBean.eliminarById}"
-                                                             update="crudForm:msgs crudForm:listPanel crudForm:cal"
-                                                             oncomplete="PF('delDlg').hide()"
-                                                             resetValues="true"/>
-                                            <p:commandButton value="Cancelar"
-                                                             icon="pi pi-times"
-                                                             type="button"
-                                                             styleClass="ui-button-secondary ui-button-outlined"
-                                                             onclick="PF('delDlg').hide()"/>
-                                        </f:facet>
-                                    </p:dialog>
-
-                                    <p:panel id="listPanel" header="Cronograma" styleClass="mt-3">
-                                        <h3 class="mb-2">Calendario</h3>
-                                        <p:schedule id="cal"
-                                                    value="#{cronogramaBean.calModel}"
-                                                    widgetVar="calWV"
-                                                    locale="es"
-                                                    timeZone="America/Bogota"
-                                                    view="dayGridMonth"
-                                                    height="auto"
-                                                    slotMinTime="07:00:00"
-                                                    slotMaxTime="21:00:00"
-                                                    tooltip="true"
-                                                    showWeekNumbers="true"
-                                                    draggable="false"
-                                                    resizable="false" />
-                                    </p:panel>
-                                </h:form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+      <ul class="nav">
+        <li><a href="menu.xhtml" class="active"><i class="fa fa-home"></i>Home</a></li>
+        <li><a href="temario.xhtml"><i class="bi bi-card-heading"></i>Temario</a></li>
+        <li><a href="problema.xhtml"><i class="bi bi-balloon-heart"></i>Problemas</a></li>
+        <li><a href="libro.xhtml"><i class="bi bi-book-half"></i>Libros</a></li>
+        <li><a href="link.xhtml"><i class="bi bi-link"></i>Links Valiosos</a></li>
+        <li><a href="cronograma.xhtml"><i class="bi bi-calendar-week"></i>Eventos</a></li>
+      </ul>
     </div>
+
+    <div class="main-content">
+      <section class="home section active" id="home">
+        <div class="container">
+          <div class="row">
+            <div class="home-info padd-15">
+              <h3 class="hello">Artemisa UEB <span class="name">Sergio - Camilo - Jeisson - Luna</span></h3>
+              <h3 class="profession">Hola, <span class="typing">aca puedes vizualizar el cronograma. </span></h3>
+              <p class="animate__animated animate__lightSpeedInRight">
+                “Soy Artemisa UEB. Aquí encontrarás tu cronograma en el que podrás visualizar todos los eventos disponibles en el calendario.”
+              </p>
+
+              <br /><br />
+
+              <div class="card" style="padding:1rem;">
+                <h:form id="crudForm">
+                  <p:growl id="msgs" showDetail="true" life="4000" autoUpdate="true" />
+
+                  <p:panel header="Crear Cronograma" rendered="#{auth.admin or auth.profesor}">
+                    <h:panelGrid columns="2" columnClasses="col-3,col-9" cellpadding="6">
+
+                      <p:outputLabel for="nombre" value="Nombre" />
+                      <p:inputText id="nombre" value="#{cronogramaBean.nombre}" required="true" label="Nombre" maxlength="100" />
+
+                      <p:outputLabel for="link" value="Link" />
+                      <p:inputText id="link" value="#{cronogramaBean.link}" required="true" label="Link">
+                        <f:validateRegex pattern="https?://.+" />
+                      </p:inputText>
+
+                      <p:outputLabel for="fecha" value="Fecha (yyyy-MM-dd)" />
+                      <p:datePicker id="fecha"
+                                    value="#{cronogramaBean.fecha}"
+                                    pattern="yyyy-MM-dd"
+                                    showIcon="true"
+                                    showButtonBar="true"
+                                    touchUI="true">
+                        <f:convertDateTime type="localDate" pattern="yyyy-MM-dd"/>
+                      </p:datePicker>
+
+                    </h:panelGrid>
+
+                    <div class="d-flex gap-2 mt-2">
+                      <p:commandButton value="Crear"
+                                       action="#{cronogramaBean.doCreate}"
+                                       process="nombre link fecha @this"
+                                       update=":crudForm:msgs :crudForm:listPanel :crudForm:cal"
+                                       icon="pi pi-check" />
+
+                      <p:commandButton value="Listar"
+                                       action="#{cronogramaBean.listar}"
+                                       process="@this"
+                                       update=":crudForm:msgs :crudForm:listPanel :crudForm:cal"
+                                       icon="pi pi-list" />
+
+                      <p:commandButton value="Eliminar por ID"
+                                       type="button"
+                                       icon="pi pi-trash"
+                                       styleClass="ui-button-danger"
+                                       onclick="PF('delDlg').show()"/>
+                    </div>
+                  </p:panel>
+
+                  <h:panelGroup rendered="#{not (auth.admin or auth.profesor)}" styleClass="alert alert-secondary mb-3">
+                    Solo <strong>profesores</strong> y <strong>administradores</strong> pueden crear cronogramas.
+                  </h:panelGroup>
+
+                  <p:panel id="listPanel" header="Cronograma" styleClass="mt-3">
+                    <h3 class="mb-2">Calendario</h3>
+                    <p:schedule id="cal"
+                                value="#{cronogramaBean.calModel}"
+                                widgetVar="calWV"
+                                locale="es"
+                                timeZone="America/Bogota"
+                                view="dayGridMonth"
+                                height="auto"
+                                slotMinTime="07:00:00"
+                                slotMaxTime="21:00:00"
+                                tooltip="true"
+                                showWeekNumbers="true"
+                                draggable="false"
+                                resizable="false" />
+                  </p:panel>
+                </h:form>
+               
+                <p:dialog header="Eliminar evento por ID"
+                          widgetVar="delDlg"
+                          modal="false"
+                          dismissableMask="true"
+                          closable="true"
+                          resizable="false">
+                  <h:form id="delForm">
+                    <p:messages id="delMsgs" for="@form" showDetail="true" closable="true" />
+                    <h:panelGrid columns="2" columnClasses="col-4,col-8" cellpadding="6">
+                      <p:outputLabel for="delId" value="ID a eliminar *"/>
+                      <p:inputNumber id="delId"
+                                     value="#{cronogramaBean.deleteId}"
+                                     minValue="1"
+                                     decimalPlaces="0"
+                                     required="true"
+                                     requiredMessage="Ingresa un ID válido"/>
+                    </h:panelGrid>
+
+                    <div class="d-flex justify-content-end gap-2 mt-3">
+                      <p:commandButton value="Eliminar"
+                                       icon="pi pi-check"
+                                       styleClass="ui-button-danger"
+                                       process="@form"
+                                       action="#{cronogramaBean.eliminarById}"
+                                       update="delForm delMsgs :crudForm:msgs :crudForm:listPanel :crudForm:cal"
+                                       oncomplete="if(!args.validationFailed) PF('delDlg').hide()"
+                                       resetValues="true"/>
+                      <p:commandButton value="Cancelar"
+                                       icon="pi pi-times"
+                                       type="button"
+                                       styleClass="ui-button-secondary ui-button-outlined"
+                                       onclick="PF('delDlg').hide()"/>
+                    </div>
+                  </h:form>
+                </p:dialog>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 
 </h:body>
 </html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -23,6 +22,24 @@
     <link rel="stylesheet" href="css/styleproblema.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+
+    <style>
+      .fab{
+        position: fixed;
+        right: 1.25rem;
+        bottom: 1.25rem;
+        width: 3.25rem;
+        height: 3.25rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,.2);
+        z-index: 1050;
+      }
+      .ui-widget-overlay { z-index: 1100 !important; }
+      .ui-dialog         { z-index: 1110 !important; }
+
+      @media (max-width: 768px){
+        .w-30rem{ width: 100% !important; }
+      }
+    </style>
 </h:head>
 
 <h:body>
@@ -30,7 +47,7 @@
 <div class="main-container">
     <div class="aside">
         <div class="logo">
-            <a href="#"><span>A</span>rtemisa <br></br><br></br><span>UEB</span></a>
+            <a href="#"><span>A</span>rtemisa <br/><br/><span>UEB</span></a>
         </div>
 
         <div class="nav-toggler">
@@ -48,7 +65,7 @@
             <div class="card">
                 <h:form>
                     <p:growl id="messages" showDetail="true"/>
-                    <p:menuButton value="Opcion">
+                    <p:menuButton value="Opción">
                         <p:menuitem value="Judge" url="https://domjudgeacademicueb.com/public" icon="bi bi-code-square"/>
                         <p:menuitem value="CodeChef" url="https://www.codechef.com/" icon="bi bi-cookie"/>
                         <p:menuitem value="Vjudge" url="https://vjudge.net/group/cuevadelprofdiego" icon="bi bi-emoji-angry"/>
@@ -70,9 +87,11 @@
                             “Soy Artemisa UEB. Aquí encontrarás información, documentos y los mejores consejos para despertar y potenciar tu programador interior.”
                         </p>
 
+                        <!-- FORM PRINCIPAL -->
                         <h:form id="form" width="1500" >
                             <p:growl id="msgs" showDetail="true" life="5000" width="1500" autoUpdate="true"/>
 
+                            <!-- FAB Crear -->
                             <p:commandButton id="fabNuevo"
                                              icon="pi pi-plus"
                                              styleClass="ui-button-rounded ui-button-help fab"
@@ -80,69 +99,13 @@
                                              onclick="PF('dlgNuevoProblema').show()"
                                              rendered="#{auth.admin or auth.profesor}" />
 
-                            <p:dialog id="dlgNuevoProblema"
-                                      header="Nuevo problema"
-                                      widgetVar="dlgNuevoProblema"
-                                      modal="false"
-                                      dismissableMask="true"
-                                      draggable="false"
-                                      resizable="false"
-                                      closeOnEscape="true"
-                                      styleClass="w-30rem"
-                                      rendered="#{auth.admin or auth.profesor}">
-
-                                <p:messages id="msgsDlg" showDetail="true" closable="true" />
-
-                                <div class="p-fluid grid">
-                                    <div class="col-12">
-                                        <p:outputLabel for="nombre" value="Nombre / Título *" />
-                                        <p:inputText id="nombre" value="#{problemaBean.titulo}" maxlength="150" required="true"
-                                                     requiredMessage="El título es obligatorio"/>
-                                    </div>
-
-                                    <div class="col-12 md:col-6">
-                                        <p:outputLabel for="dificultad" value="Dificultad (número) *" />
-                                        <p:inputNumber id="dificultad" value="#{problemaBean.dificultad}" decimalPlaces="0" required="true"
-                                                       requiredMessage="La dificultad es obligatoria"/>
-                                    </div>
-
-                                    <div class="col-12 md:col-6">
-                                        <p:outputLabel for="tema" value="Tema" />
-                                        <p:inputText id="tema" value="#{problemaBean.tema}" maxlength="80"/>
-                                    </div>
-
-                                    <div class="col-12 md:col-6">
-                                        <p:outputLabel for="juez" value="Juez" />
-                                        <p:inputText id="juez" value="#{problemaBean.juez}" maxlength="60" placeholder="DOMJudge / CodeChef / UVA..."/>
-                                    </div>
-
-                                    <div class="col-12 md:col-6">
-                                        <p:outputLabel for="link" value="Link"/>
-                                        <p:inputText id="link" value="#{problemaBean.link}" maxlength="255" placeholder="https://..."/>
-                                    </div>
-
-                                    <div class="col-12 d-flex gap-2 justify-content-end">
-                                        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoProblema').hide()" />
-                                        <p:commandButton value="Crear"
-                                                         icon="pi pi-check"
-                                                         action="#{problemaBean.crear}"
-                                                         process="@form"
-                                                         update=":form:tabla :form:msgs"
-                                                         oncomplete="PF('dlgNuevoProblema').hide();" />
-                                    </div>
-                                </div>
-                            </p:dialog>
-
+                            <!-- Botones -->
                             <div class="mb-2 d-flex gap-2">
                                 <p:commandButton value="Ver problemas"
                                                  action="#{problemaBean.listarProblemas}"
                                                  process="@this"
                                                  update=":form:tabla :form:msgs"
-                                                 icon="pi pi-list" 
-                                                 styleClass=".btn.first"/>
-                                                 
-                                                 
-
+                                                 icon="pi pi-list" />
                                 <p:commandButton value="Eliminar por ID"
                                                  type="button"
                                                  icon="pi pi-trash"
@@ -151,42 +114,7 @@
                                                  rendered="#{auth.admin or auth.profesor}"/>
                             </div>
 
-                            <p:dialog id="dlgEliminarProblema"
-                                      header="Eliminar problema por ID"
-                                      widgetVar="dlgEliminarProblema"
-                                      modal="false"
-                                      closable="true"
-                                      resizable="false"
-                                      appendTo="@form"
-                                      rendered="#{auth.admin or auth.profesor}">
-                                <h:panelGrid columns="2" columnClasses="col-4,col-8" cellpadding="6">
-                                    <p:outputLabel for="delId" value="ID a eliminar" />
-                                    <p:inputNumber id="delId"
-                                                   value="#{problemaBean.deleteId}"
-                                                   minValue="1"
-                                                   decimalPlaces="0"
-                                                   required="true"
-                                                   requiredMessage="Ingresa un ID válido"/>
-                                </h:panelGrid>
-
-                                <f:facet name="footer">
-                                    <p:commandButton value="Eliminar"
-                                                     icon="pi pi-check"
-                                                     styleClass="ui-button-danger"
-                                                     process="delId @this"
-                                                     partialSubmit="true"
-                                                     action="#{problemaBean.eliminarById}"
-                                                     update=":form:msgs :form:tabla"
-                                                     oncomplete="PF('dlgEliminarProblema').hide()"
-                                                     resetValues="true"/>
-                                    <p:commandButton value="Cancelar"
-                                                     icon="pi pi-times"
-                                                     type="button"
-                                                     styleClass="ui-button-secondary ui-button-outlined"
-                                                     onclick="PF('dlgEliminarProblema').hide()"/>
-                                </f:facet>
-                            </p:dialog>
-
+                            <!-- TABLA -->
                             <p:dataTable id="tabla"
                                          value="#{problemaBean.lista}"
                                          var="p"
@@ -226,30 +154,106 @@
                             </p:dataTable>
                         </h:form>
 
+                        <!-- DIALOG CREAR -->
+                        <p:dialog id="dlgNuevoProblema"
+                                  header="Nuevo problema"
+                                  widgetVar="dlgNuevoProblema"
+                                  modal="false"
+                                  dismissableMask="true"
+                                  draggable="false"
+                                  resizable="false"
+                                  closeOnEscape="true"
+                                  styleClass="w-30rem"
+                                  rendered="#{auth.admin or auth.profesor}">
+                            <h:form id="newForm">
+                                <p:messages id="msgsDlg" showDetail="true" closable="true" />
+
+                                <div class="p-fluid grid">
+                                    <div class="col-12">
+                                        <p:outputLabel for="nombre" value="Nombre / Título *" />
+                                        <p:inputText id="nombre" value="#{problemaBean.titulo}" maxlength="150" required="true"
+                                                     requiredMessage="El título es obligatorio"/>
+                                    </div>
+
+                                    <div class="col-12 md:col-6">
+                                        <p:outputLabel for="dificultad" value="Dificultad (número) *" />
+                                        <p:inputNumber id="dificultad" value="#{problemaBean.dificultad}" decimalPlaces="0" required="true"
+                                                       requiredMessage="La dificultad es obligatoria"/>
+                                    </div>
+
+                                    <div class="col-12 md:col-6">
+                                        <p:outputLabel for="tema" value="Tema" />
+                                        <p:inputText id="tema" value="#{problemaBean.tema}" maxlength="80"/>
+                                    </div>
+
+                                    <div class="col-12 md:col-6">
+                                        <p:outputLabel for="juez" value="Juez" />
+                                        <p:inputText id="juez" value="#{problemaBean.juez}" maxlength="60" placeholder="DOMJudge / CodeChef / UVA..."/>
+                                    </div>
+
+                                    <div class="col-12 md:col-6">
+                                        <p:outputLabel for="link" value="Link"/>
+                                        <p:inputText id="link" value="#{problemaBean.link}" maxlength="255" placeholder="https://..."/>
+                                    </div>
+
+                                    <div class="col-12 d-flex gap-2 justify-content-end">
+                                        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevoProblema').hide()" />
+                                        <p:commandButton value="Crear"
+                                                         icon="pi pi-check"
+                                                         action="#{problemaBean.crear}"
+                                                         process="@form"
+                                                         update=":form:tabla :form:msgs"
+                                                         oncomplete="if(!args.validationFailed) PF('dlgNuevoProblema').hide();" />
+                                    </div>
+                                </div>
+                            </h:form>
+                        </p:dialog>
+
+                        <!-- DIALOG ELIMINAR -->
+                        <p:dialog id="dlgEliminarProblema"
+                                  header="Eliminar problema por ID"
+                                  widgetVar="dlgEliminarProblema"
+                                  modal="true"
+                                  closable="true"
+                                  resizable="false"
+                                  appendTo="@(body)"
+                                  rendered="#{auth.admin or auth.profesor}">
+                            <h:form id="delForm">
+                                <p:messages id="dlgMsgs" for="@form" showDetail="true" closable="true" />
+                                <h:panelGrid columns="2" columnClasses="col-4,col-8" cellpadding="6">
+                                    <p:outputLabel for="delId" value="ID a eliminar *" />
+                                    <p:inputNumber id="delId"
+                                                   value="#{problemaBean.deleteId}"
+                                                   minValue="1"
+                                                   decimalPlaces="0"
+                                                   required="true"
+                                                   requiredMessage="Ingresa un ID válido"/>
+                                </h:panelGrid>
+
+                                <div class="d-flex justify-content-end gap-2 mt-2">
+                                    <p:commandButton value="Eliminar"
+                                                     icon="pi pi-check"
+                                                     styleClass="ui-button-danger"
+                                                     process="@form"
+                                                     action="#{problemaBean.eliminarById}"
+                                                     update="delForm dlgMsgs :form:msgs :form:tabla"
+                                                     oncomplete="if(!args.validationFailed) PF('dlgEliminarProblema').hide()"
+                                                     resetValues="true"/>
+                                    <p:commandButton value="Cancelar"
+                                                     icon="pi pi-times"
+                                                     type="button"
+                                                     styleClass="ui-button-secondary ui-button-outlined"
+                                                     onclick="PF('dlgEliminarProblema').hide()"/>
+                                </div>
+                            </h:form>
+                        </p:dialog>
+
                     </div>
                 </div>
             </div>
         </section>
     </div>
 </div>
-
-<style>
-  .fab{
-    position: fixed;
-    right: 1.25rem;
-    bottom: 1.25rem;
-    width: 3.25rem;
-    height: 3.25rem;
-    box-shadow: 0 8px 20px rgba(0,0,0,.2);
-    z-index: 1050;
-  }
-  .ui-widget-overlay { z-index: 1100 !important; }
-  .ui-dialog         { z-index: 1110 !important; }
-
-  @media (max-width: 768px){
-    .w-30rem{ width: 100% !important; }
-  }
-</style>
 
 </h:body>
 </html>
