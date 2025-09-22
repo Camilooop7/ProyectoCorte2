@@ -61,7 +61,10 @@
                 <li rendered="#{auth.admin}">
                     <a href="paneladmin.xhtml"><i class="fa fa-shield"></i>Panel Admin</a>
                 </li>
-
+                
+               
+                
+				
                 
 
                 <div class="card">
@@ -75,6 +78,19 @@
                         </p:menuButton>
                     </h:form>
                 </div>
+                
+                
+                
+               <li>
+    <h:form style="margin:0;">
+        <p:commandButton value="Salir" 
+                         icon="pi pi-sign-out"
+                         styleClass="delete-button"
+                         action="#{auth.logout}" />
+    </h:form>
+</li>
+                
+                
             </ul>
         </div>
 
@@ -114,7 +130,12 @@
                         </div>
 
                         <div class="home-img padd-15">
+                        
+                       
+                        
                             <img src="assets/ueblog.png" alt="hero image"/>
+                            
+                            
                         </div>
                     </div>
                 </div>

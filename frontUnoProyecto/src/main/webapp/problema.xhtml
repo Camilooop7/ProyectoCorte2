@@ -30,7 +30,7 @@
 <div class="main-container">
     <div class="aside">
         <div class="logo">
-            <a href="#"><span>A</span>rtemisa <br></br><span>UEB</span></a>
+            <a href="#"><span>A</span>rtemisa <br></br><br></br><span>UEB</span></a>
         </div>
 
         <div class="nav-toggler">
@@ -134,11 +134,14 @@
                             </p:dialog>
 
                             <div class="mb-2 d-flex gap-2">
-                                <p:commandButton value="Listar problemas"
+                                <p:commandButton value="Ver problemas"
                                                  action="#{problemaBean.listarProblemas}"
                                                  process="@this"
                                                  update=":form:tabla :form:msgs"
-                                                 icon="pi pi-list" />
+                                                 icon="pi pi-list" 
+                                                 styleClass=".btn.first"/>
+                                                 
+                                                 
 
                                 <p:commandButton value="Eliminar por ID"
                                                  type="button"

@@ -2,6 +2,7 @@ package co.edu.unbosque.beans;
 
 import java.io.Serializable;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
 @Named("auth")
@@ -40,13 +41,9 @@ public class CurrentUserBean implements Serializable {
 	}
 
 	public String logout() {
-		id = null;
-		nombre = null;
-		correo = null;
-		rol = null;
-		loggedIn = false;
-		return "/login.xhtml?faces-redirect=true";
-	}
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/index.xhtml?faces-redirect=true";
+    }
 
 	public Long getId() {
 		return id;
