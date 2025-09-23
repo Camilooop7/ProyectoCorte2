@@ -1,207 +1,204 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/templates/template.xhtml">
 	<ui:define name="contenido">
-		<section class="hero animate__animated animate__fadeIn"
-			style="margin-top:2rem;">
-		<h2 class="display-4 mb-3 fw-bold">📖 Temario</h2>
-		<p class="lead mb-4">Explora los principales temas para aprender
-			algoritmos y programación competitiva, desde fundamentos hasta
-			técnicas avanzadas.</p>
+		<!-- Sección Hero -->
+		<section class="hero">
+		<h2>📖 Temario</h2>
+		<p>
+			Actualmente trabajando en: <b>#{paginaprincipalbean.temarioActual}</b><br />
+			Descubre los temas que estamos explorando este mes.
+		</p>
 		</section>
 
-		<section class="cards container animate__animated animate__fadeInUp"
-			style="margin-bottom:2rem;">
-		<div class="row justify-content-center">
-
-			<div class="col-md-4 mb-3">
-				<div class="card text-center py-4 px-2 h-100 card-temario">
-					<i class="fa-solid fa-diagram-project card-icon"></i>
-					<h5 class="mt-2">Estructuras de Datos</h5>
-					<p>Listas, pilas, colas, árboles, grafos y cómo manipular
-						información eficientemente.</p>
-					<h:commandButton value="Ver temario"
-						action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
-				</div>
-			</div>
-			<div class="col-md-4 mb-3">
-				<div class="card text-center py-4 px-2 h-100 card-temario">
-					<i class="fa-solid fa-database card-icon"></i>
-					<h5 class="mt-2">Bases de Datos</h5>
-					<p>Almacena y gestiona datos usando SQL, consultas y
-						normalización.</p>
-					<h:commandButton value="Ver temario"
-						action="#{paginaprincipalbean.irTemario}" styleClass="btn btn-sm" />
-				</div>
-			</div>
-		</div>
-		</section>
-
-		<!-- NUEVO: Bloque Accordion con dialogs, totalmente integrado al estilo -->
-		<h:form id="form">
+		<!-- Sección de contenido detallado -->
+		<section class="content-section"> <h:form id="temarioForm">
 			<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
 
-			<div class="card" style="margin-bottom: 2rem;">
-				<p:accordionPanel widgetVar="basic" scrollIntoView="center"
-					styleClass="acc-custom">
-
+			<div class="card temario-card"
+				style="width: 100%; margin-bottom: 30px;">
+				<p:accordionPanel styleClass="acc-custom" style="width: 100%;">
 					<!-- TAB TEORIA -->
-					<p:tab title="Teoria Basica">
-						<p class="m-0">Teoria Basica para empezar a programar.</p>
-						<div class="btn-container" style="margin-top: 1rem;">
-							<p:commandButton value="Teoria data" type="button"
-								onclick="PF('dlgTeoria').show();"
-								styleClass="btn-effect-2 btn btn-sm" />
+					<p:tab title="Teoría Básica">
+						<div style="padding: 20px;">
+							<p style="font-size: 16px; line-height: 1.6;">Teoría básica
+								para empezar a programar.</p>
+							<div class="btn-container" style="margin-top: 15px;">
+								<p:commandButton value="Ver más" type="button"
+									onclick="PF('dlgTeoria').show();" styleClass="btn-effect-2"
+									style="padding: 8px 16px; font-size: 14px;" />
+							</div>
 						</div>
 					</p:tab>
-
 					<!-- TAB BUSQUEDA -->
-					<p:tab title="Algoritmos de busqueda">
-						<p class="m-0">Algoritmo de búsqueda para competitiva y
-							resolución de problemas.</p>
-						<div class="btn-container" style="margin-top: 1rem;">
-							<p:commandButton value="Algoritmo de búsqueda" type="button"
-								onclick="PF('dlgBusqueda').show();"
-								styleClass="btn-effect-2 btn btn-sm" />
+					<p:tab title="Algoritmos de Búsqueda">
+						<div style="padding: 20px;">
+							<p style="font-size: 16px; line-height: 1.6;">Algoritmos de
+								búsqueda para competitiva y resolución de problemas.</p>
+							<div class="btn-container" style="margin-top: 15px;">
+								<p:commandButton value="Ver más" type="button"
+									onclick="PF('dlgBusqueda').show();" styleClass="btn-effect-2"
+									style="padding: 8px 16px; font-size: 14px;" />
+							</div>
 						</div>
 					</p:tab>
-
 					<!-- TAB ORDENAMIENTO -->
-					<p:tab title="Algoritmos de ordenamiento">
-						<p class="m-0">Algoritmos de ordenamiento para resolución de
-							problemas.</p>
-						<div class="btn-container" style="margin-top: 1rem;">
-							<p:commandButton value="Ordenamiento" type="button"
-								onclick="PF('dlgOrdenamiento').show();"
-								styleClass="btn-effect-2 btn btn-sm" />
+					<p:tab title="Algoritmos de Ordenamiento">
+						<div style="padding: 20px;">
+							<p style="font-size: 16px; line-height: 1.6;">Algoritmos de
+								ordenamiento para resolución de problemas.</p>
+							<div class="btn-container" style="margin-top: 15px;">
+								<p:commandButton value="Ver más" type="button"
+									onclick="PF('dlgOrdenamiento').show();"
+									styleClass="btn-effect-2"
+									style="padding: 8px 16px; font-size: 14px;" />
+							</div>
 						</div>
 					</p:tab>
-
 					<!-- TAB PROGRAMACION -->
-					<p:tab title="Programación dinamica">
-						<p class="m-0">Algoritmos de programación dinámica para
-							problemas complejos.</p>
-						<div class="btn-container" style="margin-top: 1rem;">
-							<p:commandButton value="Programación Dinámica" type="button"
-								onclick="PF('dlgPD').show();"
-								styleClass="btn-effect-2 btn btn-sm" />
+					<p:tab title="Programación Dinámica">
+						<div style="padding: 20px;">
+							<p style="font-size: 16px; line-height: 1.6;">Algoritmos de
+								programación dinámica para problemas complejos.</p>
+							<div class="btn-container" style="margin-top: 15px;">
+								<p:commandButton value="Ver más" type="button"
+									onclick="PF('dlgPD').show();" styleClass="btn-effect-2"
+									style="padding: 8px 16px; font-size: 14px;" />
+							</div>
 						</div>
 					</p:tab>
-
 				</p:accordionPanel>
 			</div>
 
 			<!-- DIALOGOS -->
-			<p:dialog header="Teoria Básica" widgetVar="dlgTeoria" modal="false"
-				closable="true" resizable="false" width="1000" height="500"
-				style="overflow:auto;">
-				<p>Durante las competencias, dependiendo de la modalidad de la
-					misma, existen ciertas reglas que se deben cumplir para mantener la
-					igualdad entre los competidores y evitar cualquier tipo de trampas.
-				</p>
-
-				<h4>Competencias presenciales:</h4>
-				<ul>
-					<li>Durante las competencias está prohibido el uso de
-						elementos electrónicos tales como celulares, dispositivos de
-						almacenamiento extraíbles, reproductores de música, auriculares,
-						entre otros. De ser encontrado con alguno de estos, el
-						participante será retirado del recinto y perderá el derecho a
-						continuar en la competencia por intento de fraude.</li>
-					<li>El ingreso a páginas web distintas a la plataforma oficial
-						de la competencia será penalizado con la descalificación inmediata
-						de la competencia.</li>
-					<li>El consumo de bebidas y alimentos dentro de las aulas no
-						está permitido.</li>
-					<li>Durante la competencia los equipos no podrán hablar ni
-						intercambiar material entre ellos. De ser sorprendidos por primera
-						vez incumpliendo esta norma, se les hará una advertencia, pero si
-						ya es la segunda vez serán descalificados.</li>
-					<li>La copia de código de fuentes externas como páginas web o
-						redes sociales se considera plagio.</li>
-					<li>Está permitido el uso de material como libros de texto,
-						códigos impresos, textos matemáticos, diccionarios, entre otros.</li>
-					<li>Cada equipo tendrá a su disposición una sola máquina
-						durante la competencia.</li>
-					<li>En la competencia los equipos serán conformados por máximo
-						tres competidores.</li>
-				</ul>
-
-				<h4>Competencias virtuales:</h4>
-				<ul>
-					<li>Durante la competencia los equipos no podrán hablar ni
-						intercambiar material entre ellos. De ser sorprendidos por primera
-						vez incumpliendo esta norma, se les hará una advertencia, pero si
-						ya es la segunda vez serán descalificados.</li>
-					<li>En la competencia los equipos serán conformados por máximo
-						tres competidores.</li>
-					<li>La copia de código de fuentes externas como páginas web o
-						redes sociales se considera plagio.</li>
-					<li>No se admite cualquier tipo de ataques informáticos que
-						intenten vulnerar la integridad de los sistemas usados en las
-						competencias.</li>
-				</ul>
-
-				<p>
-					Durante la mayoría de las competencias, la forma de entrada y
-					salida de información de cada ejercicio se realiza por medio de la
-					consola (<strong>STDIN/STDOUT</strong>), aunque algunas
-					competencias sí utilizan entornos gráficos y entornos web (Uva
-					Online Judge, 2012).
-				</p>
+			<p:dialog header="Teoría Básica" widgetVar="dlgTeoria" modal="true"
+				closable="true" resizable="true" width="90%" height="600"
+				style="overflow:auto; max-width: 1200px;">
+				<div style="padding: 20px; font-size: 16px; line-height: 1.6;">
+					<p>Durante las competencias, dependiendo de la modalidad de la
+						misma, existen ciertas reglas que se deben cumplir para mantener
+						la igualdad entre los competidores y evitar cualquier tipo de
+						trampas.</p>
+					<h4 style="margin: 20px 0 10px 0;">Competencias presenciales:</h4>
+					<ul style="padding-left: 20px;">
+						<li style="margin-bottom: 10px;">Durante las competencias
+							está prohibido el uso de elementos electrónicos tales como
+							celulares, dispositivos de almacenamiento extraíbles,
+							reproductores de música, auriculares, entre otros. De ser
+							encontrado con alguno de estos, el participante será retirado del
+							recinto y perderá el derecho a continuar en la competencia por
+							intento de fraude.</li>
+						<li style="margin-bottom: 10px;">El ingreso a páginas web
+							distintas a la plataforma oficial de la competencia será
+							penalizado con la descalificación inmediata de la competencia.</li>
+						<li style="margin-bottom: 10px;">El consumo de bebidas y
+							alimentos dentro de las aulas no está permitido.</li>
+						<li style="margin-bottom: 10px;">Durante la competencia los
+							equipos no podrán hablar ni intercambiar material entre ellos. De
+							ser sorprendidos por primera vez incumpliendo esta norma, se les
+							hará una advertencia, pero si ya es la segunda vez serán
+							descalificados.</li>
+						<li style="margin-bottom: 10px;">La copia de código de
+							fuentes externas como páginas web o redes sociales se considera
+							plagio.</li>
+						<li style="margin-bottom: 10px;">Está permitido el uso de
+							material como libros de texto, códigos impresos, textos
+							matemáticos, diccionarios, entre otros.</li>
+						<li style="margin-bottom: 10px;">Cada equipo tendrá a su
+							disposición una sola máquina durante la competencia.</li>
+						<li style="margin-bottom: 10px;">En la competencia los
+							equipos serán conformados por máximo tres competidores.</li>
+					</ul>
+					<h4 style="margin: 20px 0 10px 0;">Competencias virtuales:</h4>
+					<ul style="padding-left: 20px;">
+						<li style="margin-bottom: 10px;">Durante la competencia los
+							equipos no podrán hablar ni intercambiar material entre ellos. De
+							ser sorprendidos por primera vez incumpliendo esta norma, se les
+							hará una advertencia, pero si ya es la segunda vez serán
+							descalificados.</li>
+						<li style="margin-bottom: 10px;">En la competencia los
+							equipos serán conformados por máximo tres competidores.</li>
+						<li style="margin-bottom: 10px;">La copia de código de
+							fuentes externas como páginas web o redes sociales se considera
+							plagio.</li>
+						<li style="margin-bottom: 10px;">No se admite cualquier tipo
+							de ataques informáticos que intenten vulnerar la integridad de
+							los sistemas usados en las competencias.</li>
+					</ul>
+					<p style="margin-top: 20px;">
+						Durante la mayoría de las competencias, la forma de entrada y
+						salida de información de cada ejercicio se realiza por medio de la
+						consola (<strong>STDIN/STDOUT</strong>), aunque algunas
+						competencias sí utilizan entornos gráficos y entornos web (Uva
+						Online Judge, 2012).
+					</p>
+				</div>
 			</p:dialog>
 
 			<p:dialog header="Algoritmos de Búsqueda" widgetVar="dlgBusqueda"
-				modal="false" closable="true" resizable="false" width="1000"
-				height="300" style="overflow:auto;">
-				<p>La búsqueda binaria, también conocida como búsqueda de
-					intervalo medio o búsqueda logarítmica, es un algoritmo de búsqueda
-					que encuentra la posición de un valor en un arreglo ordenado.
-					Compara el valor con el elemento en el medio del arreglo, si no son
-					iguales, la mitad en la cual el valor no puede estar es eliminada y
-					la búsqueda sigue en la mitad restante hasta que el valor se
-					encuentre. La búsqueda binaria es computada en el peor de los casos
-					en un tiempo logarítmico, realizando O (log n) comparaciones, donde
-					n es el número de elementos del arreglo y log es el logaritmo.</p>
-				<a href="https://www.geeksforgeeks.org/dsa/searching-algorithms/"
-					class="be" target="_blank" rel="noopener noreferrer"> Click me
-				</a>
+				modal="true" closable="true" resizable="true" width="90%"
+				height="500" style="overflow:auto; max-width: 1200px;">
+				<div style="padding: 20px; font-size: 16px; line-height: 1.6;">
+					<p>La búsqueda binaria, también conocida como búsqueda de
+						intervalo medio o búsqueda logarítmica, es un algoritmo de
+						búsqueda que encuentra la posición de un valor en un arreglo
+						ordenado. Compara el valor con el elemento en el medio del
+						arreglo, si no son iguales, la mitad en la cual el valor no puede
+						estar es eliminada y la búsqueda sigue en la mitad restante hasta
+						que el valor se encuentre. La búsqueda binaria es computada en el
+						peor de los casos en un tiempo logarítmico, realizando O(log n)
+						comparaciones, donde n es el número de elementos del arreglo y log
+						es el logaritmo.</p>
+					<p style="margin-top: 20px;">
+						<a href="https://www.geeksforgeeks.org/dsa/searching-algorithms/"
+							target="_blank" rel="noopener noreferrer"
+							style="color: #007bff; text-decoration: none; font-weight: bold;">Más
+							información sobre algoritmos de búsqueda</a>
+					</p>
+				</div>
 			</p:dialog>
 
 			<p:dialog header="Algoritmos de Ordenamiento"
-				widgetVar="dlgOrdenamiento" modal="false" closable="true"
-				resizable="false" width="1000" height="300" style="overflow:auto;">
-				<p>Un algoritmo de ordenamiento es un conjunto de instrucciones
-					que reorganiza los elementos de una lista o vector en un orden
-					específico, como de menor a mayor, alfabéticamente, o en orden
-					inverso.</p>
-				<a href="https://www.geeksforgeeks.org/dsa/sorting-algorithms/"
-					class="be" target="_blank" rel="noopener noreferrer"> Click me
-				</a>
+				widgetVar="dlgOrdenamiento" modal="true" closable="true"
+				resizable="true" width="90%" height="500"
+				style="overflow:auto; max-width: 1200px;">
+				<div style="padding: 20px; font-size: 16px; line-height: 1.6;">
+					<p>Un algoritmo de ordenamiento es un conjunto de instrucciones
+						que reorganiza los elementos de una lista o vector en un orden
+						específico, como de menor a mayor, alfabéticamente, o en orden
+						inverso.</p>
+					<p style="margin-top: 20px;">
+						<a href="https://www.geeksforgeeks.org/dsa/sorting-algorithms/"
+							target="_blank" rel="noopener noreferrer"
+							style="color: #007bff; text-decoration: none; font-weight: bold;">Más
+							información sobre algoritmos de ordenamiento</a>
+					</p>
+				</div>
 			</p:dialog>
 
 			<p:dialog header="Programación Dinámica" widgetVar="dlgPD"
-				modal="false" closable="true" resizable="false" width="1000"
-				height="300" style="overflow:auto;">
-				<p>La programación dinámica es una técnica para resolver
-					problemas complejos dividiéndolos en subproblemas más sencillos,
-					almacenando sus soluciones para reutilizarlas y así encontrar de
-					manera eficiente la solución óptima del problema original.</p>
-				<a
-					href="https://www.geeksforgeeks.org/competitive-programming/dynamic-programming/"
-					class="be" target="_blank" rel="noopener noreferrer"> Click me
-				</a>
+				modal="true" closable="true" resizable="true" width="90%"
+				height="500" style="overflow:auto; max-width: 1200px;">
+				<div style="padding: 20px; font-size: 16px; line-height: 1.6;">
+					<p>La programación dinámica es una técnica para resolver
+						problemas complejos dividiéndolos en subproblemas más sencillos,
+						almacenando sus soluciones para reutilizarlas y así encontrar de
+						manera eficiente la solución óptima del problema original.</p>
+					<p style="margin-top: 20px;">
+						<a
+							href="https://www.geeksforgeeks.org/competitive-programming/dynamic-programming/"
+							target="_blank" rel="noopener noreferrer"
+							style="color: #007bff; text-decoration: none; font-weight: bold;">Más
+							información sobre programación dinámica</a>
+					</p>
+				</div>
 			</p:dialog>
-		</h:form>
-		<!-- FIN NUEVO BLOQUE -->
-
+		</h:form> </section>
 	</ui:define>
 </ui:composition>
-</html>

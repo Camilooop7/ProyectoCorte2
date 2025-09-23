@@ -1,12 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition template="/templates/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
 	<ui:define name="contenido">
-		<section class="hero animate__animated animate__fadeIn">
+		<!-- Sección Hero -->
+		<section class="hero animate__animated animate__fadeIn"
+			style="margin-bottom: 30px;">
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-md-7 text-center text-md-start">
@@ -16,42 +20,127 @@
 				</div>
 				<div class="col-md-5 text-center">
 					<img
-						src="https://biblioteca-artemisa.netlify.app/images/club-lectura.jpg"
+						src="https://redprogramacioncompetitiva.com/contests/2022/12/images/logoSloganH200V1.png"
 						alt="Eventos Artemisa"
-						class="img-fluid animate__animated animate__pulse animate__infinite logo-artemisa" />
+						class="img-fluid animate__animated animate__pulse animate__infinite logo-artemisa"
+						style="max-width: 200px;" />
 				</div>
 			</div>
 		</div>
 		</section>
-		<section class="cards container animate__animated animate__fadeInUp">
+
+		<!-- Contenedor Principal -->
+		<section class="container-fluid animate__animated animate__fadeInUp"
+			style="padding: 20px;">
 		<div class="row justify-content-center">
-			<div class="col-md-4 mb-3">
-				<h:link outcome="clubLectura" styleClass="card-link">
-					<div class="card text-center py-4 px-2 h-100 card-club">
-						<i class="ri-book-open-line card-icon"></i>
-						<h5 class="mt-2">Club de Lectura</h5>
-						<p>Debate y reflexión sobre libros seleccionados cada mes.</p>
+			<div class="col-12">
+				<!-- Formulario Principal -->
+				<h:form id="crudForm">
+					<!-- Mensajes de Feedback -->
+					<p:growl id="msgs" showDetail="true" life="5000" autoUpdate="true" />
+
+					<!-- Panel para Crear Eventos -->
+					<div class="card mb-4" style="width: 100%;">
+						<div class="card-header bg-primary text-white">
+							<h5 class="mb-0">Crear Nuevo Evento</h5>
+						</div>
+						<div class="card-body" style="padding: 25px;">
+							<div class="row">
+								<div class="col-lg-4 col-md-6 mb-3">
+									<p:outputLabel for="nombre" value="Nombre del Evento"
+										style="font-weight: bold; display: block; margin-bottom: 8px; font-size: 16px;" />
+									<p:inputText id="nombre" value="#{cronogramaBean.nombre}"
+										required="true"
+										style="width: 100%; padding: 12px; font-size: 16px;" />
+								</div>
+								<div class="col-lg-4 col-md-6 mb-3">
+									<p:outputLabel for="link" value="Enlace del Evento"
+										style="font-weight: bold; display: block; margin-bottom: 8px; font-size: 16px;" />
+									<p:inputText id="link" value="#{cronogramaBean.link}"
+										required="true"
+										style="width: 100%; padding: 12px; font-size: 16px;">
+										<f:validateRegex pattern="https?://.+" />
+									</p:inputText>
+								</div>
+								<div class="col-lg-4 col-md-12 mb-3">
+									<p:outputLabel for="fecha" value="Fecha (yyyy-MM-dd)"
+										style="font-weight: bold; display: block; margin-bottom: 8px; font-size: 16px;" />
+									<p:datePicker id="fecha" value="#{cronogramaBean.fecha}"
+										pattern="yyyy-MM-dd" showIcon="true" style="width: 100%;" />
+								</div>
+							</div>
+							<div class="d-flex justify-content-center gap-3 mt-4">
+								<p:commandButton value="Crear Evento"
+									action="#{cronogramaBean.doCreate}"
+									process="nombre link fecha @this"
+									update=":crudForm:msgs :crudForm:calendarioPanel"
+									icon="pi pi-check" styleClass="ui-button-success" />
+
+								<p:commandButton value="Listar Eventos"
+									action="#{cronogramaBean.listar}" process="@this"
+									update=":crudForm:msgs :crudForm:calendarioPanel"
+									icon="pi pi-list" styleClass="ui-button-info" />
+
+								<p:commandButton value="Eliminar por ID" type="button"
+									icon="pi pi-trash" styleClass="ui-button-danger"
+									onclick="PF('delDlg').show()" />
+							</div>
+						</div>
 					</div>
-				</h:link>
-			</div>
-			<div class="col-md-4 mb-3">
-				<h:link outcome="talleres" styleClass="card-link">
-					<div class="card text-center py-4 px-2 h-100 card-taller">
-						<i class="ri-presentation-line card-icon"></i>
-						<h5 class="mt-2">Talleres</h5>
-						<p>Aprende en sesiones prácticas de programación, arte y
-							ciencia.</p>
+
+					<!-- Panel para Mostrar el Calendario -->
+					<div class="card" style="width: 100%; margin-bottom: 2rem;">
+						<div class="card-header bg-primary text-white">
+							<h5 class="mb-0">Calendario de Eventos</h5>
+						</div>
+						<div class="card-body" style="padding: 0; width: 100%;">
+							<div style="width: 100%; padding: 20px;">
+								<p:schedule id="calendarioPanel"
+									value="#{cronogramaBean.calModel}" widgetVar="calWV"
+									locale="es" timeZone="America/Bogota" view="dayGridMonth"
+									style="width: 100% !important; height: 800px !important;"
+									slotMinTime="07:00:00" slotMaxTime="21:00:00" tooltip="true"
+									showWeekNumbers="true" draggable="false" resizable="false" />
+							</div>
+						</div>
 					</div>
-				</h:link>
-			</div>
-			<div class="col-md-4 mb-3">
-				<h:link outcome="charlas" styleClass="card-link">
-					<div class="card text-center py-4 px-2 h-100 card-charla">
-						<i class="ri-mic-line card-icon"></i>
-						<h5 class="mt-2">Charlas</h5>
-						<p>Escucha a invitadas especiales y expande tu visión.</p>
-					</div>
-				</h:link>
+				</h:form>
+
+				<!-- Diálogo para Eliminar Eventos por ID -->
+				<p:dialog header="Eliminar Evento por ID" widgetVar="delDlg"
+					modal="true" width="500" height="250" resizable="false">
+					<h:form id="delForm">
+						<p:messages id="delMsgs" for="@form" showDetail="true"
+							closable="true" />
+
+						<div class="row mb-3" style="padding: 15px;">
+							<div class="col-md-4">
+								<p:outputLabel for="delId" value="ID a Eliminar"
+									style="font-weight: bold; display: block; margin-bottom: 5px;" />
+							</div>
+							<div class="col-md-8">
+								<p:inputNumber id="delId" value="#{cronogramaBean.deleteId}"
+									minValue="1" decimalPlaces="0" required="true"
+									requiredMessage="Ingresa un ID válido"
+									style="width: 100%; padding: 10px; font-size: 16px;" />
+							</div>
+						</div>
+
+						<div class="d-flex justify-content-end gap-2 mt-3"
+							style="padding: 0 15px 15px;">
+							<p:commandButton value="Eliminar" icon="pi pi-check"
+								styleClass="ui-button-danger" process="@form"
+								action="#{cronogramaBean.eliminarById}"
+								update="delForm delMsgs :crudForm:msgs :crudForm:calendarioPanel"
+								oncomplete="if(!args.validationFailed) PF('delDlg').hide()"
+								resetValues="true" />
+
+							<p:commandButton value="Cancelar" icon="pi pi-times"
+								styleClass="ui-button-secondary" type="button"
+								onclick="PF('delDlg').hide()" />
+						</div>
+					</h:form>
+				</p:dialog>
 			</div>
 		</div>
 		</section>

@@ -155,11 +155,6 @@
 		</dependency>
 
 
-		<dependency>
-			<groupId>co.edu.unbosque</groupId>
-			<artifactId>miprimerspring</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 
 

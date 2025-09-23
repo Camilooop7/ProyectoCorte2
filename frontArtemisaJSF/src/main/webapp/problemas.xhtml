@@ -1,6 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -9,185 +8,124 @@
 
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="contenido">
-		<section class="hero animate__animated animate__fadeIn"
-			style="margin-top:2rem;">
-		<h2 class="display-4 mb-3 fw-bold">❓ Problemas y Retos</h2>
-		<p class="lead mb-4">
+		<section class="hero">
+		<h2>❓ Problemas y Retos</h2>
+		<p>
 			Resuelve ejercicios, comparte soluciones y aprende en comunidad.<br />
 			¿Te animas a un nuevo desafío?
 		</p>
 		</section>
-		<section class="cards container animate__animated animate__fadeInUp"
-			style="margin-bottom:2rem;">
-		<div class="row justify-content-center">
-			<div class="col-md-4 mb-3">
-				<div class="card text-center py-4 px-2 h-100 card-problemas">
-					<i class="fa-solid fa-square-root-variable card-icon"></i>
-					<h5 class="mt-2">Matemáticas</h5>
-					<p>Ejercicios y problemas de lógica y álgebra.</p>
-					<h:commandButton value="Ver problemas"
-						action="#{paginaprincipalbean.irProblemas}"
-						styleClass="btn btn-sm" />
-				</div>
+		<!-- Botón para listar problemas -->
+		<section class="cards">
+		<div class="card">
+			<h3>Listar Problemas</h3>
+			<h:form>
+				<h:commandButton value="Cargar Problemas"
+					action="#{problemaBean.listarProblemas}" styleClass="btn btn-sm" />
+			</h:form>
+		</div>
+
+
+
+
+
+		<!-- Tabla para mostrar problemas -->
+		<div class="card"
+			style="width: 100%; margin: 20px 0; padding: 20px; box-sizing: border-box;">
+			<h3>Lista de Problemas</h3>
+			<div style="overflow-x: auto; width: 100%;">
+				<h:dataTable value="#{problemaBean.lista}" var="problema" border="1"
+					styleClass="table table-striped table-bordered"
+					headerClass="table-header"
+					rowClasses="table-row-odd, table-row-even"
+					style="width: 100%; margin-bottom: 20px;">
+					<h:column style="width: 5%; text-align: center;">
+						<f:facet name="header">ID</f:facet>
+                #{problema.id}
+            </h:column>
+					<h:column style="width: 25%;">
+						<f:facet name="header">Título</f:facet>
+                #{problema.titulo}
+            </h:column>
+					<h:column style="width: 10%; text-align: center;">
+						<f:facet name="header">Dificultad</f:facet>
+                #{problema.dificultad}
+            </h:column>
+					<h:column style="width: 20%;">
+						<f:facet name="header">Tema</f:facet>
+                #{problema.tema}
+            </h:column>
+					<h:column style="width: 20%;">
+						<f:facet name="header">Juez</f:facet>
+                #{problema.juez}
+            </h:column>
+					<h:column style="width: 25%;">
+						<f:facet name="header">Enlace</f:facet>
+						<h:outputLink value="#{problema.link}" target="_blank"
+							style="color: #007bff; text-decoration: none;">
+                    Abrir
+                </h:outputLink>
+					</h:column>
+					<h:column style="width: 15%; text-align: center;">
+						<f:facet name="header">Acciones</f:facet>
+						<h:commandButton value="Eliminar"
+							action="#{problemaBean.eliminar(problema.id)}"
+							styleClass="btn btn-sm btn-danger" />
+					</h:column>
+				</h:dataTable>
 			</div>
-			<div class="col-md-4 mb-3">
-				<div class="card text-center py-4 px-2 h-100 card-problemas">
-					<i class="fa-solid fa-code card-icon"></i>
-					<h5 class="mt-2">Programación</h5>
-					<p>Retos prácticos para mejorar tus habilidades de código.</p>
-					<h:commandButton value="Ver problemas"
-						action="#{paginaprincipalbean.irProblemas}"
-						styleClass="btn btn-sm" />
+		</div>
+
+		</section>
+		<!-- Formulario para crear un nuevo problema -->
+		<section class="cards">
+		<div class="card">
+			<h3>Crear Nuevo Problema</h3>
+			<h:form>
+				<div class="form-group">
+					<h:outputLabel for="titulo" value="Título:" />
+					<h:inputText id="titulo" value="#{problemaBean.titulo}"
+						required="true" />
 				</div>
-			</div>
-			<div class="col-md-4 mb-3">
-				<div class="card text-center py-4 px-2 h-100 card-problemas">
-					<i class="fa-solid fa-microchip card-icon"></i>
-					<h5 class="mt-2">Electrónica</h5>
-					<p>Soluciona circuitos y experimenta con tecnología.</p>
-					<h:commandButton value="Ver problemas"
-						action="#{paginaprincipalbean.irProblemas}"
-						styleClass="btn btn-sm" />
+				<div class="form-group">
+					<h:outputLabel for="dificultad" value="Dificultad (1-5):" />
+					<h:inputText id="dificultad" value="#{problemaBean.dificultad}"
+						required="true" />
 				</div>
-			</div>
+				<div class="form-group">
+					<h:outputLabel for="tema" value="Tema:" />
+					<h:inputText id="tema" value="#{problemaBean.tema}" required="true" />
+				</div>
+				<div class="form-group">
+					<h:outputLabel for="juez" value="Juez:" />
+					<h:inputText id="juez" value="#{problemaBean.juez}" required="true" />
+				</div>
+				<div class="form-group">
+					<h:outputLabel for="link" value="Enlace:" />
+					<h:inputText id="link" value="#{problemaBean.link}" required="true" />
+				</div>
+				<h:commandButton value="Crear Problema"
+					action="#{problemaBean.crear}" styleClass="btn btn-sm" />
+			</h:form>
+		</div>
+		<!-- Formulario para eliminar por ID -->
+		<div class="card">
+			<h3>Eliminar Problema por ID</h3>
+			<h:form>
+				<div class="form-group">
+					<h:outputLabel for="deleteId" value="ID del Problema:" />
+					<h:inputText id="deleteId" value="#{problemaBean.deleteId}"
+						required="true" />
+				</div>
+				<h:commandButton value="Eliminar"
+					action="#{problemaBean.eliminarById}"
+					styleClass="btn btn-sm btn-danger" />
+			</h:form>
 		</div>
 		</section>
 
-		<!-- NUEVO: CRUD PROBLEMAS ESTILO INTEGRADO -->
-		<div class="main-content">
-			<section class="home section active" id="home">
-			<div class="container">
-				<div class="row">
-					<div class="home-info padd-15">
-						<h3 class="hello">
-							Artemisa UEB <span class="name">Sergio - Camilo - Jeisson
-								- Luna</span>
-						</h3>
-						<h3 class="profession">
-							Hola, <span class="typing">Bienvenido :) </span>
-						</h3>
-						<p class="animate__animated animate__lightSpeedInRight">“Soy
-							Artemisa UEB. Aquí encontrarás información, documentos y los
-							mejores consejos para despertar y potenciar tu programador
-							interior.”</p>
-						<!-- === FORM PRINCIPAL === -->
-						<h:form id="form">
-							<p:growl id="msgs" showDetail="true" life="5000" />
-
-							<!-- FAB -->
-							<p:commandButton id="fabNuevo" icon="pi pi-plus"
-								styleClass="ui-button-rounded ui-button-help fab" type="button"
-								onclick="PF('dlgNuevoProblema').show()" />
-
-							<!-- DIALOG CREAR -->
-							<p:dialog id="dlgNuevoProblema" header="Nuevo problema"
-								widgetVar="dlgNuevoProblema" modal="false"
-								dismissableMask="true" draggable="false" resizable="false"
-								closeOnEscape="true" styleClass="w-30rem">
-
-								<p:messages id="msgsDlg" showDetail="true" closable="true" />
-
-								<div class="p-fluid grid">
-									<div class="col-12">
-										<p:outputLabel for="nombre" value="Nombre / Título *" />
-										<p:inputText id="nombre" value="#{problemaBean.titulo}"
-											maxlength="150" required="true"
-											requiredMessage="El título es obligatorio" />
-									</div>
-
-									<div class="col-12 md:col-6">
-										<p:outputLabel for="dificultad" value="Dificultad (número) *" />
-										<p:inputNumber id="dificultad"
-											value="#{problemaBean.dificultad}" decimalPlaces="0"
-											required="true"
-											requiredMessage="La dificultad es obligatoria" />
-									</div>
-
-									<div class="col-12 md:col-6">
-										<p:outputLabel for="tema" value="Tema" />
-										<p:inputText id="tema" value="#{problemaBean.tema}"
-											maxlength="80" />
-									</div>
-
-									<div class="col-12 md:col-6">
-										<p:outputLabel for="juez" value="Juez" />
-										<p:inputText id="juez" value="#{problemaBean.juez}"
-											maxlength="60" placeholder="DOMJudge / CodeChef / UVA..." />
-									</div>
-
-									<div class="col-12 md:col-6">
-										<p:outputLabel for="link" value="Link" />
-										<p:inputText id="link" value="#{problemaBean.link}"
-											maxlength="255" placeholder="https://..." />
-									</div>
-
-									<div class="col-12 d-flex gap-2 justify-content-end">
-										<p:commandButton value="Cancelar" type="button"
-											onclick="PF('dlgNuevoProblema').hide()" />
-										<p:commandButton value="Crear" icon="pi pi-check"
-											action="#{problemaBean.crear}" process="@form"
-											update=":form:tabla :form:msgs"
-											oncomplete="PF('dlgNuevoProblema').hide();" />
-									</div>
-								</div>
-							</p:dialog>
-
-							<!-- Botón Listar -->
-							<div class="mb-2">
-								<p:commandButton value="Listar problemas"
-									action="#{problemaBean.listarProblemas}" process="@this"
-									update=":form:tabla :form:msgs" icon="pi pi-list" />
-							</div>
-
-							<!-- TABLA TIPADA -->
-							<p:dataTable id="tabla" value="#{problemaBean.lista}" var="p"
-								rows="10" paginator="true"
-								emptyMessage="No hay problemas para mostrar"
-								styleClass="container" responsiveLayout="scroll">
-
-								<p:column headerText="ID" style="width:6rem; text-align:center;">
-									<h:outputText value="#{p.id}" />
-								</p:column>
-
-								<p:column headerText="Título">
-									<h:outputText value="#{p.titulo}" />
-								</p:column>
-
-								<p:column headerText="Dificultad"
-									style="width:8rem; text-align:center;">
-									<h:outputText value="#{p.dificultad}" />
-								</p:column>
-
-								<p:column headerText="Tema">
-									<h:outputText value="#{p.tema}" />
-								</p:column>
-
-								<p:column headerText="Juez" style="width:10rem;">
-									<h:outputText value="#{p.juez}" />
-								</p:column>
-
-								<p:column headerText="Acción"
-									style="width:1%; white-space:nowrap;" exportable="false">
-									<p:commandButton value="Abrir" icon="pi pi-external-link"
-										onclick="window.open('#{p.link}','_blank'); return false;"
-										disabled="#{empty p.link}" />
-								</p:column>
-							</p:dataTable>
-						</h:form>
-					</div>
-				</div>
-			</div>
-			</section>
-		</div>
-
-		<section class="hero"
-			style="background: var(--rosa-claro); color: #d6336c;">
-		<h2>¿Tienes un reto para compartir?</h2>
-		<p>Propón tu propio problema y ayuda a otras a aprender.</p>
-		<h:link outcome="problemas" styleClass="btn btn-lg"
-			style="background:var(--naranja);color:white;border-radius:30px;">
-                Proponer reto
-            </h:link> </section>
+		<!-- Mensajes de feedback -->
+		<p:growl id="messages" showDetail="true" />
 	</ui:define>
 </ui:composition>
 </html>

@@ -73,13 +73,13 @@ public class AESUtil {
 
 		return new String(decrypted);
 	}
-	
+
 	public static String decrypt(String encrypted) {
 		String iv = "programacioncomp";
 		String key = "llavede16carater";
 		return decrypt(key, iv, encrypted);
 	}
-	
+
 	public static String encrypt(String plainText) {
 		String iv = "programacioncomp";
 		String key = "llavede16carater";
@@ -87,13 +87,9 @@ public class AESUtil {
 	}
 
 	/*
-	public static void main(String[] args) {
-		String text = "hola mundo";
-		String iv = "holamundohfhfhtf";
-		String key = "holamundohfhfhtf";
-		System.out.println(iv.getBytes().length);
-		String encoded = encrypt(key, iv, text);
-		System.out.println(encoded);
-	}
-	*/
+	 * public static void main(String[] args) { String text = "hola mundo"; String
+	 * iv = "holamundohfhfhtf"; String key = "holamundohfhfhtf";
+	 * System.out.println(iv.getBytes().length); String encoded = encrypt(key, iv,
+	 * text); System.out.println(encoded); }
+	 */
 }

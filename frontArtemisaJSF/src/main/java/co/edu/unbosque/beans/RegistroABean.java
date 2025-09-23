@@ -9,12 +9,12 @@ import jakarta.inject.Named;
 @Named("adminBean")
 @RequestScoped
 public class RegistroABean {
-	private String name;
-	private String documento;
-	private String cargo;
-	private String email;
-	private String password;
-	private String role = "ADMIN";
+	private String name; 
+	private String documento; 
+	private String cargo; 
+	private String email; 
+	private String password; 
+	private String role = "ADMIN"; 
 
 	public void createAccount() {
 		try {
@@ -33,7 +33,7 @@ public class RegistroABean {
 				cargo = "";
 				email = "";
 				password = "";
-
+			
 			}
 
 		} catch (Exception e) {
@@ -61,6 +61,7 @@ public class RegistroABean {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(sev, summary, content));
 	}
 
+	
 	public String getName() {
 		return name;
 	}
