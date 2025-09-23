@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="contenido">
+		<h:body>
+			<div class="content">
+				<h2
+					style="text-align: center; color: var(--rosa-intenso); margin-bottom: 1.2rem;">Cronograma
+					de Eventos</h2>
+				<p style="text-align: center; color: var(--naranja);">Visualiza
+					y administra los eventos del calendario Artemisa UEB.</p>
+				<h:form id="crudForm">
+					<p:growl id="msgs" showDetail="true" life="4000" autoUpdate="true" />
+					<p:panel header="Crear Cronograma"
+						rendered="#{auth.admin or auth.profesor}" styleClass="card"
+						style="margin-bottom:1.2rem;">
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+							<div style="flex: 1 1 160px;">
+								<p:outputLabel for="nombre" value="Nombre" />
+								<p:inputText id="nombre" value="#{cronogramaBean.nombre}"
+									required="true" label="Nombre" maxlength="100"
+									styleClass="pwfield" />
+							</div>
+							<div style="flex: 1 1 200px;">
+								<p:outputLabel for="link" value="Link" />
+								<p:inputText id="link" value="#{cronogramaBean.link}"
+									required="true" label="Link" styleClass="pwfield">
+									<f:validateRegex pattern="https?://.+" />
+								</p:inputText>
+							</div>
+							<div style="flex: 1 1 180px;">
+								<p:outputLabel for="fecha" value="Fecha (yyyy-MM-dd)" />
+								<p:datePicker id="fecha" value="#{cronogramaBean.fecha}"
+									pattern="yyyy-MM-dd" showIcon="true" showButtonBar="true"
+									touchUI="true" styleClass="pwfield">
+									<f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+								</p:datePicker>
+							</div>
+						</div>
+						<div style="display: flex; gap: 0.7rem; margin-top: 1.1rem;">
+							<p:commandButton value="Crear"
+								action="#{cronogramaBean.doCreate}"
+								process="nombre link fecha @this"
+								update=":crudForm:msgs :crudForm:listPanel :crudForm:cal"
+								styleClass="btn" />
+							<p:commandButton value="Listar" action="#{cronogramaBean.listar}"
+								process="@this"
+								update=":crudForm:msgs :crudForm:listPanel :crudForm:cal"
+								styleClass="btn" />
+							<p:commandButton value="Eliminar por ID" type="button"
+								styleClass="btn" onclick="PF('delDlg').show()" />
+						</div>
+					</p:panel>
+					<h:panelGroup rendered="#{not (auth.admin or auth.profesor)}"
+						styleClass="alert alert-secondary mb-3"
+						style="margin-bottom:1.4rem;">
+                Solo <strong>profesores</strong> y <strong>administradores</strong> pueden crear cronogramas.
+            </h:panelGroup>
+					<p:panel id="listPanel" header="Cronograma" styleClass="card"
+						style="margin-bottom:1.2rem;">
+						<h3 class="mb-2" style="color: var(--rosa-intenso)">Calendario</h3>
+						<p:schedule id="cal" value="#{cronogramaBean.calModel}"
+							widgetVar="calWV" locale="es" timeZone="America/Bogota"
+							view="dayGridMonth" height="auto" slotMinTime="07:00:00"
+							slotMaxTime="21:00:00" tooltip="true" showWeekNumbers="true"
+							draggable="false" resizable="false" />
+					</p:panel>
+				</h:form>
+				<p:dialog header="Eliminar evento por ID" widgetVar="delDlg"
+					modal="false" dismissableMask="true" closable="true"
+					resizable="false">
+					<h:form id="delForm">
+						<p:messages id="delMsgs" for="@form" showDetail="true"
+							closable="true" />
+						<div style="margin-bottom: 1rem;">
+							<p:outputLabel for="delId" value="ID a eliminar *" />
+							<p:inputNumber id="delId" value="#{cronogramaBean.deleteId}"
+								minValue="1" decimalPlaces="0" required="true"
+								requiredMessage="Ingresa un ID válido" styleClass="pwfield" />
+						</div>
+						<div
+							style="display: flex; gap: 0.7rem; justify-content: flex-end;">
+							<p:commandButton value="Eliminar" styleClass="btn"
+								process="@form" action="#{cronogramaBean.eliminarById}"
+								update="delForm delMsgs :crudForm:msgs :crudForm:listPanel :crudForm:cal"
+								oncomplete="if(!args.validationFailed) PF('delDlg').hide()"
+								resetValues="true" />
+							<p:commandButton value="Cancelar" type="button" styleClass="btn"
+								onclick="PF('delDlg').hide()" />
+						</div>
+					</h:form>
+				</p:dialog>
+			</div>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>
