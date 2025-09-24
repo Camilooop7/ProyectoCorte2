@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import co.edu.unbosque.proyectocorte.dto.ProblemaDTO;
 import co.edu.unbosque.proyectocorte.entity.Problema;
+import co.edu.unbosque.proyectocorte.exception.ExceptionCheker;
+import co.edu.unbosque.proyectocorte.exception.NegativeNumberException;
 import co.edu.unbosque.proyectocorte.repository.ProblemaRepository;
 
 @Service
@@ -24,8 +26,13 @@ public class ProblemaService implements CRUDOperation<ProblemaDTO>{
 
 	@Override
 	public int create(ProblemaDTO date) {
-		Problema enty = modelMapper.map(date, Problema.class);
-		problemaRepository.save(enty);
+		try {
+			ExceptionCheker.checkerNegativeNumber(date.getDificultad());
+			Problema enty = modelMapper.map(date, Problema.class);
+			problemaRepository.save(enty);
+		} catch (NegativeNumberException e) {
+			// TODO Auto-generated catch block
+		}
 		
 
 		return 0;

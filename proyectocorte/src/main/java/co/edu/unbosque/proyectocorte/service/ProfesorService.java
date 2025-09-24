@@ -47,31 +47,22 @@ public class ProfesorService implements CRUDOperation<ProfesorDTO> {
 			
 		} catch (TextException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (NegativeNumberException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (InputMismatchException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (MailException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (CapitalException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (CharacterException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (NumberException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SymbolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SmallException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return 1;
 	}

@@ -29,22 +29,41 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 
 	@Override
 	public int create(EstudianteDTO date) {
-		try {
-			ExceptionCheker.checkerText(date.getNombre());
-			ExceptionCheker.checkerText(date.getCarrera());
-			ExceptionCheker.checkerNegativeNumber(date.getDocumento());
-			ExceptionCheker.checkerNegativeNumber(date.getSemestre());
-			ExceptionCheker.checkerMail(date.getCorreo());
-			ExceptionCheker.checkerPasword(date.getContrasena());
-			Estudiante entity = modelMapper.map(date, Estudiante.class);
-			estudianteRepository.save(entity);
-			return 0;
-		} catch (TextException | NegativeNumberException | CapitalException | CharacterException | NumberException
-				| SymbolException | SmallException | InputMismatchException | MailException e) {
-			e.printStackTrace();
+	
+			try {
+				ExceptionCheker.checkerText(date.getNombre());
+				ExceptionCheker.checkerText(date.getCarrera());
+				ExceptionCheker.checkerNegativeNumber(date.getDocumento());
+				ExceptionCheker.checkerNegativeNumber(date.getSemestre());
+				ExceptionCheker.checkerPasword(date.getContrasena());
+				ExceptionCheker.checkerMail(date.getCorreo());
+				Estudiante entity = modelMapper.map(date, Estudiante.class);
+				estudianteRepository.save(entity);
+				return 0;
+			} catch (TextException e) {
+				// TODO Auto-generated catch block
+			} catch (NegativeNumberException e) {
+				// TODO Auto-generated catch block
+			} catch (CapitalException e) {
+				// TODO Auto-generated catch block
+			} catch (CharacterException e) {
+				// TODO Auto-generated catch block
+			} catch (NumberException e) {
+				// TODO Auto-generated catch block
+			} catch (SymbolException e) {
+				// TODO Auto-generated catch block
+			} catch (SmallException e) {
+				// TODO Auto-generated catch block
+			} catch (InputMismatchException e) {
+				// TODO Auto-generated catch block
+			} catch (MailException e) {
+				// TODO Auto-generated catch block
+			}
+		
+		 
 			return 1;
 		}
-	}
+	
 
 	@Override
 	public List<EstudianteDTO> getAll() {

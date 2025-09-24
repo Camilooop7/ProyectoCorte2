@@ -29,13 +29,13 @@ public class LoginService {
     public LoginRespuestaDTO login(LoginEnvioDTO req) {
         try {
             String correo = req.getCorreo();
-            String pass   = req.getContrasena();
+            String contra   = req.getContrasena();
 
             Optional<Persona> op = loginRepository.findByCorreo(correo);
             
             Persona p = op.orElseThrow(SesionException::new);
 
-            ExceptionCheker.checkerSesion(correo, pass, p.getContrasena());
+            ExceptionCheker.checkerSesion(correo, contra, p.getContrasena());
 
             String rol = (p.getRol() == null) ? "" : p.getRol().trim().toLowerCase(); 
             String redirect = null;

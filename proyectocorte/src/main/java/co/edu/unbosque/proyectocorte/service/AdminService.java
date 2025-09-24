@@ -42,28 +42,19 @@ public class AdminService implements CRUDOperation<AdminDTO> {
 			adminRepo.save(entity);
 			return 0;
 		} catch (TextException e) {
-			e.printStackTrace();
 		} catch (NegativeNumberException e) {
-			e.printStackTrace();
 		} catch (InputMismatchException e) {
-			e.printStackTrace();
 		} catch (MailException e) {
-			e.printStackTrace();
 		} catch (CapitalException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (CharacterException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (NumberException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SymbolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (SmallException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return 1;
 	}
