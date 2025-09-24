@@ -123,29 +123,39 @@
 							mejores consejos para despertar y potenciar tu programador
 							interior.”</p>
 
-						<!-- FORM PRINCIPAL -->
 						<h:form id="form" width="1500">
 							<p:growl id="msgs" showDetail="true" life="5000" width="1500"
 								autoUpdate="true" />
 
-							<!-- FAB Crear -->
 							<p:commandButton id="fabNuevo" icon="pi pi-plus"
 								styleClass="ui-button-rounded ui-button-help fab" type="button"
 								onclick="PF('dlgNuevoProblema').show()"
 								rendered="#{auth.admin or auth.profesor}" />
 
-							<!-- Botones -->
 							<div class="mb-2 d-flex gap-2">
-								<p:commandButton value="Ver problemas"
+							
+							
+							
+							
+							<div class="wrapper">
+  
+								<p:commandButton styleClass="beton" value="Ver problemas"
 									action="#{problemaBean.listarProblemas}" process="@this"
 									update=":form:tabla :form:msgs" icon="pi pi-list" />
+									
+			
+</div>				
+									
+									
+									
 								<p:commandButton value="Eliminar por ID" type="button"
 									icon="pi pi-trash" styleClass="ui-button-danger"
 									onclick="PF('dlgEliminarProblema').show()"
 									rendered="#{auth.admin or auth.profesor}" />
 							</div>
+							
+							<br></br>
 
-							<!-- TABLA -->
 							<p:dataTable id="tabla" value="#{problemaBean.lista}" var="p"
 								rows="10" paginator="true"
 								emptyMessage="No hay problemas para mostrar" style="width:100%"
@@ -182,7 +192,6 @@
 							</p:dataTable>
 						</h:form>
 
-						<!-- DIALOG CREAR -->
 						<p:dialog id="dlgNuevoProblema" header="Nuevo problema"
 							widgetVar="dlgNuevoProblema" modal="false" dismissableMask="true"
 							draggable="false" resizable="false" closeOnEscape="true"
@@ -236,7 +245,6 @@
 							</h:form>
 						</p:dialog>
 
-						<!-- DIALOG ELIMINAR -->
 						<p:dialog id="dlgEliminarProblema"
 							header="Eliminar problema por ID" widgetVar="dlgEliminarProblema"
 							modal="true" closable="true" resizable="false" appendTo="@(body)"
@@ -270,6 +278,13 @@
 					</div>
 				</div>
 			</div>
+			
+			<aside class="loader" style="--wh-number: 24;">
+  <div class="pixel"></div>
+</aside>
+			
+			
+			
 			</section>
 		</div>
 	</div>

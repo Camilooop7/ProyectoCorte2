@@ -32,6 +32,26 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </h:head>
 <h:body>
+
+<div class="container2">
+  <div class="content">
+    <div class="content__container">
+      <p class="content__container__text">
+        Hello
+      </p>
+    
+      <ul class="content__container__list">
+        <li class="content__container__list__item">Jeisson!</li>
+        <li class="content__container__list__item">Sergio!</li>
+        <li class="content__container__list__item">Luna!</li>
+        <li class="content__container__list__item">Camilo!</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
 	<div class="form-container">
 		<p class="title">Crear Cuenta</p>
 		<p class="sub-title">Crea una cuenta para acceder a las
@@ -39,54 +59,48 @@
 
 		<h:form id="createForm" prependId="false">
 			<p:messages id="msgs" showDetail="true" closable="true" />
-			<!-- Nombre -->
 			<p:inputText id="name" value="#{registroBean.nombre}"
 				placeholder="Nombre" styleClass="input" required="true"
 				requiredMessage="El nombre es obligatorio" />
 
-			<br />
-			<br />
-			<br />
+			
+			<br></br>
+			<br></br>
 
-			<!-- Documento -->
 			<p:inputText id="documento" value="#{registroBean.documento}"
 				placeholder="Documento" styleClass="input" required="true"
 				requiredMessage="El documento es obligatorio" />
 
-			<br />
-			<br />
-			<br />
+			
+			<br></br>
+			<br></br>
 
-			<!-- Semestre -->
 			<p:inputText id="semestre" value="#{registroBean.semestre}"
 				placeholder="Semestre" styleClass="input" required="true"
 				requiredMessage="El semestre es obligatorio" />
 
-			<br />
-			<br />
-			<br />
+			
+			<br></br>
+			<br></br>
 
-			<!-- Carrera -->
 			<p:inputText id="carrera" value="#{registroBean.carrera}"
 				placeholder="Carrera" styleClass="input" required="true"
 				requiredMessage="La carrera es obligatoria" />
 
-			<br />
-			<br />
-			<br />
+			
+			<br></br>
+			<br></br>
 
-			<!-- Email -->
 			<p:inputText id="email" value="#{registroBean.correo}"
 				placeholder="Email" styleClass="input" required="true"
 				requiredMessage="El correo es obligatorio">
 				<f:validateRegex pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" />
 			</p:inputText>
 
-			<br />
-			<br />
-			<br />
+			
+			<br></br>
+			<br></br>
 
-			<!-- Contraseña -->
 			<p:password id="password" value="#{registroBean.contrasena}"
 				placeholder="Contraseña" styleClass="input" required="true"
 				requiredMessage="La contraseña es obligatoria" feedback="false"
@@ -94,17 +108,16 @@
 				<f:validateLength minimum="6" />
 			</p:password>
 
-			<br />
-			<br />
-			<br />
+			
+			<br></br>
+			<br></br>
 
-			<!-- Botón -->
 			<p:commandButton id="createUsuario" value="Crear Cuenta"
 				action="#{registroBean.doRegister}" process="@form"
 				update="@form msgs" styleClass="form-btn" />
 		</h:form>
 
-		<br />
+		
 		<br />
 		<p class="sign-up-label">
 			¿Ya tienes una cuenta? <a class="sign-up-link" href="index.xhtml">Iniciar
