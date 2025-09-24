@@ -84,7 +84,7 @@
 				<h:form styleClass="card__form">
 					<p:growl id="messagesDescargarPDF" showDetail="true" />
 					<p:inputText id="codigoDescargarPDF" value="#{libroPDFBean.codigo}"
-						placeholder="Ingresa el ID del libro" required="true"
+						placeholder="Ingresa el ID (10-18)" required="true"
 						requiredMessage="El ID es obligatorio" styleClass="card__input" />
 					<p:commandButton value="Descargar PDF"
 						action="#{libroPDFBean.obtenerInformacionLibro()}"
@@ -97,7 +97,7 @@
 				<h:form styleClass="card__form">
 					<p:growl id="messagesEliminarPDF" showDetail="true" />
 					<p:inputText id="codigoEliminarPDF" value="#{libroPDFBean.codigo}"
-						placeholder="Ingresa el ID del libro" required="true"
+						placeholder="Ingresa el ID (10-18)" required="true"
 						requiredMessage="El ID es obligatorio" styleClass="card__input" />
 					<p:commandButton value="Eliminar Libro PDF"
 						action="#{libroPDFBean.eliminarLibro()}" styleClass="card__button"
@@ -116,7 +116,7 @@
 					<p:growl id="messagesLibroEnLinea" showDetail="true" />
 					<p:inputText id="codigoLibroEnLinea"
 						value="#{libroEnLineaBean.codigo}"
-						placeholder="Ingresa el ID del libro" required="true"
+						placeholder="Ingresa el ID (1-9)" required="true"
 						requiredMessage="El ID es obligatorio" styleClass="card__input" />
 					<p:commandButton value="Abrir Libro"
 						action="#{libroEnLineaBean.obtenerInformacionLibro()}"
@@ -130,7 +130,7 @@
 					<p:growl id="messagesEliminarEnLinea" showDetail="true" />
 					<p:inputText id="codigoEliminarEnLinea"
 						value="#{libroEnLineaBean.codigo}"
-						placeholder="Ingresa el ID del libro" required="true"
+						placeholder="Ingresa el ID (1-9)" required="true"
 						requiredMessage="El ID es obligatorio" styleClass="card__input" />
 					<p:commandButton value="Eliminar Libro en línea"
 						action="#{libroEnLineaBean.eliminarLibro()}"
