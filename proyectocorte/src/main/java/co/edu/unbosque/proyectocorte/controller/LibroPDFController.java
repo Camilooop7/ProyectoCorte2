@@ -98,4 +98,21 @@ public class LibroPDFController {
 			return new ResponseEntity<>("Libro PDF no encontrado", HttpStatus.NOT_FOUND);
 		}
 	}
+
+	/**
+	 * Muestra todos los libros PDF en formato de texto.
+	 *
+	 * @return ResponseEntity con la lista de libros PDF en formato de texto.
+	 */
+	@GetMapping(path = "/mostrar")
+	public ResponseEntity<String> mostrarLibrosPDF() {
+		List<LibroPDFDTO> listaLibrosPDF = libroPDFService.getAll();
+		if (listaLibrosPDF.isEmpty()) {
+			return new ResponseEntity<>("No se encontraron libros PDF por mostrar", HttpStatus.NO_CONTENT);
+		} else {
+			StringBuilder stringBuilder = new StringBuilder();
+			listaLibrosPDF.forEach((libro) -> stringBuilder.append(libro.toString()).append("\n"));
+			return new ResponseEntity<>("Libros PDF: \n" + stringBuilder.toString(), HttpStatus.OK);
+		}
+	}
 }
