@@ -147,7 +147,7 @@
                         </div>
 
                         <div class="cardib" rendered="#{auth.admin or auth.profesor}">
-                            <h:form styleClass="card__form">
+                            <h:form styleClass="card__form "  rendered="#{auth.admin or auth.profesor}">
                                 <span class="card__title">Crear Libro en línea</span>
                                 <p:panel id="cropperPanel" />
                                 <p:inputText id="nombreEnLinea" value="#{libroEnLineaBean.nombre}" placeholder="Nombre del libro" styleClass="card__input" />
@@ -161,11 +161,10 @@
                         </div>
                     </div>
 
-                    <!-- Crear PDF -->
                     <div class="container mt-4">
                         <div class="card p-3 shadow-sm" rendered="#{auth.admin or auth.profesor}">
                             <h5 class="mb-3"><i class="bi bi-file-earmark-plus me-2"></i>Crear Libro PDF</h5>
-                            <h:form id="formCrearPDF" enctype="multipart/form-data">
+                            <h:form id="formCrearPDF" enctype="multipart/form-data"   rendered="#{auth.admin or auth.profesor}">
                                 <div class="row g-2">
                                     <div class="col-12 col-md-3">
                                         <p:inputText id="codigoCrearPDF" value="#{libroPDFBean.codigo}" placeholder="Código" />
@@ -195,10 +194,8 @@
                         </div>
                     </div>
 
-                    <!-- Tablas compactas y separadas -->
                     <div class="container mt-4">
                       <div class="row g-4">
-                        <!-- Tabla: Libros PDF -->
                         <div class="col-12 col-xl-6">
                           <div class="card p-3 shadow-sm card-compact table-wrap">
                             <h5 class="mb-3"><i class="bi bi-filetype-pdf me-2"></i>Libros PDF</h5>
@@ -225,89 +222,13 @@
                                 <p:column headerText="Descripción">
                                   <h:outputText value="#{row.descripcion}"/>
                                 </p:column>
-                                <p:column headerText="Acciones" style="width:220px">
-                                  <div class="d-flex gap-2">
-                                    <p:commandButton value="Descargar"
-                                                     ajax="false"
-                                                     action="#{libroPDFBean.obtenerInformacionLibro()}"
-                                                     styleClass="btn btn-success btn-sm"
-                                                     icon="bi bi-download">
-                                      <f:setPropertyActionListener target="#{libroPDFBean.codigo}" value="#{row.codigo}"/>
-                                    </p:commandButton>
-                                    <p:commandButton value="Eliminar"
-                                                     rendered="#{auth.admin or auth.profesor}"
-                                                     ajax="false"
-                                                     action="#{libroPDFBean.eliminarLibro()}"
-                                                     styleClass="btn btn-danger btn-sm"
-                                                     icon="bi bi-trash3">
-                                      <f:setPropertyActionListener target="#{libroPDFBean.codigo}" value="#{row.codigo}"/>
-                                    </p:commandButton>
-                                  </div>
-                                </p:column>
+                             
                               </p:dataTable>
                             </h:form>
                           </div>
                         </div>
 
-                        <!-- Tabla: Libros en línea -->
-                        <div class="col-12 col-xl-6">
-                          <div class="card p-3 shadow-sm card-compact table-wrap">
-                            <h5 class="mb-3"><i class="bi bi-globe2 me-2"></i>Libros en línea</h5>
-                            <h:form id="formTablaOnline">
-                              <div class="d-flex gap-2 mb-2">
-                                <p:commandButton value="Recargar"
-                                                 actionListener="#{libroEnLineaBean.cargarLibrosOnline}"
-                                                 update="tablaOnline"
-                                                 icon="bi bi-arrow-repeat" styleClass="btn btn-primary btn-sm"/>
-                              </div>
-                              <p:dataTable id="tablaOnline"
-                                           value="#{libroEnLineaBean.librosOnline}"
-                                           var="row"
-                                           paginator="true" rows="5"
-                                           scrollable="true" scrollHeight="260"
-                                           emptyMessage="No hay libros en línea cargados."
-                                           styleClass="table table-sm table-striped">
-                                <p:column headerText="Código" style="width:90px">
-                                  <h:outputText value="#{row.codigo}"/>
-                                </p:column>
-                                <p:column headerText="Nombre">
-                                  <h:outputText value="#{row.nombre}"/>
-                                </p:column>
-                                <p:column headerText="Descripción">
-                                  <h:outputText value="#{row.descripcion}"/>
-                                </p:column>
-                                <p:column headerText="Acciones" style="width:260px">
-                                  <div class="d-flex gap-2">
-                                    <!-- Abrir por AJAX y pasar el código de la fila al bean -->
-                                    <p:commandButton value="Abrir"
-                                                     action="#{libroEnLineaBean.obtenerInformacionLibro}"
-                                                     ajax="true" process="@this" update="@none"
-                                                     styleClass="btn btn-success btn-sm"
-                                                     icon="bi bi-box-arrow-up-right">
-                                      <f:setPropertyActionListener target="#{libroEnLineaBean.codigo}" value="#{row.codigo}"/>
-                                    </p:commandButton>
-
-                                    <p:commandButton value="Eliminar"
-                                                     rendered="#{auth.admin or auth.profesor}"
-                                                     ajax="false"
-                                                     action="#{libroEnLineaBean.eliminarLibro}"
-                                                     styleClass="btn btn-danger btn-sm"
-                                                     icon="bi bi-trash3">
-                                      <f:setPropertyActionListener target="#{libroEnLineaBean.codigo}" value="#{row.codigo}"/>
-                                    </p:commandButton>
-
-                                    <p:commandButton value="Link"
-                                                     rendered="#{not empty row.link}"
-                                                     type="button"
-                                                     onclick="window.open('#{row.link}','_blank'); return false;"
-                                                     styleClass="btn btn-outline-secondary btn-sm"
-                                                     icon="bi bi-link-45deg"/>
-                                  </div>
-                                </p:column>
-                              </p:dataTable>
-                            </h:form>
-                          </div>
-                        </div>
+                
                       </div>
                     </div>
 
