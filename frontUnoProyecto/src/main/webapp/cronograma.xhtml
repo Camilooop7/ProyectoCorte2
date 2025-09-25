@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      data-bs-theme="light">
 
 <h:head>
   <meta charset="UTF-8" />
@@ -22,6 +23,26 @@
   <link rel="stylesheet" href="css/stylecronograma.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+  <style>
+    html[data-bs-theme="dark"] body,
+    html[data-bs-theme="dark"] .section,
+    html[data-bs-theme="dark"] .main-content,
+    html[data-bs-theme="dark"] .card,
+    html[data-bs-theme="dark"] .p-panel {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+
+    .theme-fab {
+      position: fixed;
+      right: 16px;
+      top: 80px;
+      z-index: 3000;
+      border-radius: 999px;
+      padding: 10px 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    }
+  </style>
 </h:head>
 
 <h:body>
@@ -170,6 +191,41 @@
       </section>
     </div>
   </div>
+
+  <button id="themeFab" class="btn btn-primary theme-fab" title="Cambiar tema">
+    <i class="bi bi-moon-stars"></i>
+  </button>
+
+  <script>
+    (function(){
+      const html = document.documentElement;
+      const btn  = document.getElementById('themeFab');
+
+      if(!html.hasAttribute('data-bs-theme')) {
+        html.setAttribute('data-bs-theme','light');
+      }
+
+      const setLabel = (theme) => {
+        btn.innerHTML = theme === 'dark'
+          ? '<i class="bi bi-sun"></i>'
+          : '<i class="bi bi-moon-stars"></i>';
+        btn.setAttribute('title', theme === 'dark' ? 'Modo claro' : 'Modo oscuro');
+      };
+
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') {
+        html.setAttribute('data-bs-theme', saved);
+      }
+      setLabel(html.getAttribute('data-bs-theme'));
+
+      btn.addEventListener('click', () => {
+        const next = html.getAttribute('data-bs-theme') === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-bs-theme', next);
+        localStorage.setItem('theme', next);
+        setLabel(next);
+      });
+    })();
+  </script>
 
 </h:body>
 </html>
