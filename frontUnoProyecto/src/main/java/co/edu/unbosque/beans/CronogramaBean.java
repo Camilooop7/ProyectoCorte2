@@ -29,7 +29,7 @@ public class CronogramaBean implements Serializable {
 	private String nombre;
 	private String link;
 	private LocalDate fecha;
-
+ 
 	private Long deleteId;
 
 	private List<FilaCronograma> filas = new ArrayList<>();
