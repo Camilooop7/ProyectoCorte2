@@ -1,5 +1,7 @@
 package co.edu.unbosque.proyectocorte.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,4 +75,16 @@ public class LibroEnLineaController {
 			return new ResponseEntity<>("Libro PDF no encontrado", HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@GetMapping(path = "/mostrar")
+    public ResponseEntity<String> mostrarLibros() {
+        List<LibroEnLineaDTO> listaLibros = libroEnLineaSer.getAll();
+        if (listaLibros.isEmpty()) {
+            return new ResponseEntity<>("No se encontraron libros por mostrar", HttpStatus.NO_CONTENT);
+        } else {
+            StringBuilder stringBuilder = new StringBuilder();
+            listaLibros.forEach((libro) -> stringBuilder.append(libro.toString()).append("\n"));
+            return new ResponseEntity<>("Libros en línea: \n" + stringBuilder.toString(), HttpStatus.OK);
+        }
+    }
 }
