@@ -4,78 +4,135 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * Representa un cronograma con información relevante como nombre, enlace y fecha.
+ * Esta clase se utiliza para transferir datos relacionados con cronogramas entre capas del sistema.
+ */
 public class CronogramaDTO {
 
-	private Long id;
-	public String nombre;
-	public String link;
-	private LocalDate fecha;
+    /** Identificador único del cronograma. */
+    private Long id;
 
-	public CronogramaDTO() {
-		// TODO Auto-generated constructor stub
-	}
+    /** Nombre del cronograma. */
+    public String nombre;
 
-	public CronogramaDTO(String nombre, String link, LocalDate fecha) {
-		super();
-		this.nombre = nombre;
-		this.link = link;
-		this.fecha = fecha;
-	}
+    /** Enlace relacionado al cronograma. */
+    public String link;
 
-	public Long getId() {
-		return id;
-	}
+    /** Fecha del cronograma. */
+    private LocalDate fecha;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * Constructor vacío para la creación de instancias por defecto.
+     */
+    public CronogramaDTO() {
+        // Constructor por defecto.
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    /**
+     * Constructor que inicializa los campos principales del cronograma.
+     * 
+     * @param nombre nombre del cronograma
+     * @param link enlace relacionado al cronograma
+     * @param fecha fecha del cronograma
+     */
+    public CronogramaDTO(String nombre, String link, LocalDate fecha) {
+        super();
+        this.nombre = nombre;
+        this.link = link;
+        this.fecha = fecha;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    /**
+     * Obtiene el identificador único del cronograma.
+     * @return el id del cronograma
+     */
+    public Long getId() {
+        return id;
+    }
 
-	public String getLink() {
-		return link;
-	}
+    /**
+     * Establece el identificador único del cronograma.
+     * @param id el id a establecer
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setLink(String link) {
-		this.link = link;
-	}
+    /**
+     * Obtiene el nombre del cronograma.
+     * @return el nombre del cronograma
+     */
+    public String getNombre() {
+        return nombre;
+    }
 
-	public LocalDate getFecha() {
-		return fecha;
-	}
+    /**
+     * Establece el nombre del cronograma.
+     * @param nombre el nombre a establecer
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
-	}
+    /**
+     * Obtiene el enlace relacionado al cronograma.
+     * @return el enlace del cronograma
+     */
+    public String getLink() {
+        return link;
+    }
 
-	@Override
+    /**
+     * Establece el enlace relacionado al cronograma.
+     * @param link el enlace a establecer
+     */
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    /**
+     * Obtiene la fecha del cronograma.
+     * @return la fecha del cronograma
+     */
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    /**
+     * Establece la fecha del cronograma.
+     * @param fecha la fecha a establecer
+     */
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    /**
+     * Devuelve una representación en cadena del objeto CronogramaDTO.
+     * @return una cadena con la información del cronograma
+     */
+    @Override
     public String toString() {
         String f = fecha != null ? new SimpleDateFormat("yyyy-MM-dd").format(fecha) : "";
         return "Cronograma [id=" + id + ", nombre=" + nombre + ", link=" + link + ", fecha=" + f + "]";
     }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(fecha, id, link, nombre);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(fecha, id, link, nombre);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CronogramaDTO other = (CronogramaDTO) obj;
-		return Objects.equals(fecha, other.fecha) && Objects.equals(id, other.id) && Objects.equals(link, other.link)
-				&& Objects.equals(nombre, other.nombre);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CronogramaDTO other = (CronogramaDTO) obj;
+        return Objects.equals(fecha, other.fecha) && Objects.equals(id, other.id) && Objects.equals(link, other.link)
+                && Objects.equals(nombre, other.nombre);
+    }
 
 }

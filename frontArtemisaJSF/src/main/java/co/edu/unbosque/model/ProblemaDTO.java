@@ -2,82 +2,157 @@ package co.edu.unbosque.model;
 
 import java.util.Objects;
 
+/**
+ * Representa un problema con datos como título, dificultad, tema, juez y enlace.
+ * Esta clase se utiliza para transferir información sobre problemas de programación o similares.
+ */
 public class ProblemaDTO {
-	private Long id;
-	private String titulo;
-	private int dificultad;
-	private String tema;
-	private String juez;
-	private String link;
+    /** Identificador único del problema. */
+    private Long id;
 
-	public ProblemaDTO() {
-		// TODO Auto-generated constructor stub
-	}
+    /** Título del problema. */
+    private String titulo;
 
-	public ProblemaDTO(String titulo, int dificultad, String tema, String juez, String link) {
-		super();
-		this.titulo = titulo;
-		this.dificultad = dificultad;
-		this.tema = tema;
-		this.juez = juez;
-		this.link = link;
-	}
+    /** Nivel de dificultad del problema. */
+    private int dificultad;
 
-	@Override
-	public String toString() {
-		return "Problema [id=" + id + ", titulo=" + titulo + ", dificultad=" + dificultad + ", tema=" + tema + ", juez="
-				+ juez + ", link=" + link + "]";
-	}
+    /** Tema principal del problema. */
+    private String tema;
 
-	public Long getId() {
-		return id;
-	}
+    /** Juez asociado al problema. */
+    private String juez;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /** Enlace al problema. */
+    private String link;
 
-	public String getTitulo() {
-		return titulo;
-	}
+    /**
+     * Constructor vacío para la creación de instancias por defecto.
+     */
+    public ProblemaDTO() {
+        // Constructor por defecto.
+    }
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+    /**
+     * Constructor que inicializa los campos principales del problema.
+     * 
+     * @param titulo título del problema
+     * @param dificultad nivel de dificultad del problema
+     * @param tema tema principal del problema
+     * @param juez juez asociado al problema
+     * @param link enlace al problema
+     */
+    public ProblemaDTO(String titulo, int dificultad, String tema, String juez, String link) {
+        super();
+        this.titulo = titulo;
+        this.dificultad = dificultad;
+        this.tema = tema;
+        this.juez = juez;
+        this.link = link;
+    }
 
-	public int getDificultad() {
-		return dificultad;
-	}
+    /**
+     * Devuelve una representación en cadena del objeto ProblemaDTO.
+     * @return una cadena con la información del problema
+     */
+    @Override
+    public String toString() {
+        return "Problema [id=" + id + ", titulo=" + titulo + ", dificultad=" + dificultad + ", tema=" + tema + ", juez="
+                + juez + ", link=" + link + "]";
+    }
 
-	public void setDificultad(int dificultad) {
-		this.dificultad = dificultad;
-	}
+    /**
+     * Obtiene el identificador único del problema.
+     * @return el id del problema
+     */
+    public Long getId() {
+        return id;
+    }
 
-	public String getTema() {
-		return tema;
-	}
+    /**
+     * Establece el identificador único del problema.
+     * @param id el id a establecer
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setTema(String tema) {
-		this.tema = tema;
-	}
+    /**
+     * Obtiene el título del problema.
+     * @return el título del problema
+     */
+    public String getTitulo() {
+        return titulo;
+    }
 
-	public String getJuez() {
-		return juez;
-	}
+    /**
+     * Establece el título del problema.
+     * @param titulo el título a establecer
+     */
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
-	public void setJuez(String juez) {
-		this.juez = juez;
-	}
+    /**
+     * Obtiene el nivel de dificultad del problema.
+     * @return la dificultad del problema
+     */
+    public int getDificultad() {
+        return dificultad;
+    }
 
-	public String getLink() {
-		return link;
-	}
+    /**
+     * Establece el nivel de dificultad del problema.
+     * @param dificultad la dificultad a establecer
+     */
+    public void setDificultad(int dificultad) {
+        this.dificultad = dificultad;
+    }
 
-	public void setLink(String link) {
-		this.link = link;
-	}
+    /**
+     * Obtiene el tema principal del problema.
+     * @return el tema del problema
+     */
+    public String getTema() {
+        return tema;
+    }
 
-	
-	
+    /**
+     * Establece el tema principal del problema.
+     * @param tema el tema a establecer
+     */
+    public void setTema(String tema) {
+        this.tema = tema;
+    }
 
+    /**
+     * Obtiene el juez asociado al problema.
+     * @return el juez del problema
+     */
+    public String getJuez() {
+        return juez;
+    }
+
+    /**
+     * Establece el juez asociado al problema.
+     * @param juez el juez a establecer
+     */
+    public void setJuez(String juez) {
+        this.juez = juez;
+    }
+
+    /**
+     * Obtiene el enlace al problema.
+     * @return el enlace del problema
+     */
+    public String getLink() {
+        return link;
+    }
+
+    /**
+     * Establece el enlace al problema.
+     * @param link el enlace a establecer
+     */
+    public void setLink(String link) {
+        this.link = link;
+    }
 }

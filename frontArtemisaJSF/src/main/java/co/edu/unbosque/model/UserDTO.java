@@ -1,44 +1,66 @@
 package co.edu.unbosque.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 /**
- * Clase Abstracta que representa un Persona,y extiende de USuario e implementa
- * Serializable.
+ * Clase que representa un usuario del sistema con sus credenciales principales.
+ * Se utiliza para transferir información básica de usuario entre capas de la aplicación.
  */
 public class UserDTO {
 
-	private String correo;
-	private String contrasena;
+    /** Correo electrónico del usuario. */
+    private String correo;
 
-	/**
-	 * Constructor vacío.
-	 */
-	public UserDTO() {
-		// TODO Auto-generated constructor stub
-	}
+    /** Contraseña del usuario. */
+    private String contrasena;
 
-	public UserDTO(String correo, String contrasena) {
-		super();
-		this.correo = correo;
-		this.contrasena = contrasena;
-	}
+    /**
+     * Constructor vacío.
+     */
+    public UserDTO() {
+        // Constructor por defecto.
+    }
 
-	public String getCorreo() {
-		return correo;
-	}
+    /**
+     * Constructor que inicializa el correo y la contraseña del usuario.
+     * 
+     * @param correo el correo electrónico
+     * @param contrasena la contraseña
+     */
+    public UserDTO(String correo, String contrasena) {
+        super();
+        this.correo = correo;
+        this.contrasena = contrasena;
+    }
 
-	public void setCorreo(String correo) {
-		this.correo = correo;
-	}
+    /**
+     * Obtiene el correo electrónico del usuario.
+     * @return el correo electrónico
+     */
+    public String getCorreo() {
+        return correo;
+    }
 
-	public String getContrasena() {
-		return contrasena;
-	}
+    /**
+     * Establece el correo electrónico del usuario.
+     * @param correo el correo electrónico a establecer
+     */
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
-	}
+    /**
+     * Obtiene la contraseña del usuario.
+     * @return la contraseña
+     */
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    /**
+     * Establece la contraseña del usuario.
+     * @param contrasena la contraseña a establecer
+     */
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
 
 }
