@@ -16,16 +16,36 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+/**
+ * Bean de solicitud para gestionar libros en formato PDF.
+ */
 @Named("libroPDFBean")
 @RequestScoped
 public class LibroPDFBean {
+
+	/** Código del libro. */
 	private Integer codigo;
+
+	/** Nombre del libro. */
 	private String nombre;
+
+	/** Descripción del libro. */
 	private String descripcion;
+
+	/** Contenido del PDF. */
 	private byte[] contenidoPdf;
+
+	/** Stream del PDF para descarga. */
 	private StreamedContent pdfStream;
+
+	/** Archivo PDF subido. */
 	private UploadedFile pdfFile;
 
+	/**
+	 * Procesa la subida de un archivo PDF.
+	 * 
+	 * @param event Evento de subida de archivo.
+	 */
 	public void handleFileUploadPdf(FileUploadEvent event) {
 		try {
 			UploadedFile file = event.getFile();
@@ -48,6 +68,9 @@ public class LibroPDFBean {
 		}
 	}
 
+	/**
+	 * Crea un nuevo libro PDF.
+	 */
 	public void crearLibro() {
 		try {
 			if (codigo == null || codigo <= 0 || isBlank(nombre) || isBlank(descripcion) || contenidoPdf == null
@@ -72,6 +95,9 @@ public class LibroPDFBean {
 		}
 	}
 
+	/**
+	 * Descarga el PDF asociado a un código.
+	 */
 	public void descargarPdf() {
 		try {
 			if (codigo == null || codigo <= 0) {
@@ -97,6 +123,9 @@ public class LibroPDFBean {
 		}
 	}
 
+	/**
+	 * Obtiene la información de un libro PDF por su código.
+	 */
 	public void obtenerInformacionLibro() {
 		try {
 			if (codigo == null || codigo <= 0) {
@@ -124,6 +153,9 @@ public class LibroPDFBean {
 		descargarPdf();
 	}
 
+	/**
+	 * Elimina un libro PDF por su código.
+	 */
 	public void eliminarLibro() {
 		try {
 			if (codigo == null || codigo <= 0) {
@@ -147,6 +179,9 @@ public class LibroPDFBean {
 		}
 	}
 
+	/**
+	 * Limpia los campos del formulario.
+	 */
 	private void limpiarFormulario() {
 		this.nombre = null;
 		this.descripcion = null;
@@ -155,6 +190,12 @@ public class LibroPDFBean {
 		this.pdfFile = null;
 	}
 
+	/**
+	 * Verifica si una cadena es nula o vacía.
+	 * 
+	 * @param s Cadena a verificar.
+	 * @return {@code true} si es nula o vacía.
+	 */
 	private boolean isBlank(String s) {
 		return s == null || s.trim().isEmpty();
 	}

@@ -6,41 +6,60 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
+/**
+ * Bean de solicitud para registrar administradores.
+ */
 @Named("adminBean")
 @RequestScoped
 public class RegistroABean {
-	private String name; 
-	private String documento; 
-	private String cargo; 
-	private String email; 
-	private String password; 
-	private String role = "ADMIN"; 
 
+	/** Nombre del administrador. */
+	private String name;
+
+	/** Documento del administrador. */
+	private String documento;
+
+	/** Cargo del administrador. */
+	private String cargo;
+
+	/** Correo del administrador. */
+	private String email;
+
+	/** Contraseña del administrador. */
+	private String password;
+
+	/** Rol del administrador. */
+	private String role = "ADMIN";
+
+	/**
+	 * Crea una nueva cuenta de administrador.
+	 */
 	public void createAccount() {
 		try {
 			String respuesta = AdminRegistroService.doPostAdmin("http://localhost:8081/admin/crear", name, documento,
 					email, password, role, cargo);
-
 			String[] data = respuesta.split("\n", 2);
 			String code = (data.length > 0) ? data[0] : "500";
 			String msg = (data.length > 1) ? data[1] : "Sin cuerpo de respuesta";
-
 			showMsg(code, msg);
-
 			if ("201".equals(code)) {
 				name = "";
 				documento = "";
 				cargo = "";
 				email = "";
 				password = "";
-			
 			}
-
 		} catch (Exception e) {
 			showMsg("500", "Error al registrar: " + e.getMessage());
 		}
 	}
 
+	/**
+	 * Muestra un mensaje según el código de respuesta.
+	 * 
+	 * @param code    Código de respuesta.
+	 * @param content Contenido del mensaje.
+	 */
 	private void showMsg(String code, String content) {
 		FacesMessage.Severity sev;
 		String summary;
@@ -61,7 +80,7 @@ public class RegistroABean {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(sev, summary, content));
 	}
 
-	
+	// Getters y Setters
 	public String getName() {
 		return name;
 	}

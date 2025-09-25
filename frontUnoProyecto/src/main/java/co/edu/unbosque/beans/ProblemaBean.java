@@ -4,111 +4,60 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
-
 import co.edu.unbosque.service.ProblemaService;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
+/**
+ * Bean de vista para gestionar problemas de programación.
+ */
 @Named("problemaBean")
 @ViewScoped
 public class ProblemaBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	/** Título del problema. */
 	private String titulo;
+
+	/** Dificultad del problema. */
 	private int dificultad;
+
+	/** Tema del problema. */
 	private String tema;
+
+	/** Juez del problema. */
 	private String juez;
+
+	/** Enlace del problema. */
 	private String link;
 
-	// ID para eliminar por diálogo
+	/** ID del problema a eliminar. */
 	private Long deleteId;
 
+	/** Lista de problemas en formato texto. */
 	private List<String> listado = new ArrayList<>();
+
+	/** Lista de problemas parseados. */
 	private List<ProblemaRow> lista = new ArrayList<>();
 
+	/** URL base para crear problemas. */
 	private static final String BASE_CREATE = "http://localhost:8081/problema/crear";
+
+	/** URL base del servicio. */
 	private static final String BASE_ROOT = "http://localhost:8081";
 
-	public static class ProblemaRow {
-		private Long id;
-		private String titulo;
-		private Integer dificultad;
-		private String tema;
-		private String juez;
-		private String link;
-
-		public ProblemaRow() {
-		}
-
-		public ProblemaRow(Long id, String titulo, Integer dificultad, String tema, String juez, String link) {
-			this.id = id;
-			this.titulo = titulo;
-			this.dificultad = dificultad;
-			this.tema = tema;
-			this.juez = juez;
-			this.link = link;
-		}
-
-		public Long getId() {
-			return id;
-		}
-
-		public void setId(Long id) {
-			this.id = id;
-		}
-
-		public String getTitulo() {
-			return titulo;
-		}
-
-		public void setTitulo(String titulo) {
-			this.titulo = titulo;
-		}
-
-		public Integer getDificultad() {
-			return dificultad;
-		}
-
-		public void setDificultad(Integer dificultad) {
-			this.dificultad = dificultad;
-		}
-
-		public String getTema() {
-			return tema;
-		}
-
-		public void setTema(String tema) {
-			this.tema = tema;
-		}
-
-		public String getJuez() {
-			return juez;
-		}
-
-		public void setJuez(String juez) {
-			this.juez = juez;
-		}
-
-		public String getLink() {
-			return link;
-		}
-
-		public void setLink(String link) {
-			this.link = link;
-		}
-	}
-
-	/* Crear */
+	/**
+	 * Crea un nuevo problema.
+	 */
 	public void crear() {
 		try {
 			String resp = ProblemaService.crear(BASE_CREATE, titulo, dificultad, tema, juez, link);
 			String[] data = resp.split("\n", 2);
 			String code = (data.length > 0) ? data[0] : "500";
 			String body = (data.length > 1) ? data[1] : "Sin respuesta";
-
 			if ("201".equals(code) || "200".equals(code)) {
 				showInfo("Problema creado con éxito");
 				limpiar();
@@ -121,7 +70,9 @@ public class ProblemaBean implements Serializable {
 		}
 	}
 
-	/* Listar */
+	/**
+	 * Lista todos los problemas desde el backend.
+	 */
 	public void listarProblemas() {
 		listado.clear();
 		lista.clear();
@@ -130,7 +81,6 @@ public class ProblemaBean implements Serializable {
 			String[] data = resp.split("\n", 2);
 			String code = (data.length > 0) ? data[0] : "500";
 			String body = (data.length > 1) ? data[1] : "";
-
 			if ("202".equals(code) || "200".equals(code)) {
 				if (body != null && !body.isBlank()) {
 					for (String raw : body.split("\\R")) {
@@ -153,7 +103,9 @@ public class ProblemaBean implements Serializable {
 		}
 	}
 
-	/* Eliminar por ID desde el diálogo */
+	/**
+	 * Elimina un problema por su ID.
+	 */
 	public void eliminarById() {
 		if (deleteId == null || deleteId <= 0) {
 			showWarn("Ingresa un ID válido para eliminar.");
@@ -163,14 +115,17 @@ public class ProblemaBean implements Serializable {
 		deleteId = null;
 	}
 
-	/* Lógica de eliminación */
+	/**
+	 * Elimina un problema por su ID.
+	 * 
+	 * @param id ID del problema a eliminar.
+	 */
 	private void eliminar(Long id) {
 		try {
 			String resp = ProblemaService.eliminar(BASE_ROOT, id);
 			String[] data = resp.split("\n", 2);
 			String code = (data.length > 0) ? data[0] : "500";
 			String body = (data.length > 1) ? data[1] : "";
-
 			if ("200".equals(code)) {
 				showInfo(body.isBlank() ? "Problema eliminado con éxito" : body);
 				listarProblemas();
@@ -182,7 +137,12 @@ public class ProblemaBean implements Serializable {
 		}
 	}
 
-	/* Parser de línea plano que devuelve el backend */
+	/**
+	 * Parsea una línea de texto en un objeto {@link ProblemaRow}.
+	 * 
+	 * @param raw Línea de texto a parsear.
+	 * @return Objeto {@link ProblemaRow} o {@code null} si no es válido.
+	 */
 	private ProblemaRow parseLinea(String raw) {
 		if (raw == null)
 			return null;
@@ -205,6 +165,12 @@ public class ProblemaBean implements Serializable {
 		return null;
 	}
 
+	/**
+	 * Convierte una cadena a {@link Long} o devuelve {@code null}.
+	 * 
+	 * @param v Cadena a convertir.
+	 * @return {@link Long} o {@code null} si no es válido.
+	 */
 	private Long tryLong(String v) {
 		try {
 			return Long.parseLong(v.trim());
@@ -213,6 +179,12 @@ public class ProblemaBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Convierte una cadena a {@link Integer} o devuelve {@code null}.
+	 * 
+	 * @param v Cadena a convertir.
+	 * @return {@link Integer} o {@code null} si no es válido.
+	 */
 	private Integer tryInt(String v) {
 		try {
 			return Integer.parseInt(v.trim());
@@ -221,10 +193,19 @@ public class ProblemaBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Limpia una cadena de texto.
+	 * 
+	 * @param v Cadena a limpiar.
+	 * @return Cadena limpia o cadena vacía si es nula.
+	 */
 	private String safe(String v) {
 		return v == null ? "" : v.trim();
 	}
 
+	/**
+	 * Limpia los campos del formulario.
+	 */
 	private void limpiar() {
 		titulo = "";
 		dificultad = 0;
@@ -233,19 +214,34 @@ public class ProblemaBean implements Serializable {
 		link = "";
 	}
 
+	/**
+	 * Muestra un mensaje de información.
+	 * 
+	 * @param msg Mensaje a mostrar.
+	 */
 	private void showInfo(String msg) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", msg));
 	}
 
+	/**
+	 * Muestra un mensaje de advertencia.
+	 * 
+	 * @param msg Mensaje a mostrar.
+	 */
 	private void showWarn(String msg) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", msg));
 	}
 
+	/**
+	 * Muestra un mensaje de error.
+	 * 
+	 * @param msg Mensaje a mostrar.
+	 */
 	private void showError(String msg) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", msg));
 	}
 
-	/* Getters/Setters */
+	// Getters y Setters
 	public String getTitulo() {
 		return titulo;
 	}
@@ -308,5 +304,78 @@ public class ProblemaBean implements Serializable {
 
 	public void setLista(List<ProblemaRow> lista) {
 		this.lista = lista;
+	}
+
+	/**
+	 * Clase interna que representa un problema.
+	 */
+	public static class ProblemaRow {
+		private Long id;
+		private String titulo;
+		private Integer dificultad;
+		private String tema;
+		private String juez;
+		private String link;
+
+		public ProblemaRow() {
+		}
+
+		public ProblemaRow(Long id, String titulo, Integer dificultad, String tema, String juez, String link) {
+			this.id = id;
+			this.titulo = titulo;
+			this.dificultad = dificultad;
+			this.tema = tema;
+			this.juez = juez;
+			this.link = link;
+		}
+
+		// Getters y Setters
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getTitulo() {
+			return titulo;
+		}
+
+		public void setTitulo(String titulo) {
+			this.titulo = titulo;
+		}
+
+		public Integer getDificultad() {
+			return dificultad;
+		}
+
+		public void setDificultad(Integer dificultad) {
+			this.dificultad = dificultad;
+		}
+
+		public String getTema() {
+			return tema;
+		}
+
+		public void setTema(String tema) {
+			this.tema = tema;
+		}
+
+		public String getJuez() {
+			return juez;
+		}
+
+		public void setJuez(String juez) {
+			this.juez = juez;
+		}
+
+		public String getLink() {
+			return link;
+		}
+
+		public void setLink(String link) {
+			this.link = link;
+		}
 	}
 }

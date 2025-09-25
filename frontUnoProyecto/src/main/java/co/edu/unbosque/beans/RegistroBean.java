@@ -6,23 +6,40 @@ import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
 
+/**
+ * Bean de solicitud para registrar estudiantes.
+ */
 @Named("registroBean")
 @RequestScoped
 public class RegistroBean {
+
+	/** Nombre del estudiante. */
 	private String nombre;
+
+	/** Documento del estudiante. */
 	private String documento;
+
+	/** Semestre del estudiante. */
 	private String semestre;
+
+	/** Carrera del estudiante. */
 	private String carrera;
+
+	/** Correo del estudiante. */
 	private String correo;
+
+	/** Contraseña del estudiante. */
 	private String contrasena;
 
+	/**
+	 * Registra un nuevo estudiante.
+	 */
 	public void doRegister() {
 		try {
 			String respuesta = RegistroService.doPost("http://localhost:8081/estudiante/crear", nombre, documento,
 					correo, contrasena, "estudiantes", carrera, semestre);
 			String[] data = respuesta.split("\n");
 			showStickyRegister(data[0], data[1]);
-			// Limpia los campos del formulario
 			nombre = "";
 			documento = "";
 			semestre = "";
@@ -35,6 +52,12 @@ public class RegistroBean {
 		}
 	}
 
+	/**
+	 * Muestra un mensaje de registro.
+	 * 
+	 * @param code    Código de respuesta.
+	 * @param content Contenido del mensaje.
+	 */
 	public void showStickyRegister(String code, String content) {
 		FacesMessage.Severity severity;
 		String summary;

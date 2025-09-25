@@ -9,10 +9,29 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
+/**
+ * Servicio para registrar estudiantes en el backend. Envía solicitudes POST con
+ * los datos del estudiante.
+ */
 public class RegistroService {
+
+	/** Cliente HTTP configurado para realizar solicitudes. */
 	private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1)
 			.connectTimeout(Duration.ofSeconds(5)).build();
 
+	/**
+	 * Envía una solicitud POST para registrar un estudiante.
+	 *
+	 * @param url        URL del endpoint de registro.
+	 * @param nombre     Nombre del estudiante.
+	 * @param documento  Documento del estudiante.
+	 * @param correo     Correo del estudiante.
+	 * @param contrasena Contraseña del estudiante.
+	 * @param rol        Rol del estudiante.
+	 * @param carrera    Carrera del estudiante.
+	 * @param semestre   Semestre del estudiante.
+	 * @return Respuesta del servidor con el código de estado y el cuerpo.
+	 */
 	public static String doPost(String url, String nombre, String documento, String correo, String contrasena,
 			String rol, String carrera, String semestre) {
 		try {

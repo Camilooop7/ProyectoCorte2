@@ -6,19 +6,30 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import org.json.JSONObject;
 import org.primefaces.PrimeFaces;
-
 import co.edu.unbosque.service.LibroEnLineaService;
-import co.edu.unbosque.service.LibroPDFService;
 
+/**
+ * Bean de solicitud para gestionar libros en línea.
+ */
 @Named("libroEnLineaBean")
 @RequestScoped
 public class LibroEnLineaBean {
 
+	/** Código del libro. */
 	private Integer codigo;
+
+	/** Nombre del libro. */
 	private String nombre;
+
+	/** Descripción del libro. */
 	private String descripcion;
+
+	/** Enlace del libro. */
 	private String link;
 
+	/**
+	 * Crea un nuevo libro en línea.
+	 */
 	public void crearLibro() {
 		try {
 			if (codigo == null || codigo <= 0 || isBlank(nombre) || isBlank(descripcion) || isBlank(link)) {
@@ -26,10 +37,8 @@ public class LibroEnLineaBean {
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Todos los campos son obligatorios."));
 				return;
 			}
-
 			String url = "http://localhost:8081/libroenlinea/crear";
 			String respuesta = LibroEnLineaService.doPostLibroEnLinea(url, codigo, nombre, descripcion, link);
-
 			if (respuesta.startsWith("201") || respuesta.startsWith("200")) {
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Libro en línea creado con éxito."));
@@ -44,6 +53,9 @@ public class LibroEnLineaBean {
 		}
 	}
 
+	/**
+	 * Obtiene la información de un libro por su código.
+	 */
 	public void obtenerInformacionLibro() {
 		try {
 			if (codigo == null || codigo <= 0) {
@@ -51,18 +63,13 @@ public class LibroEnLineaBean {
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El código del libro es obligatorio."));
 				return;
 			}
-
-			// Obtiene la información del libro desde el backend
 			String respuesta = LibroEnLineaService.getLibroInfoById(codigo);
 			String body = respuesta == null ? "" : respuesta.trim();
-
 			if (body.startsWith("{")) {
 				JSONObject jsonObject = new JSONObject(body);
 				this.nombre = jsonObject.optString("nombre", "Nombre no disponible");
 				this.descripcion = jsonObject.optString("descripcion", "Descripción no disponible");
 				this.link = jsonObject.optString("link", "");
-
-				// Si se obtuvo el enlace correctamente, ejecuta JavaScript para abrirlo
 				if (!this.link.isEmpty()) {
 					PrimeFaces.current().executeScript("window.open('" + this.link + "', '_blank');");
 				} else {
@@ -78,6 +85,10 @@ public class LibroEnLineaBean {
 					"No se pudo obtener la información del libro: " + e.getMessage()));
 		}
 	}
+
+	/**
+	 * Elimina un libro por su código.
+	 */
 	public void eliminarLibro() {
 		try {
 			if (codigo == null || codigo <= 0) {
@@ -90,7 +101,7 @@ public class LibroEnLineaBean {
 			if (respuesta.startsWith("200")) {
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Libro eliminado con éxito."));
-				limpiarFormulario(); // Opcional: limpiar el formulario después de eliminar
+				limpiarFormulario();
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"Error", "Error al eliminar el libro: " + respuesta));
@@ -101,6 +112,9 @@ public class LibroEnLineaBean {
 		}
 	}
 
+	/**
+	 * Limpia los campos del formulario.
+	 */
 	private void limpiarFormulario() {
 		this.codigo = null;
 		this.nombre = null;
@@ -108,6 +122,12 @@ public class LibroEnLineaBean {
 		this.link = null;
 	}
 
+	/**
+	 * Verifica si una cadena es nula o vacía.
+	 * 
+	 * @param s Cadena a verificar.
+	 * @return {@code true} si es nula o vacía.
+	 */
 	private boolean isBlank(String s) {
 		return s == null || s.trim().isEmpty();
 	}

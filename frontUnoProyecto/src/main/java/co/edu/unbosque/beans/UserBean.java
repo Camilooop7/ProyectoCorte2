@@ -7,51 +7,56 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.RequestScoped;
 
+/**
+ * Bean de solicitud para gestionar el login de usuarios.
+ */
 @Named("userBean")
 @RequestScoped
 public class UserBean {
+
+	/** Nombre de usuario. */
 	private String username;
+
+	/** Contraseña. */
 	private String password;
 
+	/** Bean de usuario autenticado. */
 	@Inject
-	private CurrentUserBean auth; 
+	private CurrentUserBean auth;
 
+	/**
+	 * Realiza el login del usuario.
+	 * 
+	 * @return Ruta de redirección o {@code null} si falla.
+	 */
 	public String doLogin() {
 		try {
 			String respuesta = UserService.doPost("http://localhost:8081/login/inicio", username, password);
-
 			String[] data = respuesta.split("\n", 2);
 			String code = (data.length > 0) ? data[0] : "500";
 			String body = (data.length > 1) ? data[1] : "";
-
 			if ("200".equals(code)) {
 				String rol = extract(body, "\"rol\":\"", "\"");
 				String redirect = extract(body, "\"redirect\":\"", "\"");
 				String nombre = extract(body, "\"nombre\":\"", "\"");
 				String correo = extract(body, "\"correo\":\"", "\"");
-				String idStr = extract(body, "\"id\":", ","); 
+				String idStr = extract(body, "\"id\":", ",");
 				if (idStr == null || idStr.isBlank()) {
-					idStr = extract(body, "\"id\":", "}"); 
+					idStr = extract(body, "\"id\":", "}");
 				}
 				Long id = null;
 				try {
 					id = Long.parseLong(idStr.replaceAll("[^0-9]", ""));
 				} catch (Exception ignore) {
 				}
-
 				if (rol == null || rol.isBlank()) {
 					showStickyLogin("500", "Respuesta inválida del servidor (sin rol).");
 					return null;
 				}
-
 				auth.setFromLogin(id, nombre, correo, rol);
-
 				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 				showStickyLogin("200", "Autenticación exitosa como " + rol);
-
-
 				return "menu?faces-redirect=true";
-
 			} else if ("401".equals(code)) {
 				showStickyLogin("401", "Credenciales inválidas");
 				return null;
@@ -69,6 +74,14 @@ public class UserBean {
 		}
 	}
 
+	/**
+	 * Extrae un valor de una cadena JSON.
+	 * 
+	 * @param json  Cadena JSON.
+	 * @param start Inicio del valor.
+	 * @param end   Fin del valor.
+	 * @return Valor extraído o {@code null}.
+	 */
 	private static String extract(String json, String start, String end) {
 		if (json == null)
 			return null;
@@ -82,6 +95,12 @@ public class UserBean {
 		return json.substring(i, j);
 	}
 
+	/**
+	 * Muestra un mensaje de login.
+	 * 
+	 * @param code    Código de respuesta.
+	 * @param content Contenido del mensaje.
+	 */
 	private void showStickyLogin(String code, String content) {
 		FacesMessage.Severity severity;
 		String summary;
@@ -102,6 +121,7 @@ public class UserBean {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, content));
 	}
 
+	// Getters y Setters
 	public String getUsername() {
 		return username;
 	}
