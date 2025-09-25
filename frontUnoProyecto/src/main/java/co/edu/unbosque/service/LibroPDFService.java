@@ -109,4 +109,23 @@ public class LibroPDFService {
 			return "500\nError al eliminar el libro PDF: " + e.getMessage();
 		}
 	}
+	
+	public static String mostrarLibrosPDF(String url) {
+	    try {
+	        HttpRequest request = HttpRequest.newBuilder()
+	                .GET()
+	                .uri(URI.create(url + "/mostrar"))
+	                .build();
+
+	        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+	        return response.statusCode() + "\n" + response.body();
+	    } catch (IOException | InterruptedException e) {
+	        e.printStackTrace();
+	        return "500\nError al mostrar los libros PDF: " + e.getMessage();
+	    }
+	}
+
+	
+	
+	
 }

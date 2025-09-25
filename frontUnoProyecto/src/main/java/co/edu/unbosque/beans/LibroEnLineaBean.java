@@ -1,120 +1,172 @@
 package co.edu.unbosque.beans;
 
-import jakarta.inject.Named;
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
+import java.io.Serializable;
+import java.net.URI;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.primefaces.PrimeFaces;
+
 import co.edu.unbosque.service.LibroEnLineaService;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped; 
+import jakarta.inject.Named;
 
-/**
- * Bean de solicitud para gestionar libros en línea.
- */
 @Named("libroEnLineaBean")
-@RequestScoped
-public class LibroEnLineaBean {
+@ViewScoped
+public class LibroEnLineaBean implements Serializable {
 
-	/** Código del libro. */
+	private static final long serialVersionUID = 1L;
+
 	private Integer codigo;
-
-	/** Nombre del libro. */
 	private String nombre;
-
-	/** Descripción del libro. */
 	private String descripcion;
-
-	/** Enlace del libro. */
 	private String link;
 
-	/**
-	 * Crea un nuevo libro en línea.
-	 */
-	public void crearLibro() {
-		try {
-			if (codigo == null || codigo <= 0 || isBlank(nombre) || isBlank(descripcion) || isBlank(link)) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Todos los campos son obligatorios."));
-				return;
-			}
-			String url = "http://localhost:8081/libroenlinea/crear";
-			String respuesta = LibroEnLineaService.doPostLibroEnLinea(url, codigo, nombre, descripcion, link);
-			if (respuesta.startsWith("201") || respuesta.startsWith("200")) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Libro en línea creado con éxito."));
-				limpiarFormulario();
-			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Error", "Error al crear el libro: " + respuesta));
-			}
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error inesperado: " + e.getMessage()));
+	public static class LibroEnLineaItem implements Serializable {
+		private static final long serialVersionUID = 1L;
+		private int codigo;
+		private String nombre;
+		private String descripcion;
+		private String link;
+
+		public int getCodigo() {
+			return codigo;
+		}
+
+		public void setCodigo(int codigo) {
+			this.codigo = codigo;
+		}
+
+		public String getNombre() {
+			return nombre;
+		}
+
+		public void setNombre(String nombre) {
+			this.nombre = nombre;
+		}
+
+		public String getDescripcion() {
+			return descripcion;
+		}
+
+		public void setDescripcion(String descripcion) {
+			this.descripcion = descripcion;
+		}
+
+		public String getLink() {
+			return link;
+		}
+
+		public void setLink(String link) {
+			this.link = link;
 		}
 	}
 
-	/**
-	 * Obtiene la información de un libro por su código.
-	 */
+	private final List<LibroEnLineaItem> librosOnline = new ArrayList<>();
+
+	@PostConstruct
+	public void init() {
+		cargarLibrosOnline();
+	}
+
+	public List<LibroEnLineaItem> getLibrosOnline() {
+		return librosOnline;
+	}
+
+	public void crearLibro() {
+		try {
+			String url = "http://localhost:8081/libroenlinea/crear";
+			LibroEnLineaService.doPostLibroEnLinea(url, (codigo == null ? 0 : codigo), (nombre == null ? "" : nombre),
+					(descripcion == null ? "" : descripcion), (link == null ? "" : link));
+			limpiarFormulario();
+			cargarLibrosOnline();
+			addMsg(FacesMessage.SEVERITY_INFO, "Creado", "Libro en línea creado");
+		} catch (Exception e) {
+			addMsg(FacesMessage.SEVERITY_ERROR, "Error creando libro", e.getMessage());
+		}
+	}
+
 	public void obtenerInformacionLibro() {
 		try {
 			if (codigo == null || codigo <= 0) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El código del libro es obligatorio."));
+				addMsg(FacesMessage.SEVERITY_WARN, "Código requerido", "Ingresa un ID válido.");
 				return;
 			}
-			String respuesta = LibroEnLineaService.getLibroInfoById(codigo);
-			String body = respuesta == null ? "" : respuesta.trim();
-			if (body.startsWith("{")) {
-				JSONObject jsonObject = new JSONObject(body);
-				this.nombre = jsonObject.optString("nombre", "Nombre no disponible");
-				this.descripcion = jsonObject.optString("descripcion", "Descripción no disponible");
-				this.link = jsonObject.optString("link", "");
-				if (!this.link.isEmpty()) {
-					PrimeFaces.current().executeScript("window.open('" + this.link + "', '_blank');");
+			String body = LibroEnLineaService.getLibroInfoById(codigo);
+			if (body != null && body.trim().startsWith("{")) {
+				JSONObject o = new JSONObject(body.trim());
+				this.nombre = o.optString("nombre", nombre);
+				this.descripcion = o.optString("descripcion", descripcion);
+				this.link = o.optString("link", link);
+
+				if (this.link != null && !this.link.isBlank()) {
+					if (PrimeFaces.current().isAjaxRequest()) {
+						PrimeFaces.current().executeScript("window.open('" + this.link + "', '_blank');");
+					} else {
+						FacesContext.getCurrentInstance().getExternalContext().redirect(this.link);
+					}
 				} else {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Advertencia", "El libro no tiene un enlace válido."));
+					addMsg(FacesMessage.SEVERITY_WARN, "Sin enlace", "Este libro no tiene link.");
 				}
 			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-						"Advertencia", "El libro con código " + codigo + " no existe."));
+				addMsg(FacesMessage.SEVERITY_WARN, "No encontrado", "No se encontró el libro " + codigo);
 			}
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-					"No se pudo obtener la información del libro: " + e.getMessage()));
+			addMsg(FacesMessage.SEVERITY_ERROR, "Error obteniendo libro", e.getMessage());
 		}
 	}
 
-	/**
-	 * Elimina un libro por su código.
-	 */
 	public void eliminarLibro() {
 		try {
 			if (codigo == null || codigo <= 0) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El código del libro es obligatorio."));
+				addMsg(FacesMessage.SEVERITY_WARN, "Código requerido", "Ingresa un ID válido.");
 				return;
 			}
 			String url = "http://localhost:8081/libroenlinea/eliminar";
-			String respuesta = LibroEnLineaService.doDeleteLibroPDF(url, codigo);
-			if (respuesta.startsWith("200")) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Libro eliminado con éxito."));
-				limpiarFormulario();
-			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Error", "Error al eliminar el libro: " + respuesta));
-			}
+			LibroEnLineaService.doDeleteLibroPDF(url, codigo);
+			cargarLibrosOnline();
+			addMsg(FacesMessage.SEVERITY_INFO, "Eliminado", "Libro " + codigo + " eliminado");
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error inesperado: " + e.getMessage()));
+			addMsg(FacesMessage.SEVERITY_ERROR, "Error eliminando", e.getMessage());
 		}
 	}
 
-	/**
-	 * Limpia los campos del formulario.
-	 */
+	public void cargarLibrosOnline() {
+		try {
+			HttpRequest req = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:8081/libroenlinea"))
+					.build();
+
+			HttpResponse<String> resp = LibroEnLineaService.httpClient.send(req, HttpResponse.BodyHandlers.ofString());
+
+			librosOnline.clear();
+			String body = (resp.body() == null ? "[]" : resp.body().trim());
+			if (!body.startsWith("[")) {
+				addMsg(FacesMessage.SEVERITY_WARN, "Respuesta inválida", "Se esperaba un arreglo JSON");
+				return;
+			}
+
+			JSONArray arr = new JSONArray(body);
+			for (int i = 0; i < arr.length(); i++) {
+				JSONObject o = arr.getJSONObject(i);
+				LibroEnLineaItem it = new LibroEnLineaItem();
+				it.setCodigo(o.optInt("codigo"));
+				it.setNombre(o.optString("nombre"));
+				it.setDescripcion(o.optString("descripcion"));
+				it.setLink(o.optString("link"));
+				librosOnline.add(it);
+			}
+		} catch (Exception e) {
+			addMsg(FacesMessage.SEVERITY_ERROR, "No se pudo cargar", e.getMessage());
+		}
+	}
+
 	private void limpiarFormulario() {
 		this.codigo = null;
 		this.nombre = null;
@@ -122,17 +174,10 @@ public class LibroEnLineaBean {
 		this.link = null;
 	}
 
-	/**
-	 * Verifica si una cadena es nula o vacía.
-	 * 
-	 * @param s Cadena a verificar.
-	 * @return {@code true} si es nula o vacía.
-	 */
-	private boolean isBlank(String s) {
-		return s == null || s.trim().isEmpty();
+	private void addMsg(FacesMessage.Severity sev, String sum, String det) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(sev, sum, det));
 	}
 
-	// Getters y Setters
 	public Integer getCodigo() {
 		return codigo;
 	}

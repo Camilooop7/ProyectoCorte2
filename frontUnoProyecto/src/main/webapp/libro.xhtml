@@ -7,164 +7,327 @@
       xmlns:p="http://primefaces.org/ui"
       data-bs-theme="light">
 
+<!-- Mantengo preRenderView para cargar tablas al abrir la página -->
+<f:metadata>
+    <f:event type="preRenderView" listener="#{libroPDFBean.cargarLibrosPDF}" />
+    <f:event type="preRenderView" listener="#{libroEnLineaBean.cargarLibrosOnline}" />
+</f:metadata>
+
 <h:head>
-	<meta charset="UTF-8" />
-	<title>Artemisa - Libros</title>
-	<link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5520/5520840.png" />
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-	<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-	<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
-	<link rel="stylesheet" href="css/stylelibro.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-	<style>
-		html[data-bs-theme="dark"] body,
-		html[data-bs-theme="dark"] .main-container,
-		html[data-bs-theme="dark"] .container {
-			background-color: #000 !important;
-			color: #fff !important;
-		}
-		.theme-fab{
-			position: fixed;
-			right: 16px;
-			top: 80px;
-			z-index: 3000;
-			border-radius: 999px;
-			padding: 10px 14px;
-			box-shadow: 0 8px 20px rgba(0,0,0,.15);
-		}
-	</style>
+    <meta charset="UTF-8" />
+    <title>Artemisa - Libros</title>
+
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5520/5520840.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="css/stylelibro.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <style>
+        html[data-bs-theme="dark"] body,
+        html[data-bs-theme="dark"] .main-container,
+        html[data-bs-theme="dark"] .container { background-color:#000!important;color:#fff!important;}
+
+        .theme-fab{position:fixed;right:16px;top:80px;z-index:3000;border-radius:999px;padding:10px 14px;box-shadow:0 8px 20px rgba(0,0,0,.15);}
+
+        /* Compactar tablas y separar tarjetas */
+        .card-compact { margin-bottom: 1rem; }
+        .p-datatable .p-datatable-tbody > tr > td,
+        .p-datatable .p-datatable-thead > tr > th {
+            padding: .35rem .5rem;
+            font-size: .875rem;
+        }
+        .p-datatable .p-paginator { padding: .25rem .5rem; }
+
+        /* Hacer que las tablas se vean más pequeñas en desktop */
+        .table-wrap { max-width: 560px; }
+        @media (max-width: 1199.98px){
+            .table-wrap { max-width: 100%; }
+        }
+
+        .table thead th{white-space:nowrap;}
+    </style>
 </h:head>
 
 <h:body>
 
-	<div class="main-container">
-		<div class="aside">
-			<div class="logo">
-				<a href="#"><span>A</span>rtemisa <br></br> <span>UEB</span></a>
-			</div>
-			<div class="nav-toggler">
-				<span></span>
-			</div>
-			<ul class="nav">
-				<li><a href="menu.xhtml" class="active"><i class="fa fa-home"></i>Home</a></li>
-				<li><a href="temario.xhtml"><i class="bi bi-card-heading"></i>Temario</a></li>
-				<li><a href="problema.xhtml"><i class="bi bi-balloon-heart"></i>Problemas</a></li>
-				<li><a href="libro.xhtml"><i class="bi bi-book-half"></i>Libros</a></li>
-				<li><a href="link.xhtml"><i class="bi bi-link"></i>Links Valiosos</a></li>
-				<li><a href="cronograma.xhtml"><i class="bi bi-calendar-week"></i>Eventos</a></li>
-				<div class="card">
-					<h:form>
-						<p:growl id="messages" showDetail="true" />
-						<p:menuButton value="Opción">
-							<p:menuitem value="Judge" url="https://domjudgeacademicueb.com/public" icon="bi bi-code-square" />
-							<p:menuitem value="CodeChef" url="https://www.codechef.com/" icon="bi bi-cookie" />
-							<p:menuitem value="Vjudge" url="https://vjudge.net/group/cuevadelprofdiego" icon="bi bi-emoji-angry" />
-							<p:menuitem value="OnlineJudge" url="https://onlinejudge.org/" icon="bi bi-joystick" />
-						</p:menuButton>
-					</h:form>
-				</div>
-			</ul>
-		</div>
-		<div class="container">
-			<div class="row">
-				<div class="home-info padd-15">
-					<div class="centered-text">
-						<h3 class="hello">Artemisa UEB <span class="name">Sergio - Camilo - Jeisson - Luna</span></h3>
-						<h3 class="profession">Hola, <span class="typing">¡Descarga ya el PDF! </span></h3>
-						<p class="animate__animated animate__lightSpeedInRight">"Contenido exclusivo, estrategias prácticas y recursos clave en un solo clic. ¡No te pierdas esta oportunidad de potenciar tus resultados!"</p>
-					</div>
-					<div class="containerb">
-						<div class="folder">
-							<div class="top"></div>
-							<div class="bottom"></div>
-						</div>
-						<div class="title">Obteniendo archivos...</div>
-					</div>
-					<br></br><br></br>
-					<div class="containercard">
-						<div class="cardib">
-							<span class="card__title">Descargar PDF</span>
-							<h:form styleClass="card__form">
-								<p:inputText id="codigo" value="#{libroPDFBean.codigo}" placeholder="Ingresa el ID del libro" required="true" requiredMessage="El ID es obligatorio" styleClass="card__input" />
-								<p:commandButton value="Descargar PDF" action="#{libroPDFBean.obtenerInformacionLibro()}" styleClass="card__button" ajax="false" />
-							</h:form>
-						</div>
-						<div class="cardib" >
-							<h:form styleClass="card__form" rendered="#{auth.admin or auth.profesor}">
-							<span class="card__title">Eliminar Libro PDF</span>
-								<p:inputText id="codigo" value="#{libroPDFBean.codigo}" placeholder="Ingresa el ID del libro" required="true" requiredMessage="El ID es obligatorio" styleClass="card__input" />
-								<p:commandButton  value="Eliminar Libro PDF" action="#{libroPDFBean.eliminarLibro()}" styleClass="card__button" ajax="false" />
-							</h:form>
-						</div>
-					</div>
-					<div class="containercard">
-						<div class="cardib">
-							<span class="card__title">Libro en línea</span>
-							<h:form styleClass="card__form">
-								<p:inputText id="codigo" value="#{libroEnLineaBean.codigo}" placeholder="Ingresa el ID del libro" required="true" requiredMessage="El ID es obligatorio" styleClass="card__input" />
-								<p:commandButton value="Abrir Libro" action="#{libroEnLineaBean.obtenerInformacionLibro()}" styleClass="card__button" ajax="false" />
-							</h:form>
-						</div>
-						<div class="cardib">
-							<h:form styleClass="card__form" rendered="#{auth.admin or auth.profesor}">
-							<span class="card__title">Eliminar Libro en linea</span>
-								<p:inputText id="codigo" value="#{libroEnLineaBean.codigo}" placeholder="Ingresa el ID del libro" required="true" requiredMessage="El ID es obligatorio" styleClass="card__input" />
-								<p:commandButton value="Eliminar Libro en linea" action="#{libroEnLineaBean.eliminarLibro()}" styleClass="card__button" ajax="false" />
-							</h:form>
-						</div>
-						<div class="cardib">
-							<h:form styleClass="card__form" rendered="#{auth.admin or auth.profesor}">
-							<span class="card__title">Crear Libro</span>
-								<p:growl id="messages" showDetail="true" />
-								<p:panel id="cropperPanel" />
-								<p:inputText id="nombreEnLinea" value="#{libroEnLineaBean.nombre}" placeholder="Ingresa el nombre del libro" required="true" requiredMessage="El nombre es obligatorio" styleClass="card__input" />
-								<p:inputText id="codigoEnLinea" value="#{libroEnLineaBean.codigo}" placeholder="Ingresa el código del libro" required="true" requiredMessage="El código es obligatorio" styleClass="card__input" />
-								<p:inputText id="descripcionEnLinea" value="#{libroEnLineaBean.descripcion}" placeholder="Ingresa la descripción del libro" required="true" requiredMessage="La descripción es obligatoria" styleClass="card__input" />
-								<p:inputText id="linkEnLinea" value="#{libroEnLineaBean.link}" placeholder="Ingresa el enlace del libro" required="true" requiredMessage="El enlace es obligatorio" styleClass="card__input" />
-								<p:commandButton value="Crear Libro" action="#{libroEnLineaBean.crearLibro}" styleClass="card__button" ajax="false" />
-							</h:form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="main-container">
+        <div class="aside">
+            <div class="logo"><a href="#"><span>A</span>rtemisa <br></br> <span>UEB</span></a></div>
+            <div class="nav-toggler"><span></span></div>
+            <ul class="nav">
+                <li><a href="menu.xhtml" class="active"><i class="fa fa-home"></i>Home</a></li>
+                <li><a href="temario.xhtml"><i class="bi bi-card-heading"></i>Temario</a></li>
+                <li><a href="problema.xhtml"><i class="bi bi-balloon-heart"></i>Problemas</a></li>
+                <li><a href="libro.xhtml"><i class="bi bi-book-half"></i>Libros</a></li>
+                <li><a href="link.xhtml"><i class="bi bi-link"></i>Links Valiosos</a></li>
+                <li><a href="cronograma.xhtml"><i class="bi bi-calendar-week"></i>Eventos</a></li>
+                <div class="card">
+                    <h:form>
+                        <p:menuButton value="Opción">
+                            <p:menuitem value="Judge" url="https://domjudgeacademicueb.com/public" icon="bi bi-code-square" />
+                            <p:menuitem value="CodeChef" url="https://www.codechef.com/" icon="bi bi-cookie" />
+                            <p:menuitem value="Vjudge" url="https://vjudge.net/group/cuevadelprofdiego" icon="bi bi-emoji-angry" />
+                            <p:menuitem value="OnlineJudge" url="https://onlinejudge.org/" icon="bi bi-joystick" />
+                        </p:menuButton>
+                    </h:form>
+                </div>
+            </ul>
+        </div>
 
-	<button id="themeFab" class="btn btn-primary theme-fab" title="Cambiar tema">
-		<i class="bi bi-moon-stars"></i>
-	</button>
+        <div class="container">
+            <div class="row">
+                <div class="home-info padd-15">
 
-	<script>
-		(function(){
-			const html = document.documentElement;
-			const btn  = document.getElementById('themeFab');
-			if(!html.hasAttribute('data-bs-theme')) {
-				html.setAttribute('data-bs-theme','light');
-			}
-			const setLabel = (theme) => {
-				btn.innerHTML = theme === 'dark'
-					? '<i class="bi bi-sun"></i>'
-					: '<i class="bi bi-moon-stars"></i>';
-				btn.setAttribute('title', theme === 'dark' ? 'Modo claro' : 'Modo oscuro');
-			};
-			const saved = localStorage.getItem('theme');
-			if (saved === 'dark' || saved === 'light') {
-				html.setAttribute('data-bs-theme', saved);
-			}
-			setLabel(html.getAttribute('data-bs-theme'));
-			btn.addEventListener('click', () => {
-				const next = html.getAttribute('data-bs-theme') === 'light' ? 'dark' : 'light';
-				html.setAttribute('data-bs-theme', next);
-				localStorage.setItem('theme', next);
-				setLabel(next);
-			});
-		})();
-	</script>
+                    <div class="centered-text">
+                        <h3 class="hello">Artemisa UEB <span class="name">Sergio - Camilo - Jeisson - Luna</span></h3>
+                        <h3 class="profession">Hola, <span class="typing">¡Descarga ya el PDF! </span></h3>
+                        <p class="animate__animated animate__lightSpeedInRight">
+                            "Contenido exclusivo, estrategias prácticas y recursos clave en un solo clic. ¡No te pierdas esta oportunidad de potenciar tus resultados!"
+                        </p>
+                    </div>
+
+                    <div class="containerb">
+                        <div class="folder"><div class="top"></div><div class="bottom"></div></div>
+                        <div class="title">Obteniendo archivos...</div>
+                    </div>
+
+                    <br></br><br></br>
+
+                    <!-- Acciones rápidas -->
+                    <div class="containercard">
+                        <div class="cardib">
+                            <span class="card__title">Descargar PDF</span>
+                            <h:form styleClass="card__form">
+                                <p:inputText id="codigoDescarga" value="#{libroPDFBean.codigo}" placeholder="ID del libro" styleClass="card__input" />
+                                <p:commandButton value="Descargar PDF"
+                                                 action="#{libroPDFBean.obtenerInformacionLibro()}"
+                                                 styleClass="card__button" ajax="false" />
+                            </h:form>
+                        </div>
+
+                        <div class="cardib">
+                            <h:form styleClass="card__form" rendered="#{auth.admin or auth.profesor}">
+                                <span class="card__title">Eliminar Libro PDF</span>
+                                <p:inputText id="codigoEliminarPDF" value="#{libroPDFBean.codigo}" placeholder="ID del libro" styleClass="card__input" />
+                                <p:commandButton value="Eliminar Libro PDF"
+                                                 action="#{libroPDFBean.eliminarLibro()}"
+                                                 styleClass="card__button" ajax="false" />
+                            </h:form>
+                        </div>
+                    </div>
+
+                    <div class="containercard">
+                        <div class="cardib">
+                            <span class="card__title">Libro en línea</span>
+                            <h:form styleClass="card__form" id="formAbrirOnline">
+                                <p:inputText id="codigoOpenOnline" value="#{libroEnLineaBean.codigo}" placeholder="ID del libro" styleClass="card__input" />
+                                <!-- AJAX para que executeScript en el bean se ejecute -->
+                                <p:commandButton value="Abrir Libro"
+                                                 action="#{libroEnLineaBean.obtenerInformacionLibro}"
+                                                 styleClass="card__button"
+                                                 ajax="true" process="@form" update="@none" />
+                            </h:form>
+                        </div>
+
+                        <div class="cardib">
+                            <h:form styleClass="card__form" rendered="#{auth.admin or auth.profesor}">
+                                <span class="card__title">Eliminar Libro en línea</span>
+                                <p:inputText id="codigoEliminarOnline" value="#{libroEnLineaBean.codigo}" placeholder="ID del libro" styleClass="card__input" />
+                                <p:commandButton value="Eliminar Libro en línea"
+                                                 action="#{libroEnLineaBean.eliminarLibro}"
+                                                 styleClass="card__button" ajax="false" />
+                            </h:form>
+                        </div>
+
+                        <div class="cardib" rendered="#{auth.admin or auth.profesor}">
+                            <h:form styleClass="card__form">
+                                <span class="card__title">Crear Libro en línea</span>
+                                <p:panel id="cropperPanel" />
+                                <p:inputText id="nombreEnLinea" value="#{libroEnLineaBean.nombre}" placeholder="Nombre del libro" styleClass="card__input" />
+                                <p:inputText id="codigoEnLinea" value="#{libroEnLineaBean.codigo}" placeholder="Código del libro" styleClass="card__input" />
+                                <p:inputText id="descripcionEnLinea" value="#{libroEnLineaBean.descripcion}" placeholder="Descripción" styleClass="card__input" />
+                                <p:inputText id="linkEnLinea" value="#{libroEnLineaBean.link}" placeholder="Enlace" styleClass="card__input" />
+                                <p:commandButton value="Crear Libro"
+                                                 action="#{libroEnLineaBean.crearLibro}"
+                                                 styleClass="card__button" ajax="false" />
+                            </h:form>
+                        </div>
+                    </div>
+
+                    <!-- Crear PDF -->
+                    <div class="container mt-4">
+                        <div class="card p-3 shadow-sm" rendered="#{auth.admin or auth.profesor}">
+                            <h5 class="mb-3"><i class="bi bi-file-earmark-plus me-2"></i>Crear Libro PDF</h5>
+                            <h:form id="formCrearPDF" enctype="multipart/form-data">
+                                <div class="row g-2">
+                                    <div class="col-12 col-md-3">
+                                        <p:inputText id="codigoCrearPDF" value="#{libroPDFBean.codigo}" placeholder="Código" />
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <p:inputText id="nombreCrearPDF" value="#{libroPDFBean.nombre}" placeholder="Nombre" />
+                                    </div>
+                                    <div class="col-12 col-md-5">
+                                        <p:inputText id="descCrearPDF" value="#{libroPDFBean.descripcion}" placeholder="Descripción" />
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <p:fileUpload mode="advanced"
+                                                      auto="true"
+                                                      dragDropSupport="true"
+                                                      allowTypes="/(\.|\/)(pdf)$/"
+                                                      label="Seleccionar PDF"
+                                                      uploadLabel="Subir"
+                                                      cancelLabel="Cancelar"
+                                                      listener="#{libroPDFBean.handleFileUploadPdf}" />
+                                    </div>
+                                </div>
+                                <div class="mt-3 d-flex gap-2">
+                                    <p:commandButton value="Crear Libro PDF" action="#{libroPDFBean.crearLibro}" styleClass="btn btn-primary" ajax="false" />
+                                    <p:commandButton value="Limpiar" type="reset" styleClass="btn btn-outline-secondary" />
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+
+                    <!-- Tablas compactas y separadas -->
+                    <div class="container mt-4">
+                      <div class="row g-4">
+                        <!-- Tabla: Libros PDF -->
+                        <div class="col-12 col-xl-6">
+                          <div class="card p-3 shadow-sm card-compact table-wrap">
+                            <h5 class="mb-3"><i class="bi bi-filetype-pdf me-2"></i>Libros PDF</h5>
+                            <h:form id="formTablaPDF">
+                              <div class="d-flex gap-2 mb-2">
+                                <p:commandButton value="Recargar"
+                                                 actionListener="#{libroPDFBean.cargarLibrosPDF}"
+                                                 update="tablaPDF"
+                                                 icon="bi bi-arrow-repeat" styleClass="btn btn-primary btn-sm"/>
+                              </div>
+                              <p:dataTable id="tablaPDF"
+                                           value="#{libroPDFBean.librosPDF}"
+                                           var="row"
+                                           paginator="true" rows="5"
+                                           scrollable="true" scrollHeight="260"
+                                           emptyMessage="No hay libros PDF cargados."
+                                           styleClass="table table-sm table-striped">
+                                <p:column headerText="Código" style="width:90px">
+                                  <h:outputText value="#{row.codigo}"/>
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                  <h:outputText value="#{row.nombre}"/>
+                                </p:column>
+                                <p:column headerText="Descripción">
+                                  <h:outputText value="#{row.descripcion}"/>
+                                </p:column>
+                                <p:column headerText="Acciones" style="width:220px">
+                                  <div class="d-flex gap-2">
+                                    <p:commandButton value="Descargar"
+                                                     ajax="false"
+                                                     action="#{libroPDFBean.obtenerInformacionLibro()}"
+                                                     styleClass="btn btn-success btn-sm"
+                                                     icon="bi bi-download">
+                                      <f:setPropertyActionListener target="#{libroPDFBean.codigo}" value="#{row.codigo}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Eliminar"
+                                                     rendered="#{auth.admin or auth.profesor}"
+                                                     ajax="false"
+                                                     action="#{libroPDFBean.eliminarLibro()}"
+                                                     styleClass="btn btn-danger btn-sm"
+                                                     icon="bi bi-trash3">
+                                      <f:setPropertyActionListener target="#{libroPDFBean.codigo}" value="#{row.codigo}"/>
+                                    </p:commandButton>
+                                  </div>
+                                </p:column>
+                              </p:dataTable>
+                            </h:form>
+                          </div>
+                        </div>
+
+                        <!-- Tabla: Libros en línea -->
+                        <div class="col-12 col-xl-6">
+                          <div class="card p-3 shadow-sm card-compact table-wrap">
+                            <h5 class="mb-3"><i class="bi bi-globe2 me-2"></i>Libros en línea</h5>
+                            <h:form id="formTablaOnline">
+                              <div class="d-flex gap-2 mb-2">
+                                <p:commandButton value="Recargar"
+                                                 actionListener="#{libroEnLineaBean.cargarLibrosOnline}"
+                                                 update="tablaOnline"
+                                                 icon="bi bi-arrow-repeat" styleClass="btn btn-primary btn-sm"/>
+                              </div>
+                              <p:dataTable id="tablaOnline"
+                                           value="#{libroEnLineaBean.librosOnline}"
+                                           var="row"
+                                           paginator="true" rows="5"
+                                           scrollable="true" scrollHeight="260"
+                                           emptyMessage="No hay libros en línea cargados."
+                                           styleClass="table table-sm table-striped">
+                                <p:column headerText="Código" style="width:90px">
+                                  <h:outputText value="#{row.codigo}"/>
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                  <h:outputText value="#{row.nombre}"/>
+                                </p:column>
+                                <p:column headerText="Descripción">
+                                  <h:outputText value="#{row.descripcion}"/>
+                                </p:column>
+                                <p:column headerText="Acciones" style="width:260px">
+                                  <div class="d-flex gap-2">
+                                    <!-- Abrir por AJAX y pasar el código de la fila al bean -->
+                                    <p:commandButton value="Abrir"
+                                                     action="#{libroEnLineaBean.obtenerInformacionLibro}"
+                                                     ajax="true" process="@this" update="@none"
+                                                     styleClass="btn btn-success btn-sm"
+                                                     icon="bi bi-box-arrow-up-right">
+                                      <f:setPropertyActionListener target="#{libroEnLineaBean.codigo}" value="#{row.codigo}"/>
+                                    </p:commandButton>
+
+                                    <p:commandButton value="Eliminar"
+                                                     rendered="#{auth.admin or auth.profesor}"
+                                                     ajax="false"
+                                                     action="#{libroEnLineaBean.eliminarLibro}"
+                                                     styleClass="btn btn-danger btn-sm"
+                                                     icon="bi bi-trash3">
+                                      <f:setPropertyActionListener target="#{libroEnLineaBean.codigo}" value="#{row.codigo}"/>
+                                    </p:commandButton>
+
+                                    <p:commandButton value="Link"
+                                                     rendered="#{not empty row.link}"
+                                                     type="button"
+                                                     onclick="window.open('#{row.link}','_blank'); return false;"
+                                                     styleClass="btn btn-outline-secondary btn-sm"
+                                                     icon="bi bi-link-45deg"/>
+                                  </div>
+                                </p:column>
+                              </p:dataTable>
+                            </h:form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="themeFab" class="btn btn-primary theme-fab" title="Cambiar tema"><i class="bi bi-moon-stars"></i></button>
+
+    <script>
+        (function(){
+            const html=document.documentElement,btn=document.getElementById('themeFab');
+            if(!html.hasAttribute('data-bs-theme')) html.setAttribute('data-bs-theme','light');
+            const setLabel=t=>{btn.innerHTML=t==='dark'?'<i class="bi bi-sun"></i>':'<i class="bi bi-moon-stars"></i>';btn.title=t==='dark'?'Modo claro':'Modo oscuro';};
+            const saved=localStorage.getItem('theme'); if(saved==='dark'||saved==='light') html.setAttribute('data-bs-theme',saved);
+            setLabel(html.getAttribute('data-bs-theme'));
+            btn.addEventListener('click',()=>{const next=html.getAttribute('data-bs-theme')==='light'?'dark':'light';html.setAttribute('data-bs-theme',next);localStorage.setItem('theme',next);setLabel(next);});
+        })();
+    </script>
 
 </h:body>
 </html>
