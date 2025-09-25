@@ -1,13 +1,16 @@
 package co.edu.unbosque.util.exception;
 
 /**
- * Clase la cual es publica para ser llamada dentro de otras clases la cual es
- * heredada de Exception
+ * Excepción personalizada que indica que un número no puede ser negativo.
+ * Se utiliza para validar que los valores numéricos ingresados sean positivos.
  */
 public class NegativeNumberException extends Exception {
 
-	public NegativeNumberException() {
-		super("No puede ser un numero negativo.");
-	}
-
+    /**
+     * Crea una nueva instancia de NegativeNumberException con un mensaje predeterminado.
+     * El mensaje indica que no puede ser un número negativo.
+     */
+    public NegativeNumberException() {
+        super("No puede ser un numero negativo.");
+    }
 }

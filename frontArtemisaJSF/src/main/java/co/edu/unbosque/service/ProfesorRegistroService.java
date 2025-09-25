@@ -9,35 +9,52 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
+/**
+ * Servicio encargado de registrar profesores enviando solicitudes HTTP al backend.
+ * Permite crear nuevos profesores enviando los parámetros requeridos.
+ */
 public class ProfesorRegistroService {
-	private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1)
-			.connectTimeout(Duration.ofSeconds(5)).build();
+    /** Cliente HTTP utilizado para realizar las solicitudes. */
+    private static final HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1)
+            .connectTimeout(Duration.ofSeconds(5)).build();
 
-	public static String doPostProfesor(String url, String nombre, String documento, String correo, String contrasena,
-			String rol, String departamento) {
+    /**
+     * Envía una solicitud POST para registrar un profesor.
+     *
+     * @param url           URL del endpoint para el registro.
+     * @param nombre        Nombre del profesor.
+     * @param documento     Documento de identificación del profesor.
+     * @param correo        Correo electrónico del profesor.
+     * @param contrasena    Contraseña del profesor.
+     * @param rol           Rol del usuario (por ejemplo, "PROFESOR").
+     * @param departamento  Departamento al que pertenece el profesor.
+     * @return Respuesta del servidor con el código de estado y mensaje.
+     */
+    public static String doPostProfesor(String url, String nombre, String documento, String correo, String contrasena,
+            String rol, String departamento) {
 
-		try {
-			String encodedNombre = URLEncoder.encode(nombre, StandardCharsets.UTF_8);
-			String encodedDocumento = URLEncoder.encode(documento, StandardCharsets.UTF_8);
-			String encodedCorreo = URLEncoder.encode(correo, StandardCharsets.UTF_8);
-			String encodedContrasena = URLEncoder.encode(contrasena, StandardCharsets.UTF_8);
-			String encodedRol = URLEncoder.encode(rol, StandardCharsets.UTF_8);
-			String encodedDepartamento = URLEncoder.encode(departamento, StandardCharsets.UTF_8);
+        try {
+            String encodedNombre = URLEncoder.encode(nombre, StandardCharsets.UTF_8);
+            String encodedDocumento = URLEncoder.encode(documento, StandardCharsets.UTF_8);
+            String encodedCorreo = URLEncoder.encode(correo, StandardCharsets.UTF_8);
+            String encodedContrasena = URLEncoder.encode(contrasena, StandardCharsets.UTF_8);
+            String encodedRol = URLEncoder.encode(rol, StandardCharsets.UTF_8);
+            String encodedDepartamento = URLEncoder.encode(departamento, StandardCharsets.UTF_8);
 
-			String fullUrl = url + "?nombre=" + encodedNombre + "&documento=" + encodedDocumento + "&correo="
-					+ encodedCorreo + "&contrasena=" + encodedContrasena + "&rol=" + encodedRol + "&departamento="
-					+ encodedDepartamento;
+            String fullUrl = url + "?nombre=" + encodedNombre + "&documento=" + encodedDocumento + "&correo="
+                    + encodedCorreo + "&contrasena=" + encodedContrasena + "&rol=" + encodedRol + "&departamento="
+                    + encodedDepartamento;
 
-			HttpRequest request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.noBody())
-					.uri(URI.create(fullUrl)).setHeader("User-Agent", "Java 11 HttpClient Bot")
-					.header("Content-Type", "application/x-www-form-urlencoded").build();
+            HttpRequest request = HttpRequest.newBuilder().POST(HttpRequest.BodyPublishers.noBody())
+                    .uri(URI.create(fullUrl)).setHeader("User-Agent", "Java 11 HttpClient Bot")
+                    .header("Content-Type", "application/x-www-form-urlencoded").build();
 
-			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-			return response.statusCode() + "\n" + response.body();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.statusCode() + "\n" + response.body();
 
-		} catch (InterruptedException | IOException e) {
-			e.printStackTrace();
-			return "500\nError en la conexión con el servidor: " + e.getMessage();
-		}
-	}
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+            return "500\nError en la conexión con el servidor: " + e.getMessage();
+        }
+    }
 }

@@ -16,191 +16,240 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+/**
+ * Bean para la gestión de libros PDF: permite la carga, creación, consulta, descarga y eliminación de libros PDF.
+ * Utiliza PrimeFaces y JSF para la interacción en la vista.
+ */
 @Named("libroPDFBean")
 @RequestScoped
 public class LibroPDFBean {
-	private Integer codigo;
-	private String nombre;
-	private String descripcion;
-	private byte[] contenidoPdf;
-	private StreamedContent pdfStream;
-	private UploadedFile pdfFile;
+    /** Código único del libro */
+    private Integer codigo;
+    /** Nombre del libro */
+    private String nombre;
+    /** Descripción del libro */
+    private String descripcion;
+    /** Contenido binario del archivo PDF */
+    private byte[] contenidoPdf;
+    /** Stream del PDF para descarga o vista previa */
+    private StreamedContent pdfStream;
+    /** Archivo PDF cargado */
+    private UploadedFile pdfFile;
 
-	public void handleFileUploadPdf(FileUploadEvent event) {
-		try {
-			UploadedFile file = event.getFile();
-			if (file == null || file.getContent() == null) {
-				throw new IllegalArgumentException("Archivo PDF vacío.");
-			}
-			String ct = file.getContentType() == null ? "" : file.getContentType().toLowerCase();
-			if (!ct.contains("pdf")) {
-				throw new IllegalArgumentException("Formato no soportado (solo PDF).");
-			}
-			this.pdfFile = file;
-			this.contenidoPdf = file.getContent();
-			this.pdfStream = DefaultStreamedContent.builder().contentType("application/pdf")
-					.stream(() -> new ByteArrayInputStream(this.contenidoPdf)).build();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "PDF subido: " + file.getFileName()));
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al subir el PDF: " + e.getMessage()));
-		}
-	}
+    /**
+     * Maneja la subida de un archivo PDF desde la interfaz.
+     * Valida el tipo y la presencia del archivo.
+     * @param event evento de subida de archivo
+     */
+    public void handleFileUploadPdf(FileUploadEvent event) {
+        try {
+            UploadedFile file = event.getFile();
+            if (file == null || file.getContent() == null) {
+                throw new IllegalArgumentException("Archivo PDF vacío.");
+            }
+            String ct = file.getContentType() == null ? "" : file.getContentType().toLowerCase();
+            if (!ct.contains("pdf")) {
+                throw new IllegalArgumentException("Formato no soportado (solo PDF).");
+            }
+            this.pdfFile = file;
+            this.contenidoPdf = file.getContent();
+            this.pdfStream = DefaultStreamedContent.builder().contentType("application/pdf")
+                    .stream(() -> new ByteArrayInputStream(this.contenidoPdf)).build();
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "PDF subido: " + file.getFileName()));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error al subir el PDF: " + e.getMessage()));
+        }
+    }
 
-	public void crearLibro() {
-		try {
-			if (codigo == null || codigo <= 0 || isBlank(nombre) || isBlank(descripcion) || contenidoPdf == null
-					|| contenidoPdf.length == 0) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Error", "Todos los campos y archivos son obligatorios."));
-				return;
-			}
-			String url = "http://localhost:8081/libropdf/crear";
-			String respuesta = LibroPDFService.doPostLibroPDF(url, codigo, nombre, descripcion, contenidoPdf);
-			if (respuesta.startsWith("201") || respuesta.startsWith("200")) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Libro creado con éxito."));
-				limpiarFormulario();
-			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Error", "Error al crear el libro: " + respuesta));
-			}
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error inesperado: " + e.getMessage()));
-		}
-	}
+    /**
+     * Crea un nuevo libro PDF usando los datos actuales del formulario y el archivo subido.
+     * Valida los campos y muestra mensajes de éxito o error.
+     */
+    public void crearLibro() {
+        try {
+            if (codigo == null || codigo <= 0 || isBlank(nombre) || isBlank(descripcion) || contenidoPdf == null
+                    || contenidoPdf.length == 0) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error", "Todos los campos y archivos son obligatorios."));
+                return;
+            }
+            String url = "http://localhost:8081/libropdf/crear";
+            String respuesta = LibroPDFService.doPostLibroPDF(url, codigo, nombre, descripcion, contenidoPdf);
+            if (respuesta.startsWith("201") || respuesta.startsWith("200")) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Libro creado con éxito."));
+                limpiarFormulario();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error", "Error al crear el libro: " + respuesta));
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error inesperado: " + e.getMessage()));
+        }
+    }
 
-	public void descargarPdf() {
-		try {
-			if (codigo == null || codigo <= 0) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Código inválido."));
-				return;
-			}
-			HttpRequest requestPdf = HttpRequest.newBuilder().GET()
-					.uri(URI.create("http://localhost:8081/libropdf/pdf/" + codigo)).build();
-			HttpResponse<byte[]> responsePdf = LibroPDFService.httpClient.send(requestPdf,
-					HttpResponse.BodyHandlers.ofByteArray());
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			ExternalContext externalContext = facesContext.getExternalContext();
-			externalContext.responseReset();
-			externalContext.setResponseContentType("application/pdf");
-			externalContext.setResponseHeader("Content-Disposition",
-					"attachment; filename=\"libro_" + (isBlank(nombre) ? codigo : nombre) + ".pdf\"");
-			externalContext.getResponseOutputStream().write(responsePdf.body());
-			facesContext.responseComplete();
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-					"No se pudo descargar el PDF: " + e.getMessage()));
-		}
-	}
+    /**
+     * Descarga el archivo PDF del libro, dado el código.
+     * Configura la respuesta para descargar el archivo en el navegador.
+     */
+    public void descargarPdf() {
+        try {
+            if (codigo == null || codigo <= 0) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Código inválido."));
+                return;
+            }
+            HttpRequest requestPdf = HttpRequest.newBuilder().GET()
+                    .uri(URI.create("http://localhost:8081/libropdf/pdf/" + codigo)).build();
+            HttpResponse<byte[]> responsePdf = LibroPDFService.httpClient.send(requestPdf,
+                    HttpResponse.BodyHandlers.ofByteArray());
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            ExternalContext externalContext = facesContext.getExternalContext();
+            externalContext.responseReset();
+            externalContext.setResponseContentType("application/pdf");
+            externalContext.setResponseHeader("Content-Disposition",
+                    "attachment; filename=\"libro_" + (isBlank(nombre) ? codigo : nombre) + ".pdf\"");
+            externalContext.getResponseOutputStream().write(responsePdf.body());
+            facesContext.responseComplete();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+                    "No se pudo descargar el PDF: " + e.getMessage()));
+        }
+    }
 
-	public void obtenerInformacionLibro() {
-		try {
-			if (codigo == null || codigo <= 0) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El código del libro es obligatorio."));
-				return;
-			}
-			HttpRequest request = HttpRequest.newBuilder().GET()
-					.uri(URI.create("http://localhost:8081/libropdf/" + codigo)).build();
-			HttpResponse<String> response = LibroPDFService.httpClient.send(request,
-					HttpResponse.BodyHandlers.ofString());
-			String body = response.body() == null ? "" : response.body().trim();
-			if (body.startsWith("{")) {
-				JSONObject jsonObject = new JSONObject(body);
-				this.nombre = jsonObject.optString("nombre", "Nombre no disponible");
-				this.descripcion = jsonObject.optString("descripcion", "Descripción no disponible");
-			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-						"Advertencia", "El libro con código " + codigo + " no existe."));
-			}
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
-					"No se pudo obtener la información del libro: " + e.getMessage()));
-		}
-		descargarPdf();
-	}
+    /**
+     * Consulta la información de un libro PDF y descarga el PDF asociado.
+     */
+    public void obtenerInformacionLibro() {
+        try {
+            if (codigo == null || codigo <= 0) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El código del libro es obligatorio."));
+                return;
+            }
+            HttpRequest request = HttpRequest.newBuilder().GET()
+                    .uri(URI.create("http://localhost:8081/libropdf/" + codigo)).build();
+            HttpResponse<String> response = LibroPDFService.httpClient.send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            String body = response.body() == null ? "" : response.body().trim();
+            if (body.startsWith("{")) {
+                JSONObject jsonObject = new JSONObject(body);
+                this.nombre = jsonObject.optString("nombre", "Nombre no disponible");
+                this.descripcion = jsonObject.optString("descripcion", "Descripción no disponible");
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+                        "Advertencia", "El libro con código " + codigo + " no existe."));
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+                    "No se pudo obtener la información del libro: " + e.getMessage()));
+        }
+        descargarPdf();
+    }
 
-	public void eliminarLibro() {
-		try {
-			if (codigo == null || codigo <= 0) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El código del libro es obligatorio."));
-				return;
-			}
-			String url = "http://localhost:8081/libropdf/eliminar";
-			String respuesta = LibroPDFService.doDeleteLibroPDF(url, codigo);
-			if (respuesta.startsWith("200")) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Libro eliminado con éxito."));
-				limpiarFormulario();
-			} else {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-						"Error", "Error al eliminar el libro: " + respuesta));
-			}
-		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error inesperado: " + e.getMessage()));
-		}
-	}
+    /**
+     * Elimina un libro PDF por su código y limpia el formulario si fue exitoso.
+     */
+    public void eliminarLibro() {
+        try {
+            if (codigo == null || codigo <= 0) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El código del libro es obligatorio."));
+                return;
+            }
+            String url = "http://localhost:8081/libropdf/eliminar";
+            String respuesta = LibroPDFService.doDeleteLibroPDF(url, codigo);
+            if (respuesta.startsWith("200")) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Libro eliminado con éxito."));
+                limpiarFormulario();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error", "Error al eliminar el libro: " + respuesta));
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error inesperado: " + e.getMessage()));
+        }
+    }
 
-	private void limpiarFormulario() {
-		this.nombre = null;
-		this.descripcion = null;
-		this.contenidoPdf = null;
-		this.pdfStream = null;
-		this.pdfFile = null;
-	}
+    /**
+     * Limpia todos los campos del formulario y los archivos cargados.
+     */
+    private void limpiarFormulario() {
+        this.nombre = null;
+        this.descripcion = null;
+        this.contenidoPdf = null;
+        this.pdfStream = null;
+        this.pdfFile = null;
+    }
 
-	private boolean isBlank(String s) {
-		return s == null || s.trim().isEmpty();
-	}
+    /**
+     * Verifica si un string está vacío o es nulo.
+     * @param s cadena a evaluar
+     * @return true si está vacío o nulo, false en otro caso
+     */
+    private boolean isBlank(String s) {
+        return s == null || s.trim().isEmpty();
+    }
 
-	// Getters y Setters
-	public Integer getCodigo() {
-		return codigo;
-	}
+    // Getters y Setters
 
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
-	}
+    /** @return el código del libro */
+    public Integer getCodigo() {
+        return codigo;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    /** @param codigo el código a establecer */
+    public void setCodigo(Integer codigo) {
+        this.codigo = codigo;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    /** @return el nombre del libro */
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    /** @param nombre el nombre a establecer */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+    /** @return la descripción del libro */
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-	public byte[] getContenidoPdf() {
-		return contenidoPdf;
-	}
+    /** @param descripcion la descripción a establecer */
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-	public void setContenidoPdf(byte[] contenidoPdf) {
-		this.contenidoPdf = contenidoPdf;
-	}
+    /** @return el contenido binario del PDF */
+    public byte[] getContenidoPdf() {
+        return contenidoPdf;
+    }
 
-	public StreamedContent getPdfStream() {
-		return pdfStream;
-	}
+    /** @param contenidoPdf contenido binario a establecer */
+    public void setContenidoPdf(byte[] contenidoPdf) {
+        this.contenidoPdf = contenidoPdf;
+    }
 
-	public UploadedFile getPdfFile() {
-		return pdfFile;
-	}
+    /** @return el stream del PDF */
+    public StreamedContent getPdfStream() {
+        return pdfStream;
+    }
 
-	public void setPdfFile(UploadedFile pdfFile) {
-		this.pdfFile = pdfFile;
-	}
+    /** @return el archivo PDF subido */
+    public UploadedFile getPdfFile() {
+        return pdfFile;
+    }
+
+    /** @param pdfFile el archivo PDF a establecer */
+    public void setPdfFile(UploadedFile pdfFile) {
+        this.pdfFile = pdfFile;
+    }
 }

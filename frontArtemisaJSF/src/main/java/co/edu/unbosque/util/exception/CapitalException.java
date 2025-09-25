@@ -1,17 +1,16 @@
 package co.edu.unbosque.util.exception;
 
 /**
- * Clase la cual es publica para ser llamada dentro de otras clases
- * la cual es heredada de Exception
+ * Excepción personalizada que indica que una cadena debe contener al menos una letra mayúscula.
+ * Se utiliza para validar contraseñas u otros campos que requieran este requisito.
  */
 public class CapitalException extends Exception {
 
-	/**
-	 * Se crea un constructor el cual no recibe ningun tipo de parametro se llama el
-	 * super como constructor de la clase madre recibiendo un texto.
-	 */
-	public CapitalException() {
-		super("Debe contener una mayuscula.");
-
-	}
+    /**
+     * Crea una nueva instancia de CapitalException con un mensaje predeterminado.
+     * El mensaje indica que el texto debe contener una mayúscula.
+     */
+    public CapitalException() {
+        super("Debe contener una mayuscula.");
+    }
 }

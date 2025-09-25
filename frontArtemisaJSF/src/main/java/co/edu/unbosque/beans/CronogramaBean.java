@@ -20,6 +20,10 @@ import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleModel;
 
+/**
+ * Bean para la gestión de cronogramas (eventos), permite crear, listar y
+ * eliminar eventos, así como mostrarlos en un calendario usando PrimeFaces.
+ */
 @Named("cronogramaBean")
 @ViewScoped
 public class CronogramaBean implements Serializable {
@@ -29,11 +33,8 @@ public class CronogramaBean implements Serializable {
 	private String nombre;
 	private String link;
 	private LocalDate fecha;
-
 	private Long deleteId;
-
 	private List<FilaCronograma> filas = new ArrayList<>();
-
 	private ScheduleModel scheduleprime = new DefaultScheduleModel();
 
 	private static final String BASE_CREATE = "http://localhost:8081/cronograma/crear";
@@ -55,6 +56,9 @@ public class CronogramaBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Crea un nuevo evento en el cronograma.
+	 */
 	public void doCreate() {
 		try {
 			if (isBlank(nombre) || isBlank(link) || fecha == null) {
@@ -88,6 +92,9 @@ public class CronogramaBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Lista los eventos del cronograma y los muestra en el calendario.
+	 */
 	public void listar() {
 		filas.clear();
 		try {
@@ -128,6 +135,9 @@ public class CronogramaBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Elimina un evento por el id indicado en deleteId.
+	 */
 	public void eliminarById() {
 		if (deleteId == null || deleteId <= 0) {
 			show("406", "Ingresa un ID válido para eliminar.");
@@ -137,6 +147,11 @@ public class CronogramaBean implements Serializable {
 		deleteId = null;
 	}
 
+	/**
+	 * Elimina un evento por su ID.
+	 * 
+	 * @param id ID del evento a eliminar
+	 */
 	public void eliminar(Long id) {
 		if (id == null) {
 			show("406", "ID inválido para eliminar.");
@@ -160,6 +175,9 @@ public class CronogramaBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Reconstruye el modelo de calendario a partir de la lista de filas.
+	 */
 	private void rebuildCalModel() {
 		DefaultScheduleModel model = new DefaultScheduleModel();
 
@@ -183,12 +201,17 @@ public class CronogramaBean implements Serializable {
 		this.scheduleprime = model;
 	}
 
+	/**
+	 * Parsea una línea de texto y la convierte en una FilaCronograma.
+	 * 
+	 * @param line línea de texto (evento)
+	 * @return FilaCronograma
+	 */
 	private FilaCronograma parseLine(String line) {
 		if (isBlank(line))
 			return null;
 
 		Long id = longOrNull(findGroup(ID_P, line, 2));
-
 		String nombre = trimClean(findGroup(NOMBRE_P, line, 2));
 		String link = trimClean(findGroup(LINK_P, line, 2));
 
@@ -224,6 +247,12 @@ public class CronogramaBean implements Serializable {
 		return new FilaCronograma(id, nombre, link, fecha);
 	}
 
+	/**
+	 * Sanea el título mostrado en el calendario.
+	 * 
+	 * @param s título crudo
+	 * @return título procesado
+	 */
 	private String sanitizeTitle(String s) {
 		if (isBlank(s))
 			return "Evento";
@@ -261,6 +290,9 @@ public class CronogramaBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Muestra un mensaje JSF en la interfaz según el código.
+	 */
 	private void show(String code, String content) {
 		FacesMessage.Severity sev;
 		String summary;
@@ -282,6 +314,8 @@ public class CronogramaBean implements Serializable {
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(sev, summary, content));
 	}
+
+	/* Getters y Setters */
 
 	public String getNombre() {
 		return nombre;
@@ -327,6 +361,9 @@ public class CronogramaBean implements Serializable {
 		return scheduleprime;
 	}
 
+	/**
+	 * Clase interna para representar un evento/registro del cronograma.
+	 */
 	public static class FilaCronograma implements Serializable {
 		private Long id;
 		private String nombre;

@@ -7,17 +7,36 @@ import java.net.http.*;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
+/**
+ * Servicio encargado de gestionar problemas mediante peticiones HTTP al backend.
+ * Permite crear, mostrar y eliminar problemas mediante métodos estáticos.
+ */
 public class ProblemaService {
 
+    /** Cliente HTTP para gestionar las solicitudes. */
     private static final HttpClient HTTP = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_1_1)
             .connectTimeout(Duration.ofSeconds(6))
             .build();
 
+    /**
+     * Codifica un string para ser usado en una URL.
+     * @param s el string a codificar
+     * @return el string codificado en UTF-8
+     */
     private static String enc(String s) {
         return URLEncoder.encode(s == null ? "" : s, StandardCharsets.UTF_8);
     }
 
+    /**
+     * Construye el cuerpo del formulario para crear un problema.
+     * @param titulo título del problema
+     * @param dificultad dificultad del problema
+     * @param tema tema principal del problema
+     * @param juez juez asociado al problema
+     * @param link enlace al problema
+     * @return cuerpo del formulario codificado
+     */
     private static String formBody(String titulo, int dificultad, String tema, String juez, String link) {
         return "titulo=" + enc(titulo) +
                "&dificultad=" + dificultad +
@@ -26,6 +45,16 @@ public class ProblemaService {
                "&link=" + enc(link);
     }
 
+    /**
+     * Envía una solicitud para crear un nuevo problema.
+     * @param urlCrear URL para la creación del problema
+     * @param titulo título del problema
+     * @param dificultad dificultad del problema
+     * @param tema tema principal del problema
+     * @param juez juez asociado al problema
+     * @param link enlace al problema
+     * @return respuesta del servidor con el código de estado y el cuerpo
+     */
     public static String crear(String urlCrear, String titulo, int dificultad, String tema, String juez, String link) {
         String body = formBody(titulo, dificultad, tema, juez, link);
 
@@ -66,6 +95,11 @@ public class ProblemaService {
         }
     }
 
+    /**
+     * Solicita la lista de problemas en formato texto plano.
+     * @param baseRoot URL raíz del servicio
+     * @return respuesta del servidor con el código de estado y el cuerpo
+     */
     public static String mostrarTexto(String baseRoot) {
         try {
             HttpRequest req = HttpRequest.newBuilder()
@@ -88,6 +122,12 @@ public class ProblemaService {
         }
     }
 
+    /**
+     * Envía una solicitud para eliminar un problema por su ID.
+     * @param baseRoot URL raíz del servicio
+     * @param id identificador del problema a eliminar
+     * @return respuesta del servidor con el código de estado y el cuerpo
+     */
     public static String eliminar(String baseRoot, long id) {
         try {
             String url = baseRoot + "/problema/eliminar?id=" + id;

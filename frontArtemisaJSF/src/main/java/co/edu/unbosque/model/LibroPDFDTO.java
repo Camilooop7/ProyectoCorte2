@@ -3,92 +3,161 @@ package co.edu.unbosque.model;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Representa un libro en formato PDF con sus datos principales y el contenido binario.
+ * Utilizado para transferir información sobre libros PDF entre diferentes capas del sistema.
+ */
 public class LibroPDFDTO {
-	private int codigo;
-	private Long id;
-	private String nombre;
-	private String descripcion;
-	private byte[] contenidoPdf;
+    /** Código identificador del libro. */
+    private int codigo;
 
-	public LibroPDFDTO() {
-	}
+    /** Identificador único del libro. */
+    private Long id;
 
-	public LibroPDFDTO(int codigo, Long id, String nombre, String descripcion, byte[] contenidoPdf) {
-		super();
-		this.codigo = codigo;
-		this.id = id;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.contenidoPdf = contenidoPdf;
-	}
+    /** Nombre del libro. */
+    private String nombre;
 
-	public int getCodigo() {
-		return codigo;
-	}
+    /** Descripción del libro. */
+    private String descripcion;
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
+    /** Contenido binario del archivo PDF. */
+    private byte[] contenidoPdf;
 
-	public Long getId() {
-		return id;
-	}
+    /**
+     * Constructor vacío para la creación de instancias por defecto.
+     */
+    public LibroPDFDTO() {
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * Constructor que inicializa todos los campos del libro PDF.
+     * 
+     * @param codigo código identificador del libro
+     * @param id identificador único del libro
+     * @param nombre nombre del libro
+     * @param descripcion descripción del libro
+     * @param contenidoPdf contenido binario del archivo PDF
+     */
+    public LibroPDFDTO(int codigo, Long id, String nombre, String descripcion, byte[] contenidoPdf) {
+        super();
+        this.codigo = codigo;
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.contenidoPdf = contenidoPdf;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    /**
+     * Obtiene el código identificador del libro.
+     * @return el código del libro
+     */
+    public int getCodigo() {
+        return codigo;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    /**
+     * Establece el código identificador del libro.
+     * @param codigo el código a establecer
+     */
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    /**
+     * Obtiene el identificador único del libro.
+     * @return el id del libro
+     */
+    public Long getId() {
+        return id;
+    }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+    /**
+     * Establece el identificador único del libro.
+     * @param id el id a establecer
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public byte[] getContenidoPdf() {
-		return contenidoPdf;
-	}
+    /**
+     * Obtiene el nombre del libro.
+     * @return el nombre del libro
+     */
+    public String getNombre() {
+        return nombre;
+    }
 
-	public void setContenidoPdf(byte[] contenidoPdf) {
-		this.contenidoPdf = contenidoPdf;
-	}
+    /**
+     * Establece el nombre del libro.
+     * @param nombre el nombre a establecer
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(contenidoPdf);
-		result = prime * result + Objects.hash(codigo, descripcion, id, nombre);
-		return result;
-	}
+    /**
+     * Obtiene la descripción del libro.
+     * @return la descripción del libro
+     */
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LibroPDFDTO other = (LibroPDFDTO) obj;
-		return codigo == other.codigo && Arrays.equals(contenidoPdf, other.contenidoPdf)
-				&& Objects.equals(descripcion, other.descripcion) && Objects.equals(id, other.id)
-				&& Objects.equals(nombre, other.nombre);
-	}
+    /**
+     * Establece la descripción del libro.
+     * @param descripcion la descripción a establecer
+     */
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-	@Override
-	public String toString() {
-		return "LibroPDFDTO [codigo=" + codigo + ", id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion
-				+ ", contenidoPdf=" + Arrays.toString(contenidoPdf) + "]";
-	}
+    /**
+     * Obtiene el contenido binario del archivo PDF.
+     * @return el contenido PDF como arreglo de bytes
+     */
+    public byte[] getContenidoPdf() {
+        return contenidoPdf;
+    }
+
+    /**
+     * Establece el contenido binario del archivo PDF.
+     * @param contenidoPdf el contenido PDF como arreglo de bytes
+     */
+    public void setContenidoPdf(byte[] contenidoPdf) {
+        this.contenidoPdf = contenidoPdf;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(contenidoPdf);
+        result = prime * result + Objects.hash(codigo, descripcion, id, nombre);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        LibroPDFDTO other = (LibroPDFDTO) obj;
+        return codigo == other.codigo && Arrays.equals(contenidoPdf, other.contenidoPdf)
+                && Objects.equals(descripcion, other.descripcion) && Objects.equals(id, other.id)
+                && Objects.equals(nombre, other.nombre);
+    }
+
+    /**
+     * Devuelve una representación en cadena del objeto LibroPDFDTO.
+     * @return una cadena con la información del libro PDF
+     */
+    @Override
+    public String toString() {
+        return "LibroPDFDTO [codigo=" + codigo + ", id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion
+                + ", contenidoPdf=" + Arrays.toString(contenidoPdf) + "]";
+    }
 
 }
