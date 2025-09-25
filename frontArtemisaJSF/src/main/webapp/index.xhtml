@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/templates/template.xhtml">
+<ui:composition  template="/templates/template.xhtml" >
     <ui:define name="contenido">
         <h:body>
          <h:panelGroup rendered="#{auth.loggedIn}" styleClass="alert alert-success">
@@ -22,15 +22,14 @@
                 <h:form id="loginForm" prependId="false">
                     <p:messages id="msgs" showDetail="true" closable="true" style="margin-bottom:1rem;" />
                     <div class="mb-3">
-                        <p:inputText id="user" value="#{userBean.username}"
-                            placeholder="Correo / Usuario"
-                            styleClass="pwfield"
-                            required="true"
-                            requiredMessage="El correo es obligatorio"
-                            validatorMessage="Correo inválido">
-                            <f:validateRegex pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" />
-                        </p:inputText>
-                    </div>
+    <p:inputText id="user" value="#{userBean.username}"
+        placeholder="Correo / Usuario"
+        required="true"
+        requiredMessage="El correo es obligatorio"
+        validatorMessage="Correo inválido">
+        <f:validateRegex pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$" />
+    </p:inputText>
+</div>
                     <div class="mb-3 pw-wrapper">
                         <p:password id="pass" value="#{userBean.password}"
                             placeholder="Contraseña"
