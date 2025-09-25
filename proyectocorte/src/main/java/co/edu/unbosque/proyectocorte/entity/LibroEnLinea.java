@@ -1,38 +1,72 @@
 package co.edu.unbosque.proyectocorte.entity;
 
 import java.util.Objects;
-
 import jakarta.persistence.Entity;
 
+/**
+ * Entidad que representa un libro en línea en el sistema. Hereda de
+ * {@link Libro}.
+ */
 @Entity
-
 public class LibroEnLinea extends Libro {
 
+	/** Enlace del libro en línea. */
 	private String link;
 
+	/**
+	 * Constructor por defecto.
+	 */
 	public LibroEnLinea() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Constructor con enlace.
+	 *
+	 * @param link Enlace del libro en línea.
+	 */
 	public LibroEnLinea(String link) {
 		super();
 		this.link = link;
 	}
 
+	/**
+	 * Constructor completo.
+	 *
+	 * @param codigo      Código del libro.
+	 * @param nombre      Nombre del libro.
+	 * @param descripcion Descripción del libro.
+	 * @param link        Enlace del libro.
+	 */
 	public LibroEnLinea(int codigo, String nombre, String descripcion, String link) {
 		super(codigo, nombre, descripcion);
 		this.link = link;
 	}
 
+	/**
+	 * Constructor sin enlace.
+	 *
+	 * @param codigo      Código del libro.
+	 * @param nombre      Nombre del libro.
+	 * @param descripcion Descripción del libro.
+	 */
 	public LibroEnLinea(int codigo, String nombre, String descripcion) {
 		super(codigo, nombre, descripcion);
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Obtiene el enlace del libro en línea.
+	 *
+	 * @return Enlace del libro en línea.
+	 */
 	public String getLink() {
 		return link;
 	}
 
+	/**
+	 * Establece el enlace del libro en línea.
+	 *
+	 * @param link Enlace del libro en línea.
+	 */
 	public void setLink(String link) {
 		this.link = link;
 	}
@@ -59,7 +93,6 @@ public class LibroEnLinea extends Libro {
 
 	@Override
 	public String toString() {
-		return super.toString() + "LibroEnLinea [link=" + link + "]";
+		return super.toString() + " LibroEnLinea [link=" + link + "]";
 	}
-
 }

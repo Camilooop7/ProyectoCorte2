@@ -20,51 +20,48 @@ import co.edu.unbosque.proyectocorte.exception.SymbolException;
 import co.edu.unbosque.proyectocorte.exception.TextException;
 import co.edu.unbosque.proyectocorte.repository.EstudianteRepository;
 
+/**
+ * Servicio para gestionar las operaciones CRUD de la entidad
+ * {@link Estudiante}.
+ */
 @Service
 public class EstudianteService implements CRUDOperation<EstudianteDTO> {
+
 	@Autowired
 	private EstudianteRepository estudianteRepository;
+
 	@Autowired
 	private ModelMapper modelMapper;
 
+	/**
+	 * Crea un nuevo estudiante.
+	 *
+	 * @param date DTO que contiene los datos del estudiante a crear.
+	 * @return 0 si la creación fue exitosa, 1 en caso de error.
+	 */
 	@Override
 	public int create(EstudianteDTO date) {
-	
-			try {
-				ExceptionCheker.checkerText(date.getNombre());
-				ExceptionCheker.checkerText(date.getCarrera());
-				ExceptionCheker.checkerNegativeNumber(date.getDocumento());
-				ExceptionCheker.checkerNegativeNumber(date.getSemestre());
-				ExceptionCheker.checkerPasword(date.getContrasena());
-				ExceptionCheker.checkerMail(date.getCorreo());
-				Estudiante entity = modelMapper.map(date, Estudiante.class);
-				estudianteRepository.save(entity);
-				return 0;
-			} catch (TextException e) {
-				// TODO Auto-generated catch block
-			} catch (NegativeNumberException e) {
-				// TODO Auto-generated catch block
-			} catch (CapitalException e) {
-				// TODO Auto-generated catch block
-			} catch (CharacterException e) {
-				// TODO Auto-generated catch block
-			} catch (NumberException e) {
-				// TODO Auto-generated catch block
-			} catch (SymbolException e) {
-				// TODO Auto-generated catch block
-			} catch (SmallException e) {
-				// TODO Auto-generated catch block
-			} catch (InputMismatchException e) {
-				// TODO Auto-generated catch block
-			} catch (MailException e) {
-				// TODO Auto-generated catch block
-			}
-		
-		 
+		try {
+			ExceptionCheker.checkerText(date.getNombre());
+			ExceptionCheker.checkerText(date.getCarrera());
+			ExceptionCheker.checkerNegativeNumber(date.getDocumento());
+			ExceptionCheker.checkerNegativeNumber(date.getSemestre());
+			ExceptionCheker.checkerPasword(date.getContrasena());
+			ExceptionCheker.checkerMail(date.getCorreo());
+			Estudiante entity = modelMapper.map(date, Estudiante.class);
+			estudianteRepository.save(entity);
+			return 0;
+		} catch (TextException | NegativeNumberException | CapitalException | CharacterException | NumberException
+				| SymbolException | SmallException | InputMismatchException | MailException e) {
 			return 1;
 		}
-	
+	}
 
+	/**
+	 * Obtiene todos los estudiantes.
+	 *
+	 * @return Lista de DTOs de estudiantes.
+	 */
 	@Override
 	public List<EstudianteDTO> getAll() {
 		List<Estudiante> entityList = estudianteRepository.findAll();
@@ -76,6 +73,12 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 		return dtoList;
 	}
 
+	/**
+	 * Elimina un estudiante por su ID.
+	 *
+	 * @param a ID del estudiante a eliminar.
+	 * @return 0 si la eliminación fue exitosa, 1 en caso de error.
+	 */
 	@Override
 	public int deleteById(Long a) {
 		if (estudianteRepository.existsById(a)) {
@@ -85,6 +88,13 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 		return 1;
 	}
 
+	/**
+	 * Actualiza un estudiante por su ID.
+	 *
+	 * @param a    ID del estudiante a actualizar.
+	 * @param date DTO con los nuevos datos del estudiante.
+	 * @return 0 si la actualización fue exitosa, 1 en caso de error.
+	 */
 	@Override
 	public int updateById(Long a, EstudianteDTO date) {
 		Optional<Estudiante> opt = estudianteRepository.findById(a);
@@ -102,11 +112,23 @@ public class EstudianteService implements CRUDOperation<EstudianteDTO> {
 		return 1;
 	}
 
+	/**
+	 * Cuenta el número total de estudiantes.
+	 *
+	 * @return Número total de estudiantes.
+	 */
 	@Override
 	public Long count() {
 		return (long) getAll().size();
 	}
 
+	/**
+	 * Verifica si existe un estudiante con el ID proporcionado.
+	 *
+	 * @param a ID del estudiante a verificar.
+	 * @return {@code true} si el estudiante existe, {@code false} en caso
+	 *         contrario.
+	 */
 	@Override
 	public boolean exist(Long a) {
 		return estudianteRepository.existsById(a);

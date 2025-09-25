@@ -4,34 +4,71 @@ import java.util.Arrays;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
 
+/**
+ * Entidad que representa un libro en formato PDF en el sistema. Hereda de
+ * {@link Libro}.
+ */
 @Entity
 public class LibroPDF extends Libro {
 
+	/** Contenido del PDF en bytes. */
 	@Lob
 	private byte[] contenidoPdf;
 
+	/**
+	 * Constructor por defecto.
+	 */
 	public LibroPDF() {
 	}
 
+	/**
+	 * Constructor con contenido PDF.
+	 *
+	 * @param contenidoPdf Contenido del PDF en bytes.
+	 */
 	public LibroPDF(byte[] contenidoPdf) {
 		super();
 		this.contenidoPdf = contenidoPdf;
 	}
 
+	/**
+	 * Constructor completo.
+	 *
+	 * @param codigo       Código del libro.
+	 * @param nombre       Nombre del libro.
+	 * @param descripcion  Descripción del libro.
+	 * @param contenidoPdf Contenido del PDF en bytes.
+	 */
 	public LibroPDF(int codigo, String nombre, String descripcion, byte[] contenidoPdf) {
 		super(codigo, nombre, descripcion);
 		this.contenidoPdf = contenidoPdf;
 	}
 
+	/**
+	 * Constructor sin contenido PDF.
+	 *
+	 * @param codigo      Código del libro.
+	 * @param nombre      Nombre del libro.
+	 * @param descripcion Descripción del libro.
+	 */
 	public LibroPDF(int codigo, String nombre, String descripcion) {
 		super(codigo, nombre, descripcion);
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Obtiene el contenido del PDF en bytes.
+	 *
+	 * @return Contenido del PDF en bytes.
+	 */
 	public byte[] getContenidoPdf() {
 		return contenidoPdf;
 	}
 
+	/**
+	 * Establece el contenido del PDF en bytes.
+	 *
+	 * @param contenidoPdf Contenido del PDF en bytes.
+	 */
 	public void setContenidoPdf(byte[] contenidoPdf) {
 		this.contenidoPdf = contenidoPdf;
 	}
@@ -58,7 +95,6 @@ public class LibroPDF extends Libro {
 
 	@Override
 	public String toString() {
-		return super.toString() + "LibroPDF [contenidoPdf=" + Arrays.toString(contenidoPdf) + "]";
+		return super.toString() + " LibroPDF [contenidoPdf=" + Arrays.toString(contenidoPdf) + "]";
 	}
-
 }

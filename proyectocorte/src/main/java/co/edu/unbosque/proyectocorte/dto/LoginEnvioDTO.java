@@ -2,32 +2,64 @@ package co.edu.unbosque.proyectocorte.dto;
 
 import java.util.Objects;
 
+/**
+ * DTO para representar la solicitud de inicio de sesión.
+ */
 public class LoginEnvioDTO {
+
 	private String correo;
 	private String contrasena;
 
+	/**
+	 * Constructor por defecto.
+	 */
 	public LoginEnvioDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Constructor completo.
+	 *
+	 * @param correo     Correo electrónico del usuario.
+	 * @param contrasena Contraseña del usuario.
+	 */
 	public LoginEnvioDTO(String correo, String contrasena) {
 		super();
 		this.correo = correo;
 		this.contrasena = contrasena;
 	}
 
+	/**
+	 * Obtiene el correo electrónico del usuario.
+	 *
+	 * @return Correo electrónico del usuario.
+	 */
 	public String getCorreo() {
 		return correo;
 	}
 
+	/**
+	 * Establece el correo electrónico del usuario.
+	 *
+	 * @param correo Correo electrónico del usuario.
+	 */
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
 
+	/**
+	 * Obtiene la contraseña del usuario.
+	 *
+	 * @return Contraseña del usuario.
+	 */
 	public String getContrasena() {
 		return contrasena;
 	}
 
+	/**
+	 * Establece la contraseña del usuario.
+	 *
+	 * @param contrasena Contraseña del usuario.
+	 */
 	public void setContrasena(String contrasena) {
 		this.contrasena = contrasena;
 	}
@@ -53,5 +85,4 @@ public class LoginEnvioDTO {
 		LoginEnvioDTO other = (LoginEnvioDTO) obj;
 		return Objects.equals(contrasena, other.contrasena) && Objects.equals(correo, other.correo);
 	}
-
 }
