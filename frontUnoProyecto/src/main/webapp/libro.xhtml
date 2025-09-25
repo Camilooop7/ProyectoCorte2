@@ -7,7 +7,6 @@
       xmlns:p="http://primefaces.org/ui"
       data-bs-theme="light">
 
-<!-- Mantengo preRenderView para cargar tablas al abrir la página -->
 <f:metadata>
     <f:event type="preRenderView" listener="#{libroPDFBean.cargarLibrosPDF}" />
     <f:event type="preRenderView" listener="#{libroEnLineaBean.cargarLibrosOnline}" />
@@ -36,7 +35,6 @@
 
         .theme-fab{position:fixed;right:16px;top:80px;z-index:3000;border-radius:999px;padding:10px 14px;box-shadow:0 8px 20px rgba(0,0,0,.15);}
 
-        /* Compactar tablas y separar tarjetas */
         .card-compact { margin-bottom: 1rem; }
         .p-datatable .p-datatable-tbody > tr > td,
         .p-datatable .p-datatable-thead > tr > th {
@@ -45,7 +43,6 @@
         }
         .p-datatable .p-paginator { padding: .25rem .5rem; }
 
-        /* Hacer que las tablas se vean más pequeñas en desktop */
         .table-wrap { max-width: 560px; }
         @media (max-width: 1199.98px){
             .table-wrap { max-width: 100%; }
@@ -57,9 +54,11 @@
 
 <h:body>
 
+    <p:growl id="msgs" showDetail="true" life="5000" />
+
     <div class="main-container">
         <div class="aside">
-            <div class="logo"><a href="#"><span>A</span>rtemisa <br></br> <span>UEB</span></a></div>
+            <div class="logo"><a href="#"><span>A</span>rtemisa <br/> <span>UEB</span></a></div>
             <div class="nav-toggler"><span></span></div>
             <ul class="nav">
                 <li><a href="menu.xhtml" class="active"><i class="fa fa-home"></i>Home</a></li>
@@ -98,9 +97,8 @@
                         <div class="title">Obteniendo archivos...</div>
                     </div>
 
-                    <br></br><br></br>
+                    <br/><br/>
 
-                    <!-- Acciones rápidas -->
                     <div class="containercard">
                         <div class="cardib">
                             <span class="card__title">Descargar PDF</span>
@@ -108,7 +106,10 @@
                                 <p:inputText id="codigoDescarga" value="#{libroPDFBean.codigo}" placeholder="ID del libro" styleClass="card__input" />
                                 <p:commandButton value="Descargar PDF"
                                                  action="#{libroPDFBean.obtenerInformacionLibro()}"
-                                                 styleClass="card__button" ajax="false" />
+                                                 styleClass="card__button"
+                                                 ajax="false"
+                                                 process="@form"
+                                                 update="@none" />
                             </h:form>
                         </div>
 
@@ -128,7 +129,6 @@
                             <span class="card__title">Libro en línea</span>
                             <h:form styleClass="card__form" id="formAbrirOnline">
                                 <p:inputText id="codigoOpenOnline" value="#{libroEnLineaBean.codigo}" placeholder="ID del libro" styleClass="card__input" />
-                                <!-- AJAX para que executeScript en el bean se ejecute -->
                                 <p:commandButton value="Abrir Libro"
                                                  action="#{libroEnLineaBean.obtenerInformacionLibro}"
                                                  styleClass="card__button"
@@ -164,7 +164,7 @@
                     <div class="container mt-4">
                         <div class="card p-3 shadow-sm" rendered="#{auth.admin or auth.profesor}">
                             <h5 class="mb-3"><i class="bi bi-file-earmark-plus me-2"></i>Crear Libro PDF</h5>
-                            <h:form id="formCrearPDF" enctype="multipart/form-data"   rendered="#{auth.admin or auth.profesor}">
+                            <h:form id="formCrearPDF" enctype="multipart/form-data" rendered="#{auth.admin or auth.profesor}">
                                 <div class="row g-2">
                                     <div class="col-12 col-md-3">
                                         <p:inputText id="codigoCrearPDF" value="#{libroPDFBean.codigo}" placeholder="Código" />
@@ -195,41 +195,39 @@
                     </div>
 
                     <div class="container mt-4">
-                      <div class="row g-4">
-                        <div class="col-12 col-xl-6">
-                          <div class="card p-3 shadow-sm card-compact table-wrap">
-                            <h5 class="mb-3"><i class="bi bi-filetype-pdf me-2"></i>Libros PDF</h5>
-                            <h:form id="formTablaPDF">
-                              <div class="d-flex gap-2 mb-2">
-                                <p:commandButton value="Recargar"
-                                                 actionListener="#{libroPDFBean.cargarLibrosPDF}"
-                                                 update="tablaPDF"
-                                                 icon="bi bi-arrow-repeat" styleClass="btn btn-primary btn-sm"/>
-                              </div>
-                              <p:dataTable id="tablaPDF"
-                                           value="#{libroPDFBean.librosPDF}"
-                                           var="row"
-                                           paginator="true" rows="5"
-                                           scrollable="true" scrollHeight="260"
-                                           emptyMessage="No hay libros PDF cargados."
-                                           styleClass="table table-sm table-striped">
-                                <p:column headerText="Código" style="width:90px">
-                                  <h:outputText value="#{row.codigo}"/>
-                                </p:column>
-                                <p:column headerText="Nombre">
-                                  <h:outputText value="#{row.nombre}"/>
-                                </p:column>
-                                <p:column headerText="Descripción">
-                                  <h:outputText value="#{row.descripcion}"/>
-                                </p:column>
-                             
-                              </p:dataTable>
-                            </h:form>
-                          </div>
+                        <div class="row g-4">
+                            <div class="col-12 col-xl-6">
+                                <div class="card p-3 shadow-sm card-compact table-wrap">
+                                    <h5 class="mb-3"><i class="bi bi-filetype-pdf me-2"></i>Libros PDF</h5>
+                                    <h:form id="formTablaPDF">
+                                        <div class="d-flex gap-2 mb-2">
+                                            <p:commandButton value="Recargar"
+                                                             actionListener="#{libroPDFBean.cargarLibrosPDF}"
+                                                             update="tablaPDF"
+                                                             icon="bi bi-arrow-repeat" styleClass="btn btn-primary btn-sm"/>
+                                        </div>
+                                        <p:dataTable id="tablaPDF"
+                                                     value="#{libroPDFBean.librosPDF}"
+                                                     var="row"
+                                                     paginator="true" rows="5"
+                                                     scrollable="true" scrollHeight="260"
+                                                     emptyMessage="No hay libros PDF cargados."
+                                                     styleClass="table table-sm table-striped">
+                                            <p:column headerText="Código" style="width:90px">
+                                                <h:outputText value="#{row.codigo}"/>
+                                            </p:column>
+                                            <p:column headerText="Nombre">
+                                                <h:outputText value="#{row.nombre}"/>
+                                            </p:column>
+                                            <p:column headerText="Descripción">
+                                                <h:outputText value="#{row.descripcion}"/>
+                                            </p:column>
+                                     
+                                        </p:dataTable>
+                                    </h:form>
+                                </div>
+                            </div>
                         </div>
-
-                
-                      </div>
                     </div>
 
                 </div>

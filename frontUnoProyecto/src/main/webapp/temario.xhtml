@@ -111,6 +111,41 @@
                         <p:commandButton value="Programación Dinámica" type="button" onclick="PF('dlgPD').show();" styleClass="btn-effect-2" />
                       </div>
                     </p:tab>
+                    <p:tab title="Matematicas GCD/LCM">
+										<p class="m-0">El máximo común divisor (MCD o GCD)</p>
+										<div class="btn-container">
+											<p:commandButton value="Matematicas GCD/LCM" type="button"
+												onclick="PF('dlgPD').show();" styleClass="btn-effect-2" />
+										</div>
+									</p:tab>
+									
+									
+									<p:tab title="Lectura desde archivos">
+										<p class="m-0">Cada lenguaje tiene diferentes funciones que permiten realizar lectura desde archivos</p>
+										<div class="btn-container">
+											<p:commandButton value="Lectura desde archivos" type="button"
+												onclick="PF('dlgPD').show();" styleClass="btn-effect-2" />
+										</div>
+									</p:tab>
+									
+									
+									<p:tab title="Numeros Aleatorios">
+										<p class="m-0">Generar numeros aleatorios atravez de la siguiente base de codigo</p>
+										<div class="btn-container">
+											<p:commandButton value="Numeros Aleatorios" type="button"
+												onclick="PF('dlgPD').show();" styleClass="btn-effect-2" />
+										</div>
+									</p:tab>
+									
+									
+									
+									<p:tab title="BFS (Depth First Search)">
+										<p class="m-0">Grafos en busqueda de profundidad.</p>
+										<div class="btn-container">
+											<p:commandButton value="BFS (Depth First Search)" type="button"
+												onclick="PF('dlgPD').show();" styleClass="btn-effect-2" />
+										</div>
+									</p:tab>
                   </p:accordionPanel>
                 </div>
                 <p:dialog header="Teoria Básica" widgetVar="dlgTeoria" modal="false" closable="true" resizable="false" width="1000" height="500" style="overflow:auto;">
@@ -147,6 +182,87 @@
                   <p>La programación dinámica es una técnica para resolver problemas complejos dividiéndolos en subproblemas más sencillos y almacenando soluciones para reutilizarlas eficientemente.</p>
                   <a href="https://www.geeksforgeeks.org/competitive-programming/dynamic-programming/" class="be" target="_blank" rel="noopener noreferrer"> Click me </a>
                 </p:dialog>
+                
+                <p:dialog header="Matematicas GCD/LCM" widgetVar="dlgPD"
+								modal="false" closable="true" resizable="false" width="1000"
+								height="300" style="overflow:auto;">
+
+								<p>El máximo común divisor (MCD o GCD) de dos o más números 
+								naturales o enteros (no números con decimales) 
+								es el número más grande que les divide.
+								El mínimo común múltiplo (MCM o LCM) de dos números a y b es el número más 
+								pequeño que es múltiplo de a y múltiplo de b..</p>
+
+								<a
+									href="https://www.geeksforgeeks.org/java/java-program-to-compute-gcd/"
+									class="be" target="_blank" rel="noopener noreferrer"> Click
+									me </a>
+									
+									
+								<a
+									href="https://www.geeksforgeeks.org/java/java-program-to-find-lcm-of-two-numbers/"
+									class="be" target="_blank" rel="noopener noreferrer"> Click
+									me </a>
+
+							</p:dialog>
+							
+							
+							
+							<p:dialog header="Lectura desde archivos" widgetVar="dlgPD"
+								modal="false" closable="true" resizable="false" width="1000"
+								height="300" style="overflow:auto;">
+
+								<p>Cada lenguaje tiene diferentes funciones que permiten realizar esto, 
+								aquí les presentamos varios ejemplos en los tres lenguajes, necesitaremos 
+								primero crear los siguientes archivos de texto en la misma carpeta en la 
+								que se encuentre el proyecto (Puede variar).</p>
+
+								<a
+									href="https://www.w3schools.com/java/java_files_read.asp"
+									class="be" target="_blank" rel="noopener noreferrer"> Click
+									me </a>
+
+							</p:dialog>
+							
+							
+							<p:dialog header="Numeros Aleatorios" widgetVar="dlgPD"
+								modal="false" closable="true" resizable="false" width="1000"
+								height="300" style="overflow:auto;">
+
+								<p>Los números aleatorios se utilizan ampliamente en programación para simulaciones, 
+								juegos, seguridad, etc. Existen múltiples maneras de generar números aleatorios
+								 mediante métodos y clases integrados en Java. Los enfoques más comunes se 
+								 enumeran a continuación:</p>
+
+								<a
+									href="https://www.geeksforgeeks.org/java/generating-random-numbers-in-java/"
+									class="be" target="_blank" rel="noopener noreferrer"> Click
+									me </a>
+
+							</p:dialog>
+							
+							
+							
+							
+							<p:dialog header="BFS (Depth First Search)" widgetVar="dlgPD"
+								modal="false" closable="true" resizable="false" width="1000"
+								height="300" style="overflow:auto;">
+
+								<p>Búsqueda en anchura (en inglés BFS - Breadth First Search) es 
+								un algoritmo de búsqueda no informada utilizado para recorrer o 
+								buscar elementos en un grafo (usado frecuentemente sobre árboles). 
+								Intuitivamente, se comienza en la raíz (eligiendo algún nodo como 
+								elemento raíz en el caso de un grafo) y se exploran todos los vecinos 
+								de este nodo. A continuación para cada uno de los vecinos se exploran 
+								sus respectivos vecinos adyacentes, y así hasta que se recorra todo el árbol.</p>
+
+								<a
+									href="https://www.geeksforgeeks.org/dsa/breadth-first-search-or-bfs-for-a-graph/"
+									class="be" target="_blank" rel="noopener noreferrer"> Click
+									me </a>
+
+							</p:dialog>
+                
               </h:form>
               <br/><br/><br/>
             </div>
