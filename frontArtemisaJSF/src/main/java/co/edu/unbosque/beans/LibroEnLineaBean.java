@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import org.primefaces.PrimeFaces;
 
 import co.edu.unbosque.service.LibroEnLineaService;
-import co.edu.unbosque.service.LibroPDFService;
 
 @Named("libroEnLineaBean")
 @RequestScoped

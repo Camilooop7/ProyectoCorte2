@@ -70,7 +70,8 @@
 						<f:facet name="header">Acciones</f:facet>
 						<h:commandButton value="Eliminar"
 							action="#{problemaBean.eliminar(problema.id)}"
-							styleClass="btn btn-sm btn-danger" />
+							styleClass="btn btn-sm btn-danger" 
+							rendered="#{auth.admin or auth.profesor}"/>
 					</h:column>
 				</h:dataTable>
 			</div>
@@ -81,7 +82,7 @@
 		<section class="cards">
 		<div class="card">
 			<h3>Crear Nuevo Problema</h3>
-			<h:form>
+			<h:form rendered="#{auth.admin or auth.profesor}">
 				<div class="form-group">
 					<h:outputLabel for="titulo" value="Título:" />
 					<h:inputText id="titulo" value="#{problemaBean.titulo}"
@@ -105,13 +106,15 @@
 					<h:inputText id="link" value="#{problemaBean.link}" required="true" />
 				</div>
 				<h:commandButton value="Crear Problema"
-					action="#{problemaBean.crear}" styleClass="btn btn-sm" />
+					action="#{problemaBean.crear}" styleClass="btn btn-sm" 
+					rendered="#{auth.admin or auth.profesor}"/>
+					
 			</h:form>
 		</div>
 		<!-- Formulario para eliminar por ID -->
 		<div class="card">
 			<h3>Eliminar Problema por ID</h3>
-			<h:form>
+			<h:form rendered="#{auth.admin or auth.profesor}">
 				<div class="form-group">
 					<h:outputLabel for="deleteId" value="ID del Problema:" />
 					<h:inputText id="deleteId" value="#{problemaBean.deleteId}"

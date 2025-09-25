@@ -94,11 +94,11 @@
 								<p:commandButton value="Descargar PDF" action="#{libroPDFBean.obtenerInformacionLibro()}" styleClass="card__button" ajax="false" />
 							</h:form>
 						</div>
-						<div class="cardib">
+						<div class="cardib" >
+							<h:form styleClass="card__form" rendered="#{auth.admin or auth.profesor}">
 							<span class="card__title">Eliminar Libro PDF</span>
-							<h:form styleClass="card__form">
 								<p:inputText id="codigo" value="#{libroPDFBean.codigo}" placeholder="Ingresa el ID del libro" required="true" requiredMessage="El ID es obligatorio" styleClass="card__input" />
-								<p:commandButton value="Eliminar Libro PDF" action="#{libroPDFBean.eliminarLibro()}" styleClass="card__button" ajax="false" />
+								<p:commandButton  value="Eliminar Libro PDF" action="#{libroPDFBean.eliminarLibro()}" styleClass="card__button" ajax="false" />
 							</h:form>
 						</div>
 					</div>
@@ -111,15 +111,15 @@
 							</h:form>
 						</div>
 						<div class="cardib">
+							<h:form styleClass="card__form" rendered="#{auth.admin or auth.profesor}">
 							<span class="card__title">Eliminar Libro en linea</span>
-							<h:form styleClass="card__form">
 								<p:inputText id="codigo" value="#{libroEnLineaBean.codigo}" placeholder="Ingresa el ID del libro" required="true" requiredMessage="El ID es obligatorio" styleClass="card__input" />
 								<p:commandButton value="Eliminar Libro en linea" action="#{libroEnLineaBean.eliminarLibro()}" styleClass="card__button" ajax="false" />
 							</h:form>
 						</div>
 						<div class="cardib">
+							<h:form styleClass="card__form" rendered="#{auth.admin or auth.profesor}">
 							<span class="card__title">Crear Libro</span>
-							<h:form styleClass="card__form">
 								<p:growl id="messages" showDetail="true" />
 								<p:panel id="cropperPanel" />
 								<p:inputText id="nombreEnLinea" value="#{libroEnLineaBean.nombre}" placeholder="Ingresa el nombre del libro" required="true" requiredMessage="El nombre es obligatorio" styleClass="card__input" />

@@ -29,17 +29,13 @@
 		</div>
 		</section>
 
-		<!-- Contenedor Principal -->
 		<section class="container-fluid animate__animated animate__fadeInUp"
 			style="padding: 20px;">
 		<div class="row justify-content-center">
 			<div class="col-12">
-				<!-- Formulario Principal -->
-				<h:form id="crudForm">
-					<!-- Mensajes de Feedback -->
+				<h:form id="crudForm" >
 					<p:growl id="msgs" showDetail="true" life="5000" autoUpdate="true" />
 
-					<!-- Panel para Crear Eventos -->
 					<div class="card mb-4" style="width: 100%;">
 						<div class="card-header bg-primary text-white">
 							<h5 class="mb-0">Crear Nuevo Evento</h5>
@@ -74,7 +70,8 @@
 									action="#{cronogramaBean.doCreate}"
 									process="nombre link fecha @this"
 									update=":crudForm:msgs :crudForm:calendarioPanel"
-									icon="pi pi-check" styleClass="ui-button-success" />
+									icon="pi pi-check" styleClass="ui-button-success"
+									rendered="#{auth.admin or auth.profesor}" />
 
 								<p:commandButton value="Listar Eventos"
 									action="#{cronogramaBean.listar}" process="@this"
@@ -83,12 +80,12 @@
 
 								<p:commandButton value="Eliminar por ID" type="button"
 									icon="pi pi-trash" styleClass="ui-button-danger"
-									onclick="PF('delDlg').show()" />
+									onclick="PF('delDlg').show()" 
+									rendered="#{auth.admin or auth.profesor}"/>
 							</div>
 						</div>
 					</div>
 
-					<!-- Panel para Mostrar el Calendario -->
 					<div class="card" style="width: 100%; margin-bottom: 2rem;">
 						<div class="card-header bg-primary text-white">
 							<h5 class="mb-0">Calendario de Eventos</h5>
@@ -106,7 +103,6 @@
 					</div>
 				</h:form>
 
-				<!-- Diálogo para Eliminar Eventos por ID -->
 				<p:dialog header="Eliminar Evento por ID" widgetVar="delDlg"
 					modal="true" width="500" height="250" resizable="false">
 					<h:form id="delForm">
