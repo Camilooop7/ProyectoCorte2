@@ -1,392 +1,317 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      data-bs-theme="light">
 
 <h:head>
-	<meta charset="UTF-8" />
-	<title>artemisa</title>
+  <meta charset="UTF-8" />
+  <title>artemisa</title>
 
-	<link rel="icon"
-		href="https://cdn-icons-png.flaticon.com/512/5520/5520840.png" />
-	<link
-		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-		rel="stylesheet" />
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-		crossorigin="anonymous"></script>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5520/5520840.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
-	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
-		rel='stylesheet' />
-	<link
-		href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
-		rel="stylesheet" />
-	<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-	<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" />
-	<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
-	<link rel="stylesheet" href="css/stylelink.css" />
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
+  <link rel="stylesheet" href="css/stylelink.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
 
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-
-
+  <style>
+    html[data-bs-theme="dark"] body,
+    html[data-bs-theme="dark"] .main-container,
+    html[data-bs-theme="dark"] .home-info,
+    html[data-bs-theme="dark"] .section,
+    html[data-bs-theme="dark"] .main-content,
+    html[data-bs-theme="dark"] .cardi,
+    html[data-bs-theme="dark"] .card__content {
+      background-color: #000 !important;
+      color: #fff !important;
+    }
+    .theme-fab{
+      position: fixed;
+      right: 16px;
+      top: 80px;
+      z-index: 3000;
+      border-radius: 999px;
+      padding: 10px 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,.15);
+    }
+  </style>
 </h:head>
 
 <h:body>
 
-	<div class="main-container">
-		<div class="aside">
-			<div class="logo">
-				<a href="#"><span>A</span>rtemisa <br></br> <span>UEB</span></a>
-			</div>
+  <div class="main-container">
+    <div class="aside">
+      <div class="logo">
+        <a href="#"><span>A</span>rtemisa <br/><span>UEB</span></a>
+      </div>
 
-			<div class="nav-toggler">
-				<span></span>
-			</div>
+      <div class="nav-toggler">
+        <span></span>
+      </div>
 
-			<ul class="nav">
-				<li><a href="menu.xhtml" class="active"><i
-						class="fa fa-home"></i>Home</a></li>
-				<li><a href="temario.xhtml"><i class="bi bi-card-heading"></i>Temario</a></li>
-				<li><a href="problema.xhtml"><i class="bi bi-balloon-heart"></i>Problemas</a></li>
-				<li><a href="libro.xhtml"><i class="bi bi-book-half"></i>Libros</a></li>
-				<li><a href="link.xhtml"><i class="bi bi-link"></i>Links
-						Valiosos</a></li>
-				<li><a href="cronograma.xhtml"><i
-						class="bi bi-calendar-week"></i>Eventos</a></li>
+      <ul class="nav">
+        <li><a href="menu.xhtml" class="active"><i class="fa fa-home"></i>Home</a></li>
+        <li><a href="temario.xhtml"><i class="bi bi-card-heading"></i>Temario</a></li>
+        <li><a href="problema.xhtml"><i class="bi bi-balloon-heart"></i>Problemas</a></li>
+        <li><a href="libro.xhtml"><i class="bi bi-book-half"></i>Libros</a></li>
+        <li><a href="link.xhtml"><i class="bi bi-link"></i>Links Valiosos</a></li>
+        <li><a href="cronograma.xhtml"><i class="bi bi-calendar-week"></i>Eventos</a></li>
 
+        <div class="card">
+          <h:form>
+            <p:growl id="messages" showDetail="true" />
+            <p:menuButton value="Opcion">
+              <p:menuitem value="Judge" url="https://domjudgeacademicueb.com/public" icon="bi bi-code-square" />
+              <p:menuitem value="CodeChef" url="https://www.codechef.com/" icon="bi bi-cookie" />
+              <p:menuitem value="Vjudge" url="https://vjudge.net/group/cuevadelprofdiego" icon="bi bi-emoji-angry" />
+              <p:menuitem value="OnlineJudge" url="https://onlinejudge.org/" icon="bi bi-joystick" />
+            </p:menuButton>
+          </h:form>
+        </div>
+      </ul>
+    </div>
 
-				<div class="card">
-					<h:form>
-						<p:growl id="messages" showDetail="true" />
+    <div class="home-info padd-15">
+      <h3 class="hello">Links <span class="name"> . . . . . .</span></h3>
+      <p class="animate__animated animate__bounce">“En Artemisa reunimos links clave para desarrolladores: docs oficiales, estándares, ejemplos de código y repos verificados para avanzar sin perder tiempo.”</p>
+      <br/>
+    </div>
 
+    <div class="cardi">
+      <div class="card__shine"></div>
+      <div class="card__glow"></div>
+      <div class="card__content">
+        <div class="card__badge">LINK</div>
+        <div class="card__image">
+          <img src="https://www.cursosdev.com/storage/plantilla/logo.png" alt="Producto" loading="lazy" />
+        </div>
+        <div class="card__text">
+          <p class="card__title">Cursosdev</p>
+          <p class="card__description">Cursos para aprender.</p>
+        </div>
+        <div class="card__footer">
+          <div class="card__price">Link:</div>
+          <a class="card__button" href="https://www.cursosdev.com/coupons" target="_blank" rel="noopener noreferrer" aria-label="Abrir Cursosdev">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
-						<p:menuButton value="Opcion">
+    <div class="cardi">
+      <div class="card__shine"></div>
+      <div class="card__glow"></div>
+      <div class="card__content">
+        <div class="card__badge">LINK</div>
+        <div class="card__image">
+          <img src="https://onlinejudge.org/templates/hm_yaml_2_5/img/ojlogo2.svg.png" alt="Producto" loading="lazy" />
+        </div>
+        <div class="card__text">
+          <p class="card__title">Onlinejudge</p>
+          <p class="card__description">Hover to reveal stunning effects</p>
+        </div>
+        <div class="card__footer">
+          <div class="card__price">Link:</div>
+          <a class="card__button" href="https://onlinejudge.org/index.php" target="_blank" rel="noopener noreferrer" aria-label="Abrir Onlinejudge">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
+    <div class="cardi">
+      <div class="card__shine"></div>
+      <div class="card__glow"></div>
+      <div class="card__content">
+        <div class="card__badge">LINK</div>
+        <div class="card__image">
+          <img src="https://i.ytimg.com/vi/j1tWm5OOXDg/maxresdefault.jpg" alt="Producto" loading="lazy" />
+        </div>
+        <div class="card__text">
+          <p class="card__title">Vjudge</p>
+          <p class="card__description">Hover to reveal stunning effects</p>
+        </div>
+        <div class="card__footer">
+          <div class="card__price">Link:</div>
+          <a class="card__button" href="https://vjudge.net/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Vjudge">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
-							<p:menuitem value="Judge"
-								url="https://domjudgeacademicueb.com/public"
-								icon="bi bi-code-square" />
-							<p:menuitem value="CodeChef" url="https://www.codechef.com/"
-								icon="bi bi-cookie" />
-							<p:menuitem value="Vjudge"
-								url="https://vjudge.net/group/cuevadelprofdiego"
-								icon="bi bi-emoji-angry" />
-							<p:menuitem value="OnlineJudge" url="https://onlinejudge.org/"
-								icon="bi bi-joystick" />
-						</p:menuButton>
-					</h:form>
-				</div>
+    <div class="cardi">
+      <div class="card__shine"></div>
+      <div class="card__glow"></div>
+      <div class="card__content">
+        <div class="card__badge">LINK</div>
+        <div class="card__image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/GeeksforGeeks.svg/1200px-GeeksforGeeks.svg.png" alt="Producto" loading="lazy" />
+        </div>
+        <div class="card__text">
+          <p class="card__title">Geeksforgeeks</p>
+          <p class="card__description">Hover to reveal stunning effects</p>
+        </div>
+        <div class="card__footer">
+          <div class="card__price">Link:</div>
+          <a class="card__button" href="https://www.geeksforgeeks.org/" target="_blank" rel="noopener noreferrer" aria-label="Abrir GeeksforGeeks">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
+    <div class="cardi">
+      <div class="card__shine"></div>
+      <div class="card__glow"></div>
+      <div class="card__content">
+        <div class="card__badge">LINK</div>
+        <div class="card__image">
+          <img src="https://images.credly.com/images/3dcd637f-f94a-4405-9448-0409361214da/large_blob.png" alt="Producto" loading="lazy" />
+        </div>
+        <div class="card__text">
+          <p class="card__title">Hack The Box</p>
+          <p class="card__description">Hover to reveal stunning effects</p>
+        </div>
+        <div class="card__footer">
+          <div class="card__price">Link:</div>
+          <a class="card__button" href="https://account.hackthebox.com/login" target="_blank" rel="noopener noreferrer" aria-label="Abrir Hack The Box">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
-			</ul>
-		</div>
+    <div class="cardi">
+      <div class="card__shine"></div>
+      <div class="card__glow"></div>
+      <div class="card__content">
+        <div class="card__badge">LINK</div>
+        <div class="card__image">
+          <img src="https://cdn.codechef.com/sites/all/themes/abessive/cc-logo.png" alt="Producto" loading="lazy" />
+        </div>
+        <div class="card__text">
+          <p class="card__title">Codechef</p>
+          <p class="card__description">Hover to reveal stunning effects</p>
+        </div>
+        <div class="card__footer">
+          <div class="card__price">Link:</div>
+          <a class="card__button" href="https://www.codechef.com/" target="_blank" rel="noopener noreferrer" aria-label="Abrir CodeChef">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
-		<div class="home-info padd-15">
-			<h3 class="hello">
-				Links <span class="name"> . . . . . .</span>
-			</h3>
+    <div class="cardi">
+      <div class="card__shine"></div>
+      <div class="card__glow"></div>
+      <div class="card__content">
+        <div class="card__badge">LINK</div>
+        <div class="card__image">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Codeforces_logo.svg/2560px-Codeforces_logo.svg.png" alt="Producto" loading="lazy" />
+        </div>
+        <div class="card__text">
+          <p class="card__title">Codeforces</p>
+          <p class="card__description">Hover to reveal stunning effects</p>
+        </div>
+        <div class="card__footer">
+          <div class="card__price">Link:</div>
+          <a class="card__button" href="https://codeforces.com/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Codeforces">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
+    <div class="cardi">
+      <div class="card__shine"></div>
+      <div class="card__glow"></div>
+      <div class="card__content">
+        <div class="card__badge">LINK</div>
+        <div class="card__image">
+          <img src="https://assets.leetcode.com/static_assets/public/images/LeetCode_logo_rvs.png" alt="Producto" loading="lazy" />
+        </div>
+        <div class="card__text">
+          <p class="card__title">LeetCode</p>
+          <p class="card__description">Hover to reveal stunning effects</p>
+        </div>
+        <div class="card__footer">
+          <div class="card__price">Link:</div>
+          <a class="card__button" href="https://leetcode.com/" target="_blank" rel="noopener noreferrer" aria-label="Abrir LeetCode">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
-			<p class="animate__animated animate__bounce">“En Artemisa
-				reunimos links clave para desarrolladores: docs oficiales,
-				estándares, ejemplos de código y repos verificados para avanzar sin
-				perder tiempo.”</p>
+    <div class="cardi">
+      <div class="card__shine"></div>
+      <div class="card__glow"></div>
+      <div class="card__content">
+        <div class="card__badge">LINK</div>
+        <div class="card__image">
+          <img src="https://www.codeogroup.com/wp-content/uploads/2022/08/Logo-Codeo-2020-Noir.jpg" alt="Producto" loading="lazy" />
+        </div>
+        <div class="card__text">
+          <p class="card__title">Codeo</p>
+          <p class="card__description">Hover to reveal stunning effects</p>
+        </div>
+        <div class="card__footer">
+          <div class="card__price">Link:</div>
+          <a class="card__button" href="https://codeo.com/es/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Codeo">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
 
+  </div>
 
+  <button id="themeFab" class="btn btn-primary theme-fab" title="Cambiar tema">
+    <i class="bi bi-moon-stars"></i>
+  </button>
 
-			<br></br>
+  <script>
+    (function(){
+      const html = document.documentElement;
+      const btn  = document.getElementById('themeFab');
 
-		</div>
+      if(!html.hasAttribute('data-bs-theme')) {
+        html.setAttribute('data-bs-theme','light');
+      }
 
-		<div class="cardi">
-			<div class="card__shine"></div>
-			<div class="card__glow"></div>
-			<div class="card__content">
-				<div class="card__badge">LINK</div>
-				<div class="card__image">
-					<img src="https://www.cursosdev.com/storage/plantilla/logo.png"
-						alt="Producto" loading="lazy" />
-				</div>
-				<div class="card__text">
-					<p class="card__title">Cursosdev</p>
-					<p class="card__description">Cursos para aprender.</p>
-				</div>
-				<div class="card__footer">
-					<div class="card__price">Link:</div>
-					<a class="card__button" href="https://www.cursosdev.com/coupons"
-						target="_blank" rel="noopener noreferrer"
-						aria-label="Abrir CodeChef"> <svg width="16" height="16"
-							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
-							fill="none" stroke="currentColor" stroke-width="2"
-							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round"
-							stroke-linejoin="round" /> </svg>
-					</a>
-				</div>
-			</div>
-		</div>
+      const setLabel = (theme) => {
+        btn.innerHTML = theme === 'dark'
+          ? '<i class="bi bi-sun"></i>'
+          : '<i class="bi bi-moon-stars"></i>';
+        btn.setAttribute('title', theme === 'dark' ? 'Modo claro' : 'Modo oscuro');
+      };
 
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') {
+        html.setAttribute('data-bs-theme', saved);
+      }
+      setLabel(html.getAttribute('data-bs-theme'));
 
-
-		<div class="cardi">
-			<div class="card__shine"></div>
-			<div class="card__glow"></div>
-			<div class="card__content">
-				<div class="card__badge">LINK</div>
-				<div class="card__image">
-					<img
-						src="https://onlinejudge.org/templates/hm_yaml_2_5/img/ojlogo2.svg.png"
-						alt="Producto" loading="lazy" />
-				</div>
-				<div class="card__text">
-					<p class="card__title">Onlinejudge</p>
-					<p class="card__description">Hover to reveal stunning effects</p>
-				</div>
-				<div class="card__footer">
-					<div class="card__price">Link:</div>
-					<a class="card__button" href="https://onlinejudge.org/index.php"
-						target="_blank" rel="noopener noreferrer"
-						aria-label="Abrir CodeChef"> <svg width="16" height="16"
-							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
-							fill="none" stroke="currentColor" stroke-width="2"
-							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round"
-							stroke-linejoin="round" /> </svg>
-					</a>
-				</div>
-			</div>
-		</div>
-
-
-
-
-		<div class="cardi">
-			<div class="card__shine"></div>
-			<div class="card__glow"></div>
-			<div class="card__content">
-				<div class="card__badge">LINK</div>
-				<div class="card__image">
-					<img src="https://i.ytimg.com/vi/j1tWm5OOXDg/maxresdefault.jpg"
-						alt="Producto" loading="lazy" />
-				</div>
-				<div class="card__text">
-					<p class="card__title">Vjudge</p>
-					<p class="card__description">Hover to reveal stunning effects</p>
-				</div>
-				<div class="card__footer">
-					<div class="card__price">Link:</div>
-					<a class="card__button" href="https://vjudge.net/" target="_blank"
-						rel="noopener noreferrer" aria-label="Abrir CodeChef"> <svg
-							width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-						<path d="M5 12h14" fill="none" stroke="currentColor"
-							stroke-width="2" stroke-linecap="round" /> <path
-							d="M13 5l7 7-7 7" fill="none" stroke="currentColor"
-							stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-						</svg>
-					</a>
-				</div>
-			</div>
-		</div>
-
-
-
-
-		<div class="cardi">
-			<div class="card__shine"></div>
-			<div class="card__glow"></div>
-			<div class="card__content">
-				<div class="card__badge">LINK</div>
-				<div class="card__image">
-					<img
-						src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/GeeksforGeeks.svg/1200px-GeeksforGeeks.svg.png"
-						alt="Producto" loading="lazy" />
-				</div>
-				<div class="card__text">
-					<p class="card__title">Geeksforgeeks</p>
-					<p class="card__description">Hover to reveal stunning effects</p>
-				</div>
-				<div class="card__footer">
-					<div class="card__price">Link:</div>
-					<a class="card__button" href="https://www.geeksforgeeks.org/"
-						target="_blank" rel="noopener noreferrer"
-						aria-label="Abrir CodeChef"> <svg width="16" height="16"
-							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
-							fill="none" stroke="currentColor" stroke-width="2"
-							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round"
-							stroke-linejoin="round" /> </svg>
-					</a>
-				</div>
-			</div>
-		</div>
-
-
-
-
-		<div class="cardi">
-			<div class="card__shine"></div>
-			<div class="card__glow"></div>
-			<div class="card__content">
-				<div class="card__badge">LINK</div>
-				<div class="card__image">
-					<img
-						src="https://images.credly.com/images/3dcd637f-f94a-4405-9448-0409361214da/large_blob.png"
-						alt="Producto" loading="lazy" />
-				</div>
-				<div class="card__text">
-					<p class="card__title">Hack The Box</p>
-					<p class="card__description">Hover to reveal stunning effects</p>
-				</div>
-				<div class="card__footer">
-					<div class="card__price">Link:</div>
-					<a class="card__button" href="https://account.hackthebox.com/login"
-						target="_blank" rel="noopener noreferrer"
-						aria-label="Abrir CodeChef"> <svg width="16" height="16"
-							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
-							fill="none" stroke="currentColor" stroke-width="2"
-							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round"
-							stroke-linejoin="round" /> </svg>
-					</a>
-				</div>
-			</div>
-		</div>
-
-
-
-		<div class="cardi">
-			<div class="card__shine"></div>
-			<div class="card__glow"></div>
-			<div class="card__content">
-				<div class="card__badge">LINK</div>
-				<div class="card__image">
-					<img
-						src="https://cdn.codechef.com/sites/all/themes/abessive/cc-logo.png"
-						alt="Producto" loading="lazy" />
-				</div>
-				<div class="card__text">
-					<p class="card__title">Codechef</p>
-					<p class="card__description">Hover to reveal stunning effects</p>
-				</div>
-				<div class="card__footer">
-					<div class="card__price">Link:</div>
-					<a class="card__button" href="https://www.codechef.com/"
-						target="_blank" rel="noopener noreferrer"
-						aria-label="Abrir CodeChef"> <svg width="16" height="16"
-							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
-							fill="none" stroke="currentColor" stroke-width="2"
-							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round"
-							stroke-linejoin="round" /> </svg>
-					</a>
-				</div>
-			</div>
-		</div>
-
-
-		<div class="cardi">
-			<div class="card__shine"></div>
-			<div class="card__glow"></div>
-			<div class="card__content">
-				<div class="card__badge">LINK</div>
-				<div class="card__image">
-					<img
-						src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Codeforces_logo.svg/2560px-Codeforces_logo.svg.png"
-						alt="Producto" loading="lazy" />
-				</div>
-				<div class="card__text">
-					<p class="card__title">Codeforces</p>
-					<p class="card__description">Hover to reveal stunning effects</p>
-				</div>
-				<div class="card__footer">
-					<div class="card__price">Link:</div>
-					<a class="card__button" href="https://codeforces.com/"
-						target="_blank" rel="noopener noreferrer"
-						aria-label="Abrir CodeChef"> <svg width="16" height="16"
-							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
-							fill="none" stroke="currentColor" stroke-width="2"
-							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round"
-							stroke-linejoin="round" /> </svg>
-					</a>
-				</div>
-			</div>
-		</div>
-
-
-
-		<div class="cardi">
-			<div class="card__shine"></div>
-			<div class="card__glow"></div>
-			<div class="card__content">
-				<div class="card__badge">LINK</div>
-				<div class="card__image">
-					<img
-						src="https://assets.leetcode.com/static_assets/public/images/LeetCode_logo_rvs.png"
-						alt="Producto" loading="lazy" />
-				</div>
-				<div class="card__text">
-					<p class="card__title">LeetCode</p>
-					<p class="card__description">Hover to reveal stunning effects</p>
-				</div>
-				<div class="card__footer">
-					<div class="card__price">Link:</div>
-					<a class="card__button" href="https://leetcode.com/"
-						target="_blank" rel="noopener noreferrer"
-						aria-label="Abrir CodeChef"> <svg width="16" height="16"
-							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
-							fill="none" stroke="currentColor" stroke-width="2"
-							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round"
-							stroke-linejoin="round" /> </svg>
-					</a>
-				</div>
-			</div>
-		</div>
-
-
-
-		<div class="cardi">
-			<div class="card__shine"></div>
-			<div class="card__glow"></div>
-			<div class="card__content">
-				<div class="card__badge">LINK</div>
-				<div class="card__image">
-					<img
-						src="https://www.codeogroup.com/wp-content/uploads/2022/08/Logo-Codeo-2020-Noir.jpg"
-						alt="Producto" loading="lazy" />
-				</div>
-				<div class="card__text">
-					<p class="card__title">Codeo</p>
-					<p class="card__description">Hover to reveal stunning effects</p>
-				</div>
-				<div class="card__footer">
-					<div class="card__price">Link:</div>
-					<a class="card__button" href="https://codeo.com/es/"
-						target="_blank" rel="noopener noreferrer"
-						aria-label="Abrir CodeChef"> <svg width="16" height="16"
-							viewBox="0 0 24 24" aria-hidden="true"> <path d="M5 12h14"
-							fill="none" stroke="currentColor" stroke-width="2"
-							stroke-linecap="round" /> <path d="M13 5l7 7-7 7" fill="none"
-							stroke="currentColor" stroke-width="2" stroke-linecap="round"
-							stroke-linejoin="round" /> </svg>
-					</a>
-				</div>
-			</div>
-		</div>
-
-	</div>
+      btn.addEventListener('click', () => {
+        const next = html.getAttribute('data-bs-theme') === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-bs-theme', next);
+        localStorage.setItem('theme', next);
+        setLabel(next);
+      });
+    })();
+  </script>
 
 </h:body>
-
 </html>
