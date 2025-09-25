@@ -93,7 +93,6 @@ public class LibroPDFBean implements Serializable {
 				librosPDF.add(it);
 			}
 		} catch (Exception e) {
-			addMsg(FacesMessage.SEVERITY_ERROR, "Error cargando", e.getMessage());
 		}
 	}
 
@@ -104,10 +103,10 @@ public class LibroPDFBean implements Serializable {
 				throw new IllegalArgumentException("Archivo PDF vacío.");
 			String ct = file.getContentType() == null ? "" : file.getContentType().toLowerCase();
 			if (!ct.contains("pdf"))
-				throw new IllegalArgumentException("Formato no soportado (solo PDF).");
+				throw new IllegalArgumentException("Formato no es PDF.");
 
 			this.pdfFile = file;
-			this.contenidoPdf = file.getContent(); // <-- se mantiene gracias a @ViewScoped
+			this.contenidoPdf = file.getContent();
 			this.pdfStream = DefaultStreamedContent.builder().contentType("application/pdf")
 					.stream(() -> new ByteArrayInputStream(this.contenidoPdf)).build();
 
@@ -150,7 +149,7 @@ public class LibroPDFBean implements Serializable {
 	public void obtenerInformacionLibro() {
 		try {
 			if (codigo == null || codigo <= 0) {
-				addMsg(FacesMessage.SEVERITY_WARN, "Código inválido", "Ingresa un ID de libro válido.");
+				addMsg(FacesMessage.SEVERITY_WARN, "Código incorrecto", "Ingresa un ID de libro válido.");
 				return;
 			}
 			HttpRequest request = HttpRequest.newBuilder().GET()
@@ -161,13 +160,13 @@ public class LibroPDFBean implements Serializable {
 			int status = response.statusCode();
 			if (status != 200) {
 				addMsg(FacesMessage.SEVERITY_ERROR, "No se encontró el libro",
-						"HTTP " + status + " al consultar metadatos (ID " + codigo + ").");
+						"HTTP " + status + " con el ID " + codigo + ".");
 				return;
 			}
 			String body = response.body() == null ? "" : response.body().trim();
 			if (!body.startsWith("{")) {
 				addMsg(FacesMessage.SEVERITY_ERROR, "Respuesta inesperada",
-						"El backend no devolvió JSON para el libro " + codigo + ".");
+						"no cargaron los libros " + codigo + ".");
 				return;
 			}
 
@@ -197,20 +196,20 @@ public class LibroPDFBean implements Serializable {
 			int status = resp.statusCode();
 			if (status != 200) {
 				addMsg(FacesMessage.SEVERITY_ERROR, "No se pudo descargar",
-						"HTTP " + status + " al descargar PDF (ID " + codigo + ").");
+						"HTTP " + status + " al descargar el PDF con el ID " + codigo + ".");
 				return;
 			}
 
 			byte[] bytes = resp.body() != null ? resp.body() : new byte[0];
 			if (bytes.length == 0) {
 				addMsg(FacesMessage.SEVERITY_ERROR, "PDF vacío",
-						"El servidor devolvió 0 bytes para el ID " + codigo + ".");
+						"se devolvió 0 bytes para el ID " + codigo + ".");
 				return;
 			}
 
 			if (!parecePdf(bytes)) {
 				addMsg(FacesMessage.SEVERITY_WARN, "Cabecera no estándar",
-						"El archivo no inicia con %PDF-, se intentará descargar igualmente.");
+						"El archivo no inicia con %PDF- se descargar igualmente.");
 			}
 
 			var ec = fc.getExternalContext();
@@ -228,7 +227,7 @@ public class LibroPDFBean implements Serializable {
 			}
 			fc.responseComplete();
 		} catch (Exception e) {
-			addMsg(FacesMessage.SEVERITY_ERROR, "Excepción descargando PDF", e.getMessage());
+			addMsg(FacesMessage.SEVERITY_ERROR, "error descargando PDF", e.getMessage());
 		}
 	}
 
@@ -258,7 +257,6 @@ public class LibroPDFBean implements Serializable {
 		}
 	}
 
-	// getters / setters
 	public Integer getCodigo() {
 		return codigo;
 	}
