@@ -80,7 +80,6 @@ public class RegistroABean {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(sev, summary, content));
 	}
 
-	// Getters y Setters
 	public String getName() {
 		return name;
 	}

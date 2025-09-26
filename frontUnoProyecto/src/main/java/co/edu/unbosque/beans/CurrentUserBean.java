@@ -93,7 +93,6 @@ public class CurrentUserBean implements Serializable {
 		return "/index.xhtml?faces-redirect=true";
 	}
 
-	// Getters
 	public Long getId() {
 		return id;
 	}

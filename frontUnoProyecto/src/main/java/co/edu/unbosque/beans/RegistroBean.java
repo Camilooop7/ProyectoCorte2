@@ -78,7 +78,6 @@ public class RegistroBean {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, content));
 	}
 
-	// Getters y Setters
 	public String getNombre() {
 		return nombre;
 	}

@@ -427,7 +427,6 @@ public class CronogramaBean implements Serializable {
 			this.fecha = fecha;
 		}
 
-		// Getters y Setters
 		public Long getId() {
 			return id;
 		}

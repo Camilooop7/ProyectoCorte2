@@ -329,7 +329,6 @@ public class ProblemaBean implements Serializable {
 			this.link = link;
 		}
 
-		// Getters y Setters
 		public Long getId() {
 			return id;
 		}

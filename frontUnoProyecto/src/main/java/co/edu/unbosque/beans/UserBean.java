@@ -121,7 +121,6 @@ public class UserBean {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, content));
 	}
 
-	// Getters y Setters
 	public String getUsername() {
 		return username;
 	}
